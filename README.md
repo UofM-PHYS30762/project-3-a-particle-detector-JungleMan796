@@ -1,1 +1,12 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/gT6z3ohB)
+# Final Project - Particle Detector.
+
+## Usage instructions.
+Compilation line:
+
+## Declaration of AI use.
+Sharing of prompts will be included if it regards "Code Generation" or "comments".
+Also whether I have a paid GenAI subscriptions: I have ChatGPT plus. Below will explain how it is used in this assignment.
+
+## Report
+This report includes my design considerations and process and a description of the software built.
+The report can be found in the file "" with its commit history being found in the file "project_particle_detector.tex". It includes design considerations and a description of the software.
