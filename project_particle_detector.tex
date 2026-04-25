@@ -41,8 +41,12 @@ I also note that I may want better error and exit logic.
 
 \subsection{Detectors}
 
+With the detectors, my initial plan is to have a pure abstract base class \texttt{SubDetector} from which \texttt{Tracker}, \texttt{Calorimeter} and \texttt{MuonChamber} etc can be derived.
 
-    
-   
+Then have a the generic overall detector \texttt{DetectorSystem} that stores the \texttt{SubDetector}s in a vector like.
+
+Should \texttt{SubDetector} change the Particle in anyway, what if the detection changes the energy due to a collision, something to consider.
+
+I don't believe any need for specific copy/move constructors/assignment operators as the data members are only \texttt{std::string} and \texttt{bool}.
 
 \end{document}
