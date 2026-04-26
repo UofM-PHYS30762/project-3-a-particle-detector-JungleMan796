@@ -90,3 +90,9 @@ void Electron::print_info() const
     
     std::cout << std::endl; // Line break.
 }
+
+// Interacts with subdetectors.
+bool Electron::interacts_with_calorimeter() const
+{
+    return true; // Electrons interact with calorimeters.
+}

@@ -60,6 +60,9 @@ class Particle
     // Print function for characteristics common to all Particles.
     virtual void print_info() const = 0;
 
+    // Interacts with subdetectors, will be overridden in derived classes.
+    virtual bool interacts_with_calorimeter() const = 0;
+
     // Friend functions.
     friend FourMomentum sum_four_momenta(const Particle& particle1, const Particle& particle2);
     friend double dot_product(const Particle& particle1, const Particle& particle2);

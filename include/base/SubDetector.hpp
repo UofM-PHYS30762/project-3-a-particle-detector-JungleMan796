@@ -42,7 +42,7 @@ class SubDetector
     // Pure virtual, print charactertistics common to all SubDetectors.
     virtual void print_info() const = 0;
 
-    // Print virtual function for detection of Particle class.
+    // Pure abstract function for detection of Particle class.
     virtual void detect(const Particle& particle) const = 0;
 };
 
