@@ -62,8 +62,9 @@ I also note that I may want better error and exit logic.
 
 \subsection{Detectors}
 
-With the detectors, my initial plan is to have a pure abstract base class \texttt{SubDetector} from which \texttt{Tracker}, \texttt{Calorimeter} and \texttt{MuonChamber} etc can be derived.
+\subsubsection{SubDetector}
 
+With the detectors, my initial plan is to have a pure abstract base class \texttt{SubDetector} from which \texttt{Tracker}, \texttt{Calorimeter} and \texttt{MuonChamber} etc can be derived.
 Then have a the generic overall detector \texttt{DetectorSystem} that stores the \texttt{SubDetector}s in a vector like.
 
 Should \texttt{SubDetector} change the Particle in anyway, what if the detection changes the energy due to a collision, something to consider.
@@ -115,7 +116,13 @@ bool SubDetector::is_off() const
 This is then used in the derived \texttt{detect} function, being used to exit the function prior to detection. 
 
 
-Also detect should not necessarily keep \texttt{Particle} constant as the detection may change some of the kinematics something to note?? 
+Also detect should not necessarily keep \texttt{Particle} constant as the detection may change some of the kinematics something to note??
+
+\subsubsection{DetectorSystem}
+
+Now will create the class that can store multiple \texttt{SubDetector} classes to match the likes of \textcolor{red}{ATLAS or CMS} and print the overall configuration.
+
+My plan is to use pointers and vectors to control ownership of the multiple \texttt{SubDetector} classes.
 
 \subsection{Particles}
 
