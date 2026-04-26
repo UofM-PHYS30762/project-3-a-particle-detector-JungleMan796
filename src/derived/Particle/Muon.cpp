@@ -86,5 +86,10 @@ void Muon::print_info() const
 // Interacts with subdetectors.
 bool Muon::interacts_with_calorimeter() const
 {
-    return false; // Muon interact with calorimeters.
+    return false; // Muon do not interact with calorimeters.
+}
+
+bool Muon::interacts_with_muonchamber() const
+{
+    return true; // Muons interact with muon chambers.
 }

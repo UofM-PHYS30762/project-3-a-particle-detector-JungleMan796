@@ -96,3 +96,8 @@ bool Electron::interacts_with_calorimeter() const
 {
     return true; // Electrons interact with calorimeters.
 }
+
+bool Electron::interacts_with_muonchamber() const
+{
+    return false; // Electrons do not interact with muon chambers.
+}

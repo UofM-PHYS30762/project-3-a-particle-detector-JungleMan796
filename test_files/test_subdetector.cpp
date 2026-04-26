@@ -11,6 +11,7 @@
 #include "derived/Particle/Muon.hpp"
 
 #include "derived/SubDetector/Calorimeter.hpp"
+#include "derived/SubDetector/MuonChamber.hpp"
 
 
 int main()
@@ -33,6 +34,12 @@ int main()
     calor2.detect(e1);
 
     calor1.detect(m1); // Testing detection of a Muon in the calorimeter, should not interact.
+
+    MuonChamber muonchamber1("Muon Chamber 1", true);
+    muonchamber1.print_info();
+
+    muonchamber1.detect(e1); // Testing detection of an Electron in the muon chamber, should not interact.
+    muonchamber1.detect(m1); // Testing detection of a Muon in the muon chamber, should interact and print energy measurement.
 
     return 0;
 }
