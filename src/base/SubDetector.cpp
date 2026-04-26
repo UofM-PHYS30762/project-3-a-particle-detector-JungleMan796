@@ -70,4 +70,4 @@ void SubDetector::print_info() const
     std::cout << "Status (0=off/1=on): " << status << std::endl;
 }
 
-// No detect called as it is derived SubDetector specific.
+// No detect defined as it is derived SubDetector specific.
