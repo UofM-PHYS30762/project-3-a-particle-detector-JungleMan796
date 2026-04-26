@@ -49,4 +49,12 @@ Should \texttt{SubDetector} change the Particle in anyway, what if the detection
 
 I don't believe any need for specific copy/move constructors/assignment operators as the data members are only \texttt{std::string} and \texttt{bool}.
 
+Considering how to control if a \texttt{SubDetector} detects a \texttt{Particle} passed through it.
+My two current ideas are using a \texttt{Particle} distinct data member that is a vector with strings, referring to which \texttt{SubDetectors} can detect this \texttt{Particle}. Then in the derived \texttt{SubDetector} member function \texttt{detect} it would use an if statement distinguishing if the \texttt{Particle} passed through can be detected.
+
+The other method I was considering was using a polymorphic virtual \texttt{Particle} member function, for example \texttt{interacts\_with\_calorimeter}, which will return a bool depending on if that derived \texttt{Particle} interacts with that detector.
+Then in the derived \texttt{SubDetector} member function \texttt{detect}, \texttt{particle.interacts\_with\_calorimeter} can be called which will just return true or false.
+
+I find this method cleaner as no loop through a vector of strings or enums is needed in the \texttt{detect}. It also allows for flexibility, in the sense perhaps \texttt{Electron} only interacts with \texttt{Calorimeter} when it has certain energies.
+
 \end{document}
