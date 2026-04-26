@@ -12,6 +12,7 @@
 
 #include "derived/SubDetector/Calorimeter.hpp"
 #include "derived/SubDetector/MuonChamber.hpp"
+#include "derived/SubDetector/Tracker.hpp"
 
 
 int main()
@@ -40,6 +41,12 @@ int main()
 
     muonchamber1.detect(e1); // Testing detection of an Electron in the muon chamber, should not interact.
     muonchamber1.detect(m1); // Testing detection of a Muon in the muon chamber, should interact and print energy measurement.
+
+    Tracker tracker1("Tracker 1", true);
+    tracker1.print_info();
+
+    tracker1.detect(e1); // Testing detection of an Electron in the tracker, should interact and print energy measurement.
+    tracker1.detect(m1); // Testing detection of a Muon in the tracker, should interact and print energy measurement.
 
     return 0;
 }

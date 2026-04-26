@@ -101,3 +101,8 @@ bool Electron::interacts_with_muonchamber() const
 {
     return false; // Electrons do not interact with muon chambers.
 }
+
+bool Electron::interacts_with_tracker() const
+{
+    return true; // Electrons interact with trackers.
+}

@@ -42,6 +42,7 @@ class Muon : public Particle
     // Interacts with SubDetectors.
     bool interacts_with_calorimeter() const override;
     bool interacts_with_muonchamber() const override;
+    bool interacts_with_tracker() const override;
 };
 
 #endif

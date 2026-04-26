@@ -93,3 +93,8 @@ bool Muon::interacts_with_muonchamber() const
 {
     return true; // Muons interact with muon chambers.
 }
+
+bool Muon::interacts_with_tracker() const
+{
+    return true; // Muons interact with trackers.
+}
