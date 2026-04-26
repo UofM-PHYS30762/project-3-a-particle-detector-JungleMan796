@@ -22,7 +22,11 @@ int main()
     Calorimeter calor1("Calorimeter 1", true);
     calor1.print_info();
 
+    Calorimeter calor2("Calorimeter 2", false); // status off to test the status check in the detect function.
+    calor2.print_info();
+
     calor1.detect(e1);
+    calor2.detect(e1);
 
     return 0;
 }

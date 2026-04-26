@@ -71,3 +71,18 @@ void SubDetector::print_info() const
 }
 
 // No detect defined as it is derived SubDetector specific.
+
+// Base function to check if off or on, will be called in derived class detect function.
+bool SubDetector::is_off() const
+{
+    if (!status)
+    {
+        std::cout << "SubDetector (" << sd_name << ") is off. No detection." << std::endl;
+        std::cout << std::endl; // Line break.
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
