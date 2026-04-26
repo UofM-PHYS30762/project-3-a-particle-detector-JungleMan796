@@ -39,7 +39,7 @@ class Electron : public Particle
     // Print function for characteristics common to Electrons.
     void print_info() const override;
 
-    // Interacts with subdetectors.
+    // Interacts with SubDetectors.
     bool interacts_with_calorimeter() const override;
 };
 
