@@ -16,6 +16,27 @@
 % Packages I've added.
 \usepackage{listings}
 \usepackage{float}
+\usepackage{xcolor}
+
+\renewcommand{\lstlistingname}{Code snippet}
+
+\lstdefinestyle{vscode}{
+    language=C++,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{orange},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=8pt,
+    backgroundcolor=\color{gray!10},
+    frame=single,
+    breaklines=true,
+    captionpos=b,
+    tabsize=4,
+    showstringspaces=false
+}
 
 \title{Assignment 5 report}
 \author{Callum Williamson}
@@ -56,5 +77,44 @@ The other method I was considering was using a polymorphic virtual \texttt{Parti
 Then in the derived \texttt{SubDetector} member function \texttt{detect}, \texttt{particle.interacts\_with\_calorimeter} can be called which will just return true or false.
 
 I find this method cleaner as no loop through a vector of strings or enums is needed in the \texttt{detect}. It also allows for flexibility, in the sense perhaps \texttt{Electron} only interacts with \texttt{Calorimeter} when it has certain energies.
+
+Noted that \texttt{detect} for all \texttt{SubDetector} should first have their \texttt{status} checked as if it is off then nothing should be detected.
+As this is common to all \texttt{SubDetector} I initially thought to make it within the base \texttt{detect}. However, calling this function within the derived \texttt{detect} could not leave the derived function using \texttt{return} and stop the detection process. But I still did not like doing this for each derived class
+\begin{lstlisting}[
+    style=vscode, 
+    caption={Example of repetition for status check in derived SubDetectors},
+    label={lst:repetition_status}
+]
+if (!status)
+{
+    std::cout << "Calorimeter (" << sd_name << ") is off, no detection." << std::endl;
+    std::cout << std::endl; // Line break.
+    return; // Exit function.
+}
+\end{lstlisting}
+My solution was to make a base member function \texttt{is\_off}, as seen in Code snippet \ref{lst:repetition_status}, which prints the information required (the same for all \texttt{SubDetector}) and returns true if off and false if on.
+\begin{lstlisting}[
+    style=vscode, 
+    caption={Base function to check status, called in derived class detect.},
+    label={lst:is_off}
+    ]
+bool SubDetector::is_off() const
+{
+    if (!status)
+    {
+        std::cout << "SubDetector (" << sd_name << ") is off. No detection." << std::endl;
+        std::cout << std::endl; // Line break.
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+\end{lstlisting}
+This is then used in the derived \texttt{detect} function, being used to exit the function prior to detection. 
+
+
+Also detect should not necessarily keep \texttt{Particle} constant as the detection may change some of the kinematics something to note?? 
 
 \end{document}
