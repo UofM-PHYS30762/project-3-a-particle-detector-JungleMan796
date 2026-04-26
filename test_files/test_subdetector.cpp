@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "derived/Particle/Electron.hpp"
+#include "derived/Particle/Muon.hpp"
 
 #include "derived/SubDetector/Calorimeter.hpp"
 
@@ -19,6 +20,9 @@ int main()
     Electron e1(10.0, 1.0, 2.0, 3.0, false, 0.0);
     e1.print_info();
 
+    Muon m1(20.0, 4.0, 5.0, 6.0, false, 0.0);
+    m1.print_info();
+
     Calorimeter calor1("Calorimeter 1", true);
     calor1.print_info();
 
@@ -27,6 +31,8 @@ int main()
 
     calor1.detect(e1);
     calor2.detect(e1);
+
+    calor1.detect(m1); // Testing detection of a Muon in the calorimeter, should not interact.
 
     return 0;
 }
