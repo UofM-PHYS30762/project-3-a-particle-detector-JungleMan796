@@ -78,5 +78,13 @@ int main()
     DetectorSystem det_sys_3("Detector System 3", std::move(param_sub_detectors));
     det_sys_3.print_configuration();
 
+    // Test detect function with a particle.
+    Electron electron_1(10.0, 1.0, 2.0, 3.0, false, 0.0);
+    det_sys_3.detect(electron_1);
+
+    // Test detect function with another particle.
+    Muon muon_1(20.0, 4.0, 5.0, 6.0, false, 0.0);
+    det_sys_3.detect(muon_1);
+
     return 0;
 }
