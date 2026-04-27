@@ -68,5 +68,15 @@ int main()
         std::cout << "Released SubDetector is null." << std::endl;
     }
 
+    // Test parameterised constructor with initial SubDetectors vector.
+    std::vector<std::unique_ptr<SubDetector>> param_sub_detectors;
+    param_sub_detectors.push_back(std::make_unique<Tracker>("Tracker 1", false));
+    param_sub_detectors.push_back(std::make_unique<Calorimeter>("Calorimeter 2", true));
+    param_sub_detectors.push_back(std::make_unique<MuonChamber>("Muon Chamber 2", false));
+    param_sub_detectors.push_back(std::make_unique<Tracker>("Tracker 2", true));
+
+    DetectorSystem det_sys_3("Detector System 3", std::move(param_sub_detectors));
+    det_sys_3.print_configuration();
+
     return 0;
 }

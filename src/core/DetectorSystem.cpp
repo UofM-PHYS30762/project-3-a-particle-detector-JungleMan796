@@ -32,6 +32,7 @@ DetectorSystem::DetectorSystem(const std::string& sys_name) : sys_name(sys_name)
 }
 
 // Parameterised constructor with SubDetector vector.
+// Note that if there is a pre-existing vector of unique pointers to SubDetectors, must use std::move in the argument.
 DetectorSystem::DetectorSystem(
     const std::string& sys_name,
     std::vector<std::unique_ptr<SubDetector>> sub_detectors
