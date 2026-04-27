@@ -61,10 +61,51 @@ std::string DetectorSystem::get_sys_name() const
     return sys_name;
 }
 
+// Returns non owning pointer to SubDetector, or nullptr if not found.
+SubDetector* DetectorSystem::get_sub_detector(const std::string& sub_detector_name)
+{
+    // Find which index the SubDetector is at in the vector, if it exists.
+    std::vector<std::unique_ptr<SubDetector>>::iterator it = std::find_if(
+        sub_detectors.begin(),
+        sub_detectors.end(),
+        [&sub_detector_name](const std::unique_ptr<SubDetector>& sub_detector)
+        {
+            return sub_detector->get_sd_name() == sub_detector_name;
+        }
+    );
+
+    if (it == sub_detectors.end())
+    {
+        return nullptr;
+    }
+
+    return it->get();
+}
+
 // Setters.
 void DetectorSystem::set_sys_name(const std::string& new_sys_name)
 {
     sys_name = new_sys_name;
+}
+
+void DetectorSystem::set_sub_detector_status(const std::string& sub_detector_name, bool new_status)
+{
+    SubDetector* sub_detector = get_sub_detector(sub_detector_name);
+
+    if (!sub_detector)
+    {
+        std::cerr << "Error: SubDetector (" << sub_detector_name << ") not found in DetectorSystem (" << sys_name << ")." << std::endl;    
+        std::cout << std::endl;
+        return;
+    }
+    
+    sub_detector->set_status(new_status);
+    if (DSMessages::show_messages)
+    {
+        std::cout << "Set SubDetector (" << sub_detector_name << ") status to -" << (new_status ? "on" : "off") 
+        << "- in DetectorSystem (" << sys_name << ")." << std::endl;
+        std::cout << std::endl;
+    }
 }
 
 // Add a SubDetector to the DetectorSystem.

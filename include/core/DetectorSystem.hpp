@@ -45,8 +45,13 @@ class DetectorSystem
     // Getters.
     std::string get_sys_name() const;
 
+    // Returns non owning pointer to SubDetector, or nullptr if not found.
+    SubDetector* get_sub_detector(const std::string& sub_detector_name);
+
     // Setters.
     void set_sys_name(const std::string& new_sys_name);
+
+    void set_sub_detector_status(const std::string& sub_detector_name, bool new_status);
 
     // Add a SubDetector to the DetectorSystem.
     void add_sub_detector(std::unique_ptr<SubDetector> sub_detector);

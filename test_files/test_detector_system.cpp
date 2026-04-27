@@ -91,5 +91,11 @@ int main()
     Photon photon_1(15.0, 7.0, 8.0, 9.0, false);
     det_sys_3.detect(photon_1);
 
+    // Test set_sub_detector_status.
+    det_sys_3.set_sub_detector_status("Tracker 1", true);
+    det_sys_3.set_sub_detector_status("Non-Existent SubDetector", true); // Testing error handling for non-existent SubDetector.
+
+    det_sys_3.detect(electron_1); // Testing that Tracker 1 is now on for detection.
+
     return 0;
 }
