@@ -67,6 +67,7 @@ void DetectorSystem::set_sys_name(const std::string& new_sys_name)
 }
 
 // Add a SubDetector to the DetectorSystem.
+// If adding from pre-existing unique pointer, must use std::move in the argument.
 void DetectorSystem::add_sub_detector(std::unique_ptr<SubDetector> new_sub_detector)
 {
     if (!new_sub_detector)
