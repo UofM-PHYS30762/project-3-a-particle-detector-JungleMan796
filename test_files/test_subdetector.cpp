@@ -9,6 +9,7 @@
 
 #include "derived/Particle/Electron.hpp"
 #include "derived/Particle/Muon.hpp"
+#include "derived/Particle/Photon.hpp"
 
 #include "derived/SubDetector/Calorimeter.hpp"
 #include "derived/SubDetector/MuonChamber.hpp"
@@ -47,6 +48,14 @@ int main()
 
     tracker1.detect(e1); // Testing detection of an Electron in the tracker, should interact and print energy measurement.
     tracker1.detect(m1); // Testing detection of a Muon in the tracker, should interact and print energy measurement.
+
+    // Test Photon interactions.
+    Photon p1(15.0, 7.0, 8.0, 9.0, false);
+    p1.print_info();
+
+    calor1.detect(p1);
+    muonchamber1.detect(p1);
+    tracker1.detect(p1);
 
     return 0;
 }

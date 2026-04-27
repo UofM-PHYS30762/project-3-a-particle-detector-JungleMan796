@@ -11,6 +11,7 @@
 
 #include "derived/Particle/Electron.hpp"
 #include "derived/Particle/Muon.hpp"
+#include "derived/Particle/Photon.hpp"
 
 #include "derived/SubDetector/Calorimeter.hpp"
 #include "derived/SubDetector/MuonChamber.hpp"
@@ -85,6 +86,10 @@ int main()
     // Test detect function with another particle.
     Muon muon_1(20.0, 4.0, 5.0, 6.0, false, 0.0);
     det_sys_3.detect(muon_1);
+
+    // Test detect with Photon.
+    Photon photon_1(15.0, 7.0, 8.0, 9.0, false);
+    det_sys_3.detect(photon_1);
 
     return 0;
 }
