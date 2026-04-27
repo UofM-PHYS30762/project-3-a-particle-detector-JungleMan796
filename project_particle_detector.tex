@@ -173,7 +173,7 @@ For \texttt{remove\_sub\_detector} and \texttt{release\_sub\_detector} ChatGPT 5
 I made it like this with the \textcolor{red}{lambda function} to maintain simplicity. The namespace \texttt{DSMessages} also lets the user controller if they want to see the remove messages.
 Should note that the error messages is mandatory no matter \texttt{Debug} or \texttt{DSMessages}.
 
-\texttt{DetectorSystem::detect} works well, even for the SubDetector's status. But it made me realise I want to develop a way to alter the SubDetectors contained in a DetectorSystem. \textcolor{red}{This is likely additional features.}
+\texttt{DetectorSystem::detect} works well, even for the SubDetector's status. But it made me realise I want to develop a way to alter the SubDetectors contained in a DetectorSystem. \textcolor{red}{This is likely additional features.} I did this making \texttt{get\_sub\_detector} which is used within a wrapper \texttt{DetectorSystem::set\_sub\_detector\_status}.
 
 
 
@@ -188,6 +188,8 @@ Now having done the minimum functionality for the \texttt{DetectorSystem} class 
 
 When making the \texttt{Photon} class the inherited data members \texttt{rest\_mass} and \texttt{is\_anti} are quite redundant as they have 0 mass and they are their own antiparticles. However I still think it is worth them being derived from \texttt{Particle} as these redundancies are not damaging.
 Perhaps can remove the anti part from \texttt{Photon::print\_info}.
+
+For \texttt{Hadron} there are many with different properties, so this will likely have to be an intermediate base class. 
 
 \subsection{Misc}
 
