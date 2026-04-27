@@ -120,14 +120,28 @@ Also detect should not necessarily keep \texttt{Particle} constant as the detect
 
 \subsubsection{DetectorSystem}
 
-Now will create the class that can store multiple \texttt{SubDetector} classes to match the likes of \textcolor{red}{ATLAS or CMS} and print the overall configuration.
+Now will create the class that can store multiple \texttt{SubDetector} classes to match the likes of \textcolor{red}{ATLAS or CMS} and print the overall configuration. This will be a container class.
+My plan is to use pointers and vectors to control ownership of the multiple \texttt{SubDetector} classe, via having the data member shown in Code snippet \ref{lst:container_pointer}.
+\begin{lstlisting}[
+    style=vscode, 
+    caption={Data member for \texttt{DetectorSystem} to manage the ownership of multiple \texttt{SubDetector} classes},
+    label={lst:container_pointer}
+    ]
+    private:
+    std::vector<std::unique_ptr<SubDetector>> sub_detectors;
+\end{lstlisting}
 
-My plan is to use pointers and vectors to control ownership of the multiple \texttt{SubDetector} classes.
+Do I have a getter for the data member in Code snippet \ref{lst:container_pointer}? I think not but have a function that prints the configuration.
+
 
 \subsection{Particles}
 
 Note that the distinct data members from assignment 5 for the derived \texttt{Particle} are not really useful, however will keep for now.
 
 For now assuming \texttt{Muon} doesn't interact with \texttt{Calorimeter}.
+
+\subsection{Misc}
+
+Note that namespace was used, an advanced C++ to help with debugging and code exiting. 
 
 \end{document}
