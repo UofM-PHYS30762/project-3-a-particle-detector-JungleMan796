@@ -183,7 +183,7 @@ void DetectorSystem::print_configuration() const
 // Pass a particle through the DetectorSystem, calling detect on each SubDetector.
 void DetectorSystem::detect(const Particle& particle) const
 {
-    std::cout << "Passing particle through DetectorSystem (" << sys_name << "):" << std::endl;
+    std::cout << "-- Passing particle through DetectorSystem (" << sys_name << ") ---" << std::endl;
     std::cout << std::endl; // Line break.
 
     for (const auto& sub_detector : sub_detectors)
@@ -191,6 +191,6 @@ void DetectorSystem::detect(const Particle& particle) const
         sub_detector->detect(particle);
     }
 
-    std::cout << "Finished passing particle through DetectorSystem (" << sys_name << ")." << std::endl;
+    std::cout << "-- Finished passing particle through DetectorSystem (" << sys_name << ") ---" << std::endl;
     std::cout << std::endl; // Line break.
 }
