@@ -133,6 +133,50 @@ My plan is to use pointers and vectors to control ownership of the multiple \tex
 
 Do I have a getter for the data member in Code snippet \ref{lst:container_pointer}? I think not but have a function that prints the configuration.
 
+Perhaps may want to use \texttt{static} to keep track of detector names so that there are no repeats. Or like in assignment 2, they could have ID that cannot repeat.
+
+Currently using same \texttt{Debug} namespace to decide on whether messages for adding \texttt{SubDetector} classes to \texttt{DetectorSystem}, however may change this to allow for more flexibility.
+Decided to use namespace \texttt{DSMessages} (Detector System Messages) to help add this flexibility.
+
+Below is also beyond minimum functionality as the brief only asks to be able to add. I decided a remove function and a release which lets you receive the SubDetector you are removing.
+
+For \texttt{remove\_sub\_detector} and \texttt{release\_sub\_detector} ChatGPT 5.2 suggested using \texttt{std::find\_if} and a \textcolor{red}{lambda function} to search through the vector containing the \texttt{SubDetector} classes.
+\begin{lstlisting}[
+    style=vscode, 
+    caption={\texttt{remove\_sub\_detector} member function for \texttt{DetectorSystem}.},
+    label={lst:remove_sub_detector}
+    ]
+    void DetectorSystem::remove_sub_detector(const std::string& rem_sub_detector_name)
+{
+    std::vector<std::unique_ptr<SubDetector>>::iterator it = std::find_if(
+        sub_detectors.begin(),
+        sub_detectors.end(),
+        [&rem_sub_detector_name](const std::unique_ptr<SubDetector>& sub_detector)
+        {
+            return sub_detector->get_sd_name() == rem_sub_detector_name;
+        }
+    );
+
+    if (it == sub_detectors.end())
+    {
+        std::cerr << "Error: SubDetector (" << rem_sub_detector_name << ") not found in DetectorSystem (" << sys_name << ")." << std::endl;
+        return;
+    }
+
+    sub_detectors.erase(it);
+    if (DSMessages::show_messages)
+    {
+        std::cout << "Removed SubDetector (" << rem_sub_detector_name << ") from DetectorSystem (" << sys_name << ")." << std::endl;
+    }
+}
+\end{lstlisting}
+I made it like this with the \textcolor{red}{lambda function} to maintain simplicity. The namespace \texttt{DSMessages} also lets the user controller if they want to see the remove messages.
+Should note that the error messages is mandatory no matter \texttt{Debug} or \texttt{DSMessages}.
+
+\texttt{DetectorSystem::detect} works well, even for the SubDetector's status. But it made me realise I want to develop a way to alter the SubDetectors contained in a DetectorSystem.
+
+
+
 
 \subsection{Particles}
 
