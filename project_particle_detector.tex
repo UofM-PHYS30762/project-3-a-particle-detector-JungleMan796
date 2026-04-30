@@ -118,6 +118,11 @@ This is then used in the derived \texttt{detect} function, being used to exit th
 
 Also detect should not necessarily keep \texttt{Particle} constant as the detection may change some of the kinematics something to note??
 
+Should I make \texttt{Tracker} dependent on charge. This goes to the discussion as to whether have charge as base data member.
+
+I am going to make a Hadronic and Electromagnetic Calorimeter class derived from Calorimeter as they interact with different particles as shown from the CMS detector. They will just use different member functions for \texttt{interacts\_with}.
+
+
 \subsubsection{DetectorSystem}
 
 Now will create the class that can store multiple \texttt{SubDetector} classes to match the likes of \textcolor{red}{ATLAS or CMS} and print the overall configuration. This will be a container class.
@@ -189,7 +194,11 @@ Now having done the minimum functionality for the \texttt{DetectorSystem} class 
 When making the \texttt{Photon} class the inherited data members \texttt{rest\_mass} and \texttt{is\_anti} are quite redundant as they have 0 mass and they are their own antiparticles. However I still think it is worth them being derived from \texttt{Particle} as these redundancies are not damaging.
 Perhaps can remove the anti part from \texttt{Photon::print\_info}.
 
-For \texttt{Hadron} there are many with different properties, so this will likely have to be an intermediate base class. 
+For \texttt{Hadron} there are many with different properties, so this will likely have to be an intermediate base class. For now not going to invest time when I am not sure.
+
+When considering the Hadron mesons I am considering that they are different enough from the Baryons as they will have to deal with the fact that a pion for example can be charge +1, -1 (these are each others antiparticles) and 0 charge which is its own antiparticle.
+Kaons have the same structure but their neutral also has an anti particle. Hence their anti and charge structures are going to have to be intertwined.
+This also brings the question as to whether my \texttt{Particle} should have a charge data member and how it links to the \texttt{is\_anti} status. 
 
 \subsection{Misc}
 
