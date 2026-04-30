@@ -43,7 +43,7 @@ Photon::~Photon()
 void Photon::print_info() const
 {
     std::cout << std::endl; // Line break.
-    // Photon speccfic title.
+    // Photon specific title.
     std::cout << "--- Photon properties ---" << std::endl;
 
     // Call the base class print function to print the common characteristics of all Particles.
