@@ -121,6 +121,69 @@ Also detect should not necessarily keep \texttt{Particle} constant as the detect
 Should I make \texttt{Tracker} dependent on charge. This goes to the discussion as to whether have charge as base data member.
 
 I am going to make a Hadronic and Electromagnetic Calorimeter class derived from Calorimeter as they interact with different particles as shown from the CMS detector. They will just use different member functions for \texttt{interacts\_with}.
+Actually I have decided not to have two different \texttt{detect} functions for the derived functions, as would have been like Code snippet  \ref{lst:two_calorimeter_detects}.
+\begin{lstlisting}[
+    style=vscode, 
+    caption={Previous data member function for \texttt{HadronCalorimeter}, which would have had code repetition.},
+    label={lst:two_calorimeter_detects}
+    ]
+    // Function for HadronCalorimeter detection of Particle class.
+void HadronCalorimeter::detect(const Particle& particle) const
+{
+    // Check status of SubDetector.
+    if (is_off())
+    {
+        return; // Exit function.
+    }
+
+    if (particle.interacts_with_hadron_calorimeter())
+    {
+        std::cout << "Calorimeter (" << sd_name << ") measures the energy of the particle as: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
+        // Will differentiate these later.
+        std::cout << "The particle's true energy is: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
+        std::cout << std::endl; // Line break.
+    }
+    else
+    {
+        std::cout << "Particle does not interact with the calorimeter (" << sd_name << "), no energy measurement." << std::endl;
+        std::cout << std::endl; // Line break.
+    }
+}
+\end{lstlisting}
+
+Instead have it central to the base intermediate \texttt{Calorimeter}, as shown in Code snippet \ref{lst:efficient_calor_detect} , by introducing a virtual member function \texttt{particle\_interacts} which is overridden in the derived classes. It acts as a switch between the two \texttt{interacts\_with} functions.
+\begin{lstlisting}[
+    style=vscode, 
+    caption={\texttt{Calorimeter::detect} function that means it does not need to be overridden in each derived class, which would cause code repetition. This is facilitate via the more simple \texttt{particle\_interacts} virtual function which is overidden in the derived classes.},
+    label={lst:efficient_calor_detect}
+    ]
+// Function for HadronCalorimeter detection of Particle class.
+void HadronCalorimeter::detect(const Particle& particle) const
+{
+    // Check status of SubDetector.
+    if (is_off())
+    {
+        return; // Exit function.
+    }
+
+    if (particle.interacts_with_hadron_calorimeter())
+    {
+        std::cout << "Calorimeter (" << sd_name << ") measures the energy of the particle as: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
+        // Will differentiate these later.
+        std::cout << "The particle's true energy is: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
+        std::cout << std::endl; // Line break.
+    }
+    else
+    {
+        std::cout << "Particle does not interact with the calorimeter (" << sd_name << "), no energy measurement." << std::endl;
+        std::cout << std::endl; // Line break.
+    }
+}
+\end{lstlisting}
+
+
+
+Also considering that perhaps a vector of what a particle interacts with is better. As if this possessed a lot of information it could be got from a dataset. With mine it is built into a data member function, on the otherhand it is set in stone what \texttt{Particle} a \texttt{SubDetector} can detect.
 
 
 \subsubsection{DetectorSystem}
@@ -198,10 +261,14 @@ For \texttt{Hadron} there are many with different properties, so this will likel
 
 When considering the Hadron mesons I am considering that they are different enough from the Baryons as they will have to deal with the fact that a pion for example can be charge +1, -1 (these are each others antiparticles) and 0 charge which is its own antiparticle.
 Kaons have the same structure but their neutral also has an anti particle. Hence their anti and charge structures are going to have to be intertwined.
-This also brings the question as to whether my \texttt{Particle} should have a charge data member and how it links to the \texttt{is\_anti} status. 
+This also brings the question as to whether my \texttt{Particle} should have a charge data member and how it links to the \texttt{is\_anti} status.
+
+Mention that we chose \texttt{Muon} to not be detected by any \texttt{Calorimeter} and say why?
 
 \subsection{Misc}
 
 Note that namespace was used, an advanced C++ to help with debugging and code exiting. 
+
+Make sure all code snippets are up to date and dont have any of that differentiate later.
 
 \end{document}
