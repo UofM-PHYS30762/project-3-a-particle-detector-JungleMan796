@@ -1,7 +1,7 @@
 // Callum Williamson.
 // Student ID: 11399397.
 
-//  Implementation file for the Calorimeter (derived) class.
+//  Implementation file for the Calorimeter (abstract base intermediate) class.
 
 #ifndef CALORIMETER_HPP
 #define CALORIMETER_HPP
@@ -14,6 +14,11 @@
 
 class Calorimeter : public SubDetector
 {
+    protected:
+    // Pure virtual function to check if a Particle interacts with the Calorimeter, will be overridden in derived classes.
+    // Used in the detect function.
+    virtual bool particle_interacts(const Particle& particle) const = 0;
+
     public:
     // Defualt Constructor.
     Calorimeter();

@@ -71,9 +71,14 @@ void Photon::print_info() const
 }
 
 // Interacts with subdetectors.
-bool Photon::interacts_with_calorimeter() const
+bool Photon::interacts_with_hadron_calorimeter() const
 {
-    return true; // Photons interact with calorimeters.
+    return false; // Photons do not interact with HadronCalorimeters.
+}
+
+bool Photon::interacts_with_em_calorimeter() const
+{
+    return true; // Photons interact with EMCalorimeters.
 }
 
 bool Photon::interacts_with_muonchamber() const

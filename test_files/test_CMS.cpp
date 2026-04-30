@@ -13,7 +13,8 @@
 #include "derived/Particle/Muon.hpp"
 #include "derived/Particle/Photon.hpp"
 
-#include "derived/SubDetector/Calorimeter.hpp"
+#include "derived/SubDetector/HadronCalorimeter.hpp"
+#include "derived/SubDetector/EMCalorimeter.hpp"
 #include "derived/SubDetector/MuonChamber.hpp"
 #include "derived/SubDetector/Tracker.hpp"
 
@@ -27,9 +28,9 @@ int main()
 
     // Add SubDetectors to the CMS DetectorSystem.
     det_sys_CMS.add_sub_detector(std::make_unique<Tracker>("Silicon Tracker", true));
-    det_sys_CMS.add_sub_detector(std::make_unique<Calorimeter>("Crystal Electromagnetic Calorimeter", true));
-    det_sys_CMS.add_sub_detector(std::make_unique<Calorimeter>("Hadron Calorimeter", true));
-    det_sys_CMS.add_sub_detector(std::make_unique<Calorimeter>("Forward Calorimeter", true));
+    det_sys_CMS.add_sub_detector(std::make_unique<EMCalorimeter>("Crystal Electromagnetic Calorimeter", true));
+    det_sys_CMS.add_sub_detector(std::make_unique<HadronCalorimeter>("Hadron Calorimeter", true));
+    det_sys_CMS.add_sub_detector(std::make_unique<EMCalorimeter>("Forward Calorimeter", true));
     det_sys_CMS.add_sub_detector(std::make_unique<MuonChamber>("Muon Chamber", true));
 
     // Print CMS configuration.

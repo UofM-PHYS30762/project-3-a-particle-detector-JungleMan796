@@ -1,7 +1,7 @@
 // Callum Williamson.
 // Student ID: 11399397.
 
-//  Implementation file for the Calorimter (derived) class.
+//  Implementation file for the Calorimter (abstract intermediate base) class.
 
 #include "derived/SubDetector/Calorimeter.hpp"
 #include "core/Debug.hpp"
@@ -63,7 +63,7 @@ void Calorimeter::detect(const Particle& particle) const
         return; // Exit function.
     }
 
-    if (particle.interacts_with_calorimeter())
+    if (particle_interacts(particle)) // Removes code repetition by having detect differ in the derived classes.
     {
         std::cout << "Calorimeter (" << sd_name << ") measures the energy of the particle as: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
         // Will differentiate these later.

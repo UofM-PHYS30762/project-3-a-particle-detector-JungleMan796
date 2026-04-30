@@ -92,9 +92,14 @@ void Electron::print_info() const
 }
 
 // Interacts with subdetectors.
-bool Electron::interacts_with_calorimeter() const
+bool Electron::interacts_with_hadron_calorimeter() const
 {
-    return true; // Electrons interact with calorimeters.
+    return false; // Electrons doesn't interact with HadronCalorimeters.
+}
+
+bool Electron::interacts_with_em_calorimeter() const
+{
+    return true; // Electrons do interact with EMCalorimeters.
 }
 
 bool Electron::interacts_with_muonchamber() const

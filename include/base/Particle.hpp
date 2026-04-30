@@ -61,7 +61,8 @@ class Particle
     virtual void print_info() const = 0;
 
     // Interacts with subdetectors, will be overridden in derived classes.
-    virtual bool interacts_with_calorimeter() const = 0;
+    virtual bool interacts_with_hadron_calorimeter() const = 0;
+    virtual bool interacts_with_em_calorimeter() const = 0;
     virtual bool interacts_with_muonchamber() const = 0;
     virtual bool interacts_with_tracker() const = 0;
 
