@@ -271,6 +271,8 @@ The member function \texttt{interacts\_with\_tracker} could then be fully depend
 
 Mention that we chose \texttt{Muon} to not be detected by any \texttt{Calorimeter} and say why?
 
+I think \texttt{Hadron} intermediate base class makes sense as all of them interact with the \texttt{HadronCalorimeter} and this will limit code repetition. They also all share the same interaction with the other \texttt{SubDetector} classes.
+
 \subsection{Misc}
 
 Note that namespace was used, an advanced C++ to help with debugging and code exiting. 
@@ -278,5 +280,11 @@ Note that namespace was used, an advanced C++ to help with debugging and code ex
 Make sure all code snippets are up to date and dont have any of that differentiate later.
 
 Unsure if my base classes are PURE abstract. 
+
+Check masses are all to same sig fig.
+
+I think there is no need for an intermediate baryon intermediate base class as right now \texttt{Proton} gets everything from \texttt{Hadron}.
+
+However there maybe for \texttt{Meson} as there structure of having neutral and charged is similar.
 
 \end{document}
