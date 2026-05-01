@@ -151,7 +151,7 @@ void HadronCalorimeter::detect(const Particle& particle) const
 }
 \end{lstlisting}
 
-Instead have it central to the base intermediate \texttt{Calorimeter}, as shown in Code snippet \ref{lst:efficient_calor_detect} , by introducing a virtual member function \texttt{particle\_interacts} which is overridden in the derived classes. It acts as a switch between the two \texttt{interacts\_with} functions.
+% Instead have it central to the base intermediate \texttt{Calorimeter}, as shown in Code snippet \ref{lst:efficient_calor_detect} , by introducing a virtual member function \texttt{particle\_interacts} which is overridden in the derived classes. It acts as a switch between the two \texttt{interacts\_with} functions. It also means only one line is changed in \texttt{Calorimeter::detect} to allow for the derived detection.
 \begin{lstlisting}[
     style=vscode, 
     caption={\texttt{Calorimeter::detect} function that means it does not need to be overridden in each derived class, which would cause code repetition. This is facilitate via the more simple \texttt{particle\_interacts} virtual function which is overidden in the derived classes.},
@@ -184,6 +184,7 @@ void HadronCalorimeter::detect(const Particle& particle) const
 
 
 Also considering that perhaps a vector of what a particle interacts with is better. As if this possessed a lot of information it could be got from a dataset. With mine it is built into a data member function, on the otherhand it is set in stone what \texttt{Particle} a \texttt{SubDetector} can detect.
+
 
 
 \subsubsection{DetectorSystem}
@@ -262,6 +263,11 @@ For \texttt{Hadron} there are many with different properties, so this will likel
 When considering the Hadron mesons I am considering that they are different enough from the Baryons as they will have to deal with the fact that a pion for example can be charge +1, -1 (these are each others antiparticles) and 0 charge which is its own antiparticle.
 Kaons have the same structure but their neutral also has an anti particle. Hence their anti and charge structures are going to have to be intertwined.
 This also brings the question as to whether my \texttt{Particle} should have a charge data member and how it links to the \texttt{is\_anti} status.
+Prior to making an intermediate hadron class and then maybe subsequent meson and baryon classes. I am going to make pion and proton directly. That way I can see what is shared and what is required. Then can adjust accordingly.
+\texttt{Pion} detection by tracker depends on its charge, I think here we can have \texttt{bool} that if true it means it is a charged pion and hence it has an anti and if 0 it is a neutral pion and hence doesnt have an anti.
+Note, that a charged \texttt{Pion} is slightly heavier than a neutral \texttt{Pion}.
+It is also making me consider a charge magnitude base data member. This could be an argument for mesons but not for electrons.
+The member function \texttt{interacts\_with\_tracker} could then be fully dependent on this. It would have to be different than just a \texttt{bool} for \texttt{is\_charged}. It would have to cater for a charge magnitude of 2 for example.
 
 Mention that we chose \texttt{Muon} to not be detected by any \texttt{Calorimeter} and say why?
 
@@ -270,5 +276,7 @@ Mention that we chose \texttt{Muon} to not be detected by any \texttt{Calorimete
 Note that namespace was used, an advanced C++ to help with debugging and code exiting. 
 
 Make sure all code snippets are up to date and dont have any of that differentiate later.
+
+Unsure if my base classes are PURE abstract. 
 
 \end{document}
