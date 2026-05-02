@@ -59,6 +59,12 @@ Due to this, the initial English used in my earlier commits may not be the best 
 \section{Design process \& considerations}
 
 The design process is discussed in two stages: the implementation of the minimum functionality, followed by the reasoning behind the advanced features.
+Both sections are structured around the main components of the program.
+First, the development of the \texttt{Particle} class hierarchy is discussed, followed by the development of the \texttt{SubDetector} class hierarchy. Finally, the construction of the \texttt{DetectorSystem} class is described.
+
+\subsection{Particles}
+
+
 
 My initial consideration is that I will need to change my particle base class from assignment 5.
 In assignment 5 the lepton was required to be the base class, however now I need to move that responsibility to the Particle class.
@@ -347,6 +353,8 @@ However there maybe for \texttt{Meson} as there structure of having neutral and 
 \textcolor{red}{Should I reference where I found the masses}
 
 \textcolor{red}{Should I validate the SubDetector naming??}
+
+\textcolor{red}{I also note that I may want better error and exit logic.}
 
 \section{Results}
 
