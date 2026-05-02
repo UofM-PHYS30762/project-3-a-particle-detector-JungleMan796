@@ -101,7 +101,26 @@ To begin with, a simple \texttt{Electron} class was directly derived from \textt
 
 The information regarding which \texttt{SubDetector} classes a derived \texttt{Particle} interacts with is stored in the \texttt{Particle} hierarchy rather than the \texttt{SubDetector} hierarchy.
 This design choice was made for several considerations.
-
+First, many interaction properties are shared by similar particles. Storing this information in the \texttt{Particle} hierarchy allows for common behaviour to be encoded through inheritance, reducing code repetition.
+For example, \textcolor{red}{as shown in Code snippet \ref{lst:interacts_with_tracker}}, the data member \texttt{charge\_mag} determines whether a \texttt{Particle} interacts with a \texttt{Tracker}. Since this logic/behaviour is the same for all particles it can be defined once in the base class rather than repeatedly implemented in each derived class.
+\begin{lstlisting}[
+    style=vscode, 
+    caption={
+    \texttt{Particle} member function \texttt{interacts\_with\_tracker}. Only \texttt{interacts\_with} member function defined in \texttt{Particle} and not overridden in the derived classes.},
+    label={lst:interacts_with_tracker}
+]
+bool Particle::interacts_with_tracker() const
+{
+    if (charge_mag == 0)
+    {
+        return false; // Neutral Particles don't interact with Trackers.
+    }
+    else
+    {
+        return true; // Charged Particles interact with Trackers.
+    }
+}
+\end{lstlisting}
 The choice to use virtual member functions, except in the case of \texttt{interacts\_with\_tracker} due to all \texttt{Particle} classes sharing the same logic, ...... rather than vector list.
 
 
