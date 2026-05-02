@@ -23,12 +23,14 @@ class Particle
 
     bool is_anti;
 
+    int charge_mag; // Magnitude of charge in units of e.
+
     public:
     // Defualt constructor.
     Particle();
 
     // Parameterised constructor.
-    Particle(double E, double px, double py, double pz, double rest_mass, bool is_anti);
+    Particle(double E, double px, double py, double pz, double rest_mass, bool is_anti, int charge_mag);
 
     // Destructor.
     virtual ~Particle();
@@ -51,6 +53,8 @@ class Particle
     double get_rest_mass() const;
 
     bool get_is_anti() const;
+
+    int get_charge_mag() const;
 
     // Setters.
     void set_four_momentum(const FourMomentum& new_four_momentum);

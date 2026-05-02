@@ -12,9 +12,8 @@
 
 // Defualt constructor.
 Particle::Particle() : four_momentum(std::make_unique<FourMomentum>(0.0, 0.0, 0.0, 0.0)),
-rest_mass(0.0), 
-is_anti(false)
-// Setting defualt four momenta as all zeros,  rest mass as zero and is_anti as false.
+rest_mass(0.0),  is_anti(false), charge_mag(0)
+// Setting defualt four momenta as all zeros,  rest mass as zero, is_anti as false and charge_mag as zero.
 {
     if (Debug::show_messages)
     {
@@ -23,10 +22,11 @@ is_anti(false)
 }
 
 // Parameterised Constructor.
-Particle::Particle(double E, double px, double py, double pz, double rest_mass, bool is_anti)
+Particle::Particle(double E, double px, double py, double pz, double rest_mass, bool is_anti, int charge_mag)
     : four_momentum(std::make_unique<FourMomentum>(E, px, py, pz)), // Validation of E happens in the four_momentum constructor.
     rest_mass(rest_mass), // Setting rest_mass given via constructor chain from derived class.
-    is_anti(is_anti) // Setting is_anti given via constructor chain from derived class.
+    is_anti(is_anti), // Setting is_anti given via constructor chain from derived class.
+    charge_mag(charge_mag) // Setting charge_mag given via constructor chain from derived class.
 {
     if (Debug::show_messages)
     {
@@ -47,7 +47,8 @@ Particle::~Particle()
 Particle::Particle(const Particle& other) 
     : four_momentum(std::make_unique<FourMomentum>(*other.four_momentum)),
     rest_mass(other.rest_mass),
-    is_anti(other.is_anti)
+    is_anti(other.is_anti),
+    charge_mag(other.charge_mag)
 {
     if (Debug::show_messages)
     {
@@ -68,6 +69,7 @@ Particle& Particle::operator=(const Particle& other)
         four_momentum = std::make_unique<FourMomentum>(*other.four_momentum);
         rest_mass = other.rest_mass;
         is_anti = other.is_anti;
+        charge_mag = other.charge_mag;
     }
 
     return *this;
@@ -77,7 +79,8 @@ Particle& Particle::operator=(const Particle& other)
 Particle::Particle(Particle&& other) noexcept
     : four_momentum(std::move(other.four_momentum)),
     rest_mass(std::move(other.rest_mass)),
-    is_anti(std::move(other.is_anti))
+    is_anti(std::move(other.is_anti)),
+    charge_mag(std::move(other.charge_mag))
 {
     if (Debug::show_messages)
     {
@@ -98,6 +101,7 @@ Particle& Particle::operator=(Particle&& other) noexcept
         four_momentum = std::move(other.four_momentum);
         rest_mass = std::move(other.rest_mass);
         is_anti = std::move(other.is_anti);
+        charge_mag = std::move(other.charge_mag);
     }
 
     return *this;
@@ -117,6 +121,11 @@ double Particle::get_rest_mass() const
 bool Particle::get_is_anti() const
 {
     return is_anti;
+}
+
+int Particle::get_charge_mag() const
+{
+    return charge_mag;
 }
 
 // Setters.
