@@ -273,6 +273,12 @@ Mention that we chose \texttt{Muon} to not be detected by any \texttt{Calorimete
 
 I think \texttt{Hadron} intermediate base class makes sense as all of them interact with the \texttt{HadronCalorimeter} and this will limit code repetition. They also all share the same interaction with the other \texttt{SubDetector} classes.
 
+If I am going to have charge magnitude as a data member do I need validation. No as user doesnt set it.
+
+Will define \texttt{interacts\_with\_tracker} in \texttt{Particle} as it is the same for all, it depends if it has \texttt{charge\_mag}.
+
+If using \texttt{charge\_mag} and \texttt{is\_anti} to print the charge, this will have to be particle specific as some anti particles are +1 some are -1.
+
 \subsection{Misc}
 
 Note that namespace was used, an advanced C++ to help with debugging and code exiting. 
