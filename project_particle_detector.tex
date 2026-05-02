@@ -17,6 +17,7 @@
 \usepackage{listings}
 \usepackage{float}
 \usepackage{xcolor}
+\usepackage{comment}
 
 \renewcommand{\lstlistingname}{Code snippet}
 
@@ -85,15 +86,20 @@ As we move through this section, the approach of how these were met is discussed
 
 \subsubsection{Particles}
 
-Much of this project's \texttt{Particle} architecture was previously developed in assignments 4 and 5.
-I will first outline the prior design process that brought me to where I was when I started this project and then explain how moved forward from there
+Much of the \texttt{Particle} architecture used in this project was initially developed in Assignments 4 and 5.
+The discussion is therefore split into the prior design decisions that formed the starting point for the project and the present development carried out for this project.
+\textcolor{red}{Should I put the repo link?}
 
+\textcolor{red}{Skip the prior for now.}
 
-My initial consideration is that I will need to change my particle base class from assignment 5.
-In assignment 5 the lepton was required to be the base class, however now I need to move that responsibility to the Particle class.
-Assignment 5 also has a lepton hierarchy already built in, however initially my plan is to make the Particle class the pure base class with one simple derived class which can be pushed through my SubDetectors which will be my main focus in the beginning, so to keep things simple and clean.
+The responsibilities previously held by Assignment 5's \texttt{Lepton} class were moved to this project's \texttt{Particle} base class, now extend to not just Leptons.
+To begin with, a simple \texttt{Electron} class was directly derived from \texttt{Particle}, without retaining the intermediate \texttt{ChargedLepton} layer used in Assignment 5. This simplified structure was chosen to test the initial interaction between the \texttt{Particle} and \texttt{SubDetector} classes before introducing a more complex class hierarchy.
 
-I also note that I may want better error and exit logic.
+\begin{comment}
+    My initial consideration is that I will need to change my particle base class from assignment 5.
+    In assignment 5 the lepton was required to be the base class, however now I need to move that responsibility to the Particle class.
+    Assignment 5 also has a lepton hierarchy already built in, however initially my plan is to make the Particle class the pure base class with one simple derived class which can be pushed through my SubDetectors which will be my main focus in the beginning, so to keep things simple and clean.
+\end{comment}
 
 \subsection{Detectors}
 
