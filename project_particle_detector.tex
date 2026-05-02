@@ -103,6 +103,7 @@ The information regarding which \texttt{SubDetector} classes a derived \texttt{P
 This design choice was made for several considerations.
 First, many interaction properties are shared by similar particles. Storing this information in the \texttt{Particle} hierarchy allows for common behaviour to be encoded through inheritance, reducing code repetition.
 For example, \textcolor{red}{as shown in Code snippet \ref{lst:interacts_with_tracker}}, the data member \texttt{charge\_mag} determines whether a \texttt{Particle} interacts with a \texttt{Tracker}. Since this logic/behaviour is the same for all particles it can be defined once in the base class rather than repeatedly implemented in each derived class.
+This design also supports future extension. If a new derived \texttt{Particle} is added, its interaction behaviour may already be defined and if not just needs introducing in that derived class implementation. In contrast, if the information was stored in the \texttt{SubDetector} hierarchy, each derived class would have to be updated whenever a new \texttt{Particle} was introduced.
 \begin{lstlisting}[
     style=vscode, 
     caption={
