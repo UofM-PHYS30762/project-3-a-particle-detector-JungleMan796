@@ -19,6 +19,9 @@
 \usepackage{xcolor}
 \usepackage{comment}
 
+\setlength{\parskip}{0.8em}
+\setlength{\parindent}{0pt}
+
 \renewcommand{\lstlistingname}{Code snippet}
 
 \lstdefinestyle{vscode}{
@@ -91,15 +94,21 @@ The discussion is therefore split into the prior design decisions that formed th
 \textcolor{red}{Should I put the repo link?}
 
 \textcolor{red}{Skip the prior for now.}
+\textcolor{red}{Mention abstract base class, four momentum and setters/getters}
 
 The responsibilities previously held by Assignment 5's \texttt{Lepton} class were moved to this project's \texttt{Particle} base class, now extend to not just Leptons.
 To begin with, a simple \texttt{Electron} class was directly derived from \texttt{Particle}, without retaining the intermediate \texttt{ChargedLepton} layer used in Assignment 5. This simplified structure was chosen to test the initial interaction between the \texttt{Particle} and \texttt{SubDetector} classes before introducing a more complex class hierarchy.
 
-\begin{comment}
-    My initial consideration is that I will need to change my particle base class from assignment 5.
-    In assignment 5 the lepton was required to be the base class, however now I need to move that responsibility to the Particle class.
-    Assignment 5 also has a lepton hierarchy already built in, however initially my plan is to make the Particle class the pure base class with one simple derived class which can be pushed through my SubDetectors which will be my main focus in the beginning, so to keep things simple and clean.
-\end{comment}
+The information regarding which \texttt{SubDetector} classes a derived \texttt{Particle} interacts with is stored in the \texttt{Particle} hierarchy rather than the \texttt{SubDetector} hierarchy.
+This design choice was made for several considerations.
+
+The choice to use virtual member functions, except in the case of \texttt{interacts\_with\_tracker} due to all \texttt{Particle} classes sharing the same logic, ...... rather than vector list.
+
+
+Upon reaching the minimum functionality for the \texttt{SubDetector} and \texttt{DetectorSystem}, bar having multiple derived \texttt{
+SubDetector} classes, the class structures for \texttt{Muon}, \texttt{Photon} and \texttt{Hadron} were created.
+
+\texttt{Muon} was developed 
 
 \subsection{Detectors}
 
