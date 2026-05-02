@@ -15,6 +15,7 @@
 #include "derived/Particle/Pion.hpp"
 #include "derived/Particle/Kaon.hpp"
 #include "derived/Particle/Proton.hpp"
+#include "derived/Particle/Neutron.hpp"
 
 #include "derived/SubDetector/HadronCalorimeter.hpp"
 #include "derived/SubDetector/EMCalorimeter.hpp"
@@ -81,6 +82,17 @@ int main()
     proton_2.print_info();
 
     det_sys_CMS.detect(proton_1);
+
+    // Testing Neutrons.
+    Neutron neutron_1;
+    neutron_1.print_info();
+    neutron_1.set_is_anti(true);
+    neutron_1.print_info();
+
+    Neutron neutron_2(30.0, 7.0, 8.0, 9.0, false);
+    neutron_2.print_info();
+
+    det_sys_CMS.detect(neutron_1);
     
     return 0;
 }
