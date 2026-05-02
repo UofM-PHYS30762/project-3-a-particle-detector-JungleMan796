@@ -304,10 +304,16 @@ All mesons are -1, 0, +1 charge, nothing greater.
 
 \textcolor{red}{Current question aswell, should the user be able to change the \texttt{Meson} classes' \texttt{is\_charged}?}
 
-\textcolor{red}{Need to ensure that the intermediate particles cannot be constructed and that espicially their defaults}
+\textcolor{red}{Need to ensure that the intermediate particles cannot be constructed and that especially their defaults}
 
 In \texttt{Meson} neutral and charged rest masses are not stored as data members as they're not needed after initialisation.
 I think this is a good design choice but we'll see if it brings about mistakes.
+
+I believe the only differentiation for the \texttt{Meson} derived classes will be their masses and  that I'll print that the \texttt{Pion} neutral is its own anti-particle and this wont be printed for example for \texttt{Kaon}.
+
+\textcolor{red}{Do need to consider that the \texttt{Meson} neutral particles may be more unstable and hence behave differently with detectors.}
+
+Introduction of the base data member \texttt{charge\_mag} mean that I need to adjust all other \texttt{Particle} derived classses.
 
 
 \subsection{Misc}
@@ -324,6 +330,8 @@ I think there is no need for an intermediate baryon intermediate base class as r
 
 However there maybe for \texttt{Meson} as there structure of having neutral and charged is similar.
 
-\textcolor{red}{Check code snippets are indented properly} 
+\textcolor{red}{Check code snippets are indented properly}
+
+\textcolor{red}{Should I reference where I found the masses}
 
 \end{document}
