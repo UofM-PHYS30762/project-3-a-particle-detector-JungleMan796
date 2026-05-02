@@ -279,6 +279,8 @@ Will define \texttt{interacts\_with\_tracker} in \texttt{Particle} as it is the 
 
 If using \texttt{charge\_mag} and \texttt{is\_anti} to print the charge, this will have to be particle specific as some anti particles are +1 some are -1.
 
+In \texttt{Pion} I need to link the \texttt{is\_charged} to the anti, so that anti is either the positive or negative pion and hence if the user makes changes to \texttt{is\_anti} it changes the charge +ve or -ve. I have defined the negative \texttt{Pion} as the anti particle.
+
 \subsection{Misc}
 
 Note that namespace was used, an advanced C++ to help with debugging and code exiting. 
