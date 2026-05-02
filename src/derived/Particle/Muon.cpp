@@ -11,7 +11,7 @@
 #include <memory>
 
 // Defualt constructor.
-Muon::Muon() : Particle(0.0, 0.0, 0.0, 0.0, 105.66, false), // Calling the base class paramerterised constuctor.
+Muon::Muon() : Particle(0.0, 0.0, 0.0, 0.0, 105.66, false, 1), // Calling the base class paramerterised constuctor.
     muon_chamber_hits(0.0)
 {
     if (Debug::show_messages)
@@ -22,7 +22,7 @@ Muon::Muon() : Particle(0.0, 0.0, 0.0, 0.0, 105.66, false), // Calling the base 
 
 // Parameterised Constructor.
 Muon::Muon(double E, double px, double py, double pz, bool is_anti, int muon_chamber_hits)
-    : Particle(E, px, py, pz, 105.66, is_anti) // Calling the base class parameterised constructor.
+    : Particle(E, px, py, pz, 105.66, is_anti, 1) // Calling the base class parameterised constructor.
 {
     validate_muon_chamber_hits(muon_chamber_hits);
     this->muon_chamber_hits = muon_chamber_hits;
@@ -74,8 +74,11 @@ void Muon::print_info() const
     // Muon speccfic title.
     std::cout << "--- Muon properties ---" << std::endl;
     
-    // Call ChargedLepton print function to print the common characteristics of all ChargedLeptons.
+    // Call base print function to print the common characteristics of all ChargedLeptons.
     Particle::print_info();
+
+    // Print charge info.
+    std::cout << "Charge: " << (is_anti ? "+1" : "-1") << std::endl;
 
     // Additional characteristics common to Muons.
     std::cout << "Number of muon chamber hits: " << muon_chamber_hits << std::endl;
@@ -97,9 +100,4 @@ bool Muon::interacts_with_em_calorimeter() const
 bool Muon::interacts_with_muonchamber() const
 {
     return true; // Muons interact with muon chambers.
-}
-
-bool Muon::interacts_with_tracker() const
-{
-    return true; // Muons interact with trackers.
 }

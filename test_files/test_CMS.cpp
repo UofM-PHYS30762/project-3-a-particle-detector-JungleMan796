@@ -41,13 +41,18 @@ int main()
     electron_1.print_info();
     electron_1.set_is_anti(true);
     electron_1.print_info();
-    // Muon muon_1(20.0, 4.0, 5.0, 6.0, false, 0.0);
+
+    Muon muon_1(20.0, 4.0, 5.0, 6.0, false, 0.0);
+    muon_1.print_info();
+    muon_1.set_is_anti(true);
+    muon_1.print_info();
+
     Photon photon_1(30.0, 7.0, 9.0, 11.0, false);
     photon_1.print_info();
 
     // Detection.
     det_sys_CMS.detect(electron_1);
-    // det_sys_CMS.detect(muon_1);
+    det_sys_CMS.detect(muon_1);
     det_sys_CMS.detect(photon_1);
 
     
