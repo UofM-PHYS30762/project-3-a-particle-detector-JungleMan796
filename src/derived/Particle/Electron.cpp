@@ -82,7 +82,7 @@ void Electron::print_info() const
     // Call the base class print function to print the common characteristics of all Particles.
     Particle::print_info();
 
-    // Print charge reminder.
+    // Print charge info.
     std::cout << "Charge: " << (is_anti ? "+1" : "-1") << std::endl;
 
     // Additional characteristics common to Electrons.
