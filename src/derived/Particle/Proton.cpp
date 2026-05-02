@@ -57,31 +57,3 @@ void Proton::print_info() const
     
     std::cout << std::endl; // Line break.
 }
-
-// // Interacts with subdetectors.
-// bool Pion::interacts_with_hadron_calorimeter() const
-// {
-//     return true; // Pions do interact with HadronCalorimeters.
-// }
-
-// bool Pion::interacts_with_em_calorimeter() const
-// {
-//     return false; // Pions do not interact with EMCalorimeters.
-// }
-
-// bool Pion::interacts_with_muonchamber() const
-// {
-//     return false; // Pions do not interact with muon chambers.
-// }
-
-// bool Pion::interacts_with_tracker() const
-// {
-//     if (is_charged)
-//     {
-//         return true; // Charged Pions interact with Trackers.
-//     }
-//     else
-//     {
-//         return false; // Neutral Pions do not interact with Trackers.
-//     }
-// }

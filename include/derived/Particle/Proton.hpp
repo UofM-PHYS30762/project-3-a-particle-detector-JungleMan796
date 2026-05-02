@@ -26,12 +26,6 @@ class Proton : public Hadron
 
     // Print function for characteristics common to Proton.
     void print_info() const override;
-
-    // // Interacts with SubDetectors.
-    // bool interacts_with_hadron_calorimeter() const override;
-    // bool interacts_with_em_calorimeter() const override;
-    // bool interacts_with_muonchamber() const override;
-    // bool interacts_with_tracker() const override;
 };
 
 #endif
