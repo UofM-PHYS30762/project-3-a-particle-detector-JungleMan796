@@ -215,7 +215,7 @@ For \texttt{remove\_sub\_detector} and \texttt{release\_sub\_detector} ChatGPT 5
     caption={\texttt{remove\_sub\_detector} member function for \texttt{DetectorSystem}.},
     label={lst:remove_sub_detector}
     ]
-    void DetectorSystem::remove_sub_detector(const std::string& rem_sub_detector_name)
+void DetectorSystem::remove_sub_detector(const std::string& rem_sub_detector_name)
 {
     std::vector<std::unique_ptr<SubDetector>>::iterator it = std::find_if(
         sub_detectors.begin(),
@@ -281,6 +281,35 @@ If using \texttt{charge\_mag} and \texttt{is\_anti} to print the charge, this wi
 
 In \texttt{Pion} I need to link the \texttt{is\_charged} to the anti, so that anti is either the positive or negative pion and hence if the user makes changes to \texttt{is\_anti} it changes the charge +ve or -ve. I have defined the negative \texttt{Pion} as the anti particle.
 
+Now using the logic which I used in \texttt{Pion} that is useful for all mesons in the \texttt{Meson} intermediate base class from which the mesons will (\texttt{Pion}) will be derived. This logic consists of having a data member \texttt{is\_charged} and using it to decide how charge is printed and how the \texttt{rest\_mass} is set, as the \texttt{Meson} neutral particle's mass differs from the charged mass.
+As shown in Code snippet \ref{lst:prev_pion_constructor}, right now (previously)  my \texttt{Pion} parametrised constructor uses \texttt{is\_charged} to determine the \texttt{rest\_mass}.
+\begin{lstlisting}[
+    style=vscode, 
+    caption={Previous \texttt{Pion} parameterised constructor.},
+    label={lst:prev_pion_constructor}
+    ]
+Pion::Pion(double E, double px, double py, double pz, bool is_anti, bool is_charged)
+    : Hadron(E, px, py, pz, is_charged ? 139.57 : 134.98, is_anti, is_charged ? 1 : 0), // Calling the intermediatebase class parameterised constructor.
+    is_charged(is_charged) // rest_mass is set based on if charged or neutral, so is the charge_mag
+{
+    if (Debug::show_messages)
+    {
+        std::cout << "Calling Pion Parameterised Constructor." << std::endl;
+    }
+}
+\end{lstlisting}
+I need to move this logic so it is the same for all \texttt{Meson} classes and hence reduces code repetition.
+
+All mesons are -1, 0, +1 charge, nothing greater.
+
+\textcolor{red}{Current question aswell, should the user be able to change the \texttt{Meson} classes' \texttt{is\_charged}?}
+
+\textcolor{red}{Need to ensure that the intermediate particles cannot be constructed and that espicially their defaults}
+
+In \texttt{Meson} neutral and charged rest masses are not stored as data members as they're not needed after initialisation.
+I think this is a good design choice but we'll see if it brings about mistakes.
+
+
 \subsection{Misc}
 
 Note that namespace was used, an advanced C++ to help with debugging and code exiting. 
@@ -294,5 +323,7 @@ Check masses are all to same sig fig.
 I think there is no need for an intermediate baryon intermediate base class as right now \texttt{Proton} gets everything from \texttt{Hadron}.
 
 However there maybe for \texttt{Meson} as there structure of having neutral and charged is similar.
+
+\textcolor{red}{Check code snippets are indented properly} 
 
 \end{document}
