@@ -11,7 +11,7 @@
 #include <memory>
 
 // Defualt constructor.
-Electron::Electron() : Particle(0.0, 0.0, 0.0, 0.0, 0.511, false), // Calling the base class paramerterised constuctor.
+Electron::Electron() : Particle(0.0, 0.0, 0.0, 0.0, 0.511, false, 1), // Calling the base class paramerterised constuctor.
     shower_depth(0.0)
 // Setting the rest mass for an electron.
 {
@@ -23,7 +23,7 @@ Electron::Electron() : Particle(0.0, 0.0, 0.0, 0.0, 0.511, false), // Calling th
 
 // Parameterised Constructor.
 Electron::Electron(double E, double px, double py, double pz, bool is_anti, double shower_depth)
-    : Particle(E, px, py, pz, 0.511, is_anti) // Calling the base class parameterised constructor.
+    : Particle(E, px, py, pz, 0.511, is_anti, 1) // Calling the base class parameterised constructor.
 {
     validate_shower_depth(shower_depth);
     this->shower_depth = shower_depth;
@@ -82,8 +82,8 @@ void Electron::print_info() const
     // Call the base class print function to print the common characteristics of all Particles.
     Particle::print_info();
 
-    // Charge reminder.
-    std::cout << "Charge reminder" << std::endl;
+    // Print charge reminder.
+    std::cout << "Charge: " << (is_anti ? "+1" : "-1") << std::endl;
 
     // Additional characteristics common to Electrons.
     std::cout << "Electron shower depth: " << shower_depth << " cm" << std::endl;
@@ -105,9 +105,4 @@ bool Electron::interacts_with_em_calorimeter() const
 bool Electron::interacts_with_muonchamber() const
 {
     return false; // Electrons do not interact with muon chambers.
-}
-
-bool Electron::interacts_with_tracker() const
-{
-    return true; // Electrons interact with trackers.
 }
