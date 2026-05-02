@@ -37,12 +37,16 @@ int main()
     det_sys_CMS.print_configuration();
 
     // Define particle for detection test.
-    Electron electron_1(10.0, 1.0, 2.0, 3.0, false, 0.0);
-    Muon muon_1(20.0, 4.0, 5.0, 6.0, false, 0.0);
+    // Electron electron_1(10.0, 1.0, 2.0, 3.0, false, 0.0);
+    // Muon muon_1(20.0, 4.0, 5.0, 6.0, false, 0.0);
+    Photon photon_1(30.0, 7.0, 9.0, 11.0, false);
+    photon_1.print_info();
 
     // Detection.
-    det_sys_CMS.detect(electron_1);
-    det_sys_CMS.detect(muon_1);
+    // det_sys_CMS.detect(electron_1);
+    // det_sys_CMS.detect(muon_1);
+    det_sys_CMS.detect(photon_1);
+
     
     return 0;
 }

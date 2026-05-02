@@ -14,7 +14,7 @@
 
 class Photon : public Particle
 {
-    private:
+    // private:
     // No distinct data members for Photon yet.
 
     public:
@@ -34,7 +34,6 @@ class Photon : public Particle
     bool interacts_with_hadron_calorimeter() const override;
     bool interacts_with_em_calorimeter() const override;
     bool interacts_with_muonchamber() const override;
-    bool interacts_with_tracker() const override;
 };
 
 #endif

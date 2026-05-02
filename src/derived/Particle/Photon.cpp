@@ -11,8 +11,8 @@
 #include <memory>
 
 // Defualt constructor.
-Photon::Photon() : Particle(0.0, 0.0, 0.0, 0.0, 0, false) // Calling the base class paramerterised constuctor.
-// Setting the rest mass for a photon as 0..
+Photon::Photon() : Particle(0.0, 0.0, 0.0, 0.0, 0, false, 0) // Calling the base class paramerterised constuctor.
+// Setting the rest mass for a photon as 0.
 {
     if (Debug::show_messages)
     {
@@ -22,7 +22,7 @@ Photon::Photon() : Particle(0.0, 0.0, 0.0, 0.0, 0, false) // Calling the base cl
 
 // Parameterised Constructor.
 Photon::Photon(double E, double px, double py, double pz, bool is_anti)
-    : Particle(E, px, py, pz, 0, is_anti) // Calling the base class parameterised constructor.
+    : Particle(E, px, py, pz, 0, is_anti, 0) // Calling the base class parameterised constructor.
 {
     if (Debug::show_messages)
     {
@@ -47,24 +47,13 @@ void Photon::print_info() const
     std::cout << "--- Photon properties ---" << std::endl;
 
     // Call the base class print function to print the common characteristics of all Particles.
-    // Particle::print_info();
-    // Commented for Photon as rest_mass is zero and anti_is is redundant.
-    // Part below is the Particle::print_info() adjusted.
+    Particle::print_info();
 
-    // Print four momenta in (E, px, py, pz) format.
-    std::cout << "Four momenta: " <<
-                "(" << four_momentum->get_E() << // Using -> since four_momentum is a unique_ptr. 
-                ", " << four_momentum->get_px() <<
-                ", " << four_momentum->get_py() <<
-                ", " << four_momentum->get_pz() <<
-                ") MeV" << std::endl; // (E, px, py, pz) format.
-
-    std::cout << "Rest mass: " << rest_mass << " MeV" << std::endl;
-
-    // Charge reminder.
-    std::cout << "Charge reminder" << std::endl;
+    // Print charge info.
+    std::cout << "Charge: 0e" << std::endl;
 
     // Additional characteristics common to Photons.
+    std::cout << "Note: Photons are their own anti-particles." << std::endl;
     std::cout << "Additional Photon characteristics placeholder." << std::endl;
     
     std::cout << std::endl; // Line break.
@@ -84,9 +73,4 @@ bool Photon::interacts_with_em_calorimeter() const
 bool Photon::interacts_with_muonchamber() const
 {
     return false; // Photons do not interact with muon chambers.
-}
-
-bool Photon::interacts_with_tracker() const
-{
-    return false; // Photons don't interact with trackers.
 }
