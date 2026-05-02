@@ -68,7 +68,7 @@ class Particle
     virtual bool interacts_with_hadron_calorimeter() const = 0;
     virtual bool interacts_with_em_calorimeter() const = 0;
     virtual bool interacts_with_muonchamber() const = 0;
-    virtual bool interacts_with_tracker() const = 0;
+    virtual bool interacts_with_tracker() const;
 
     // Friend functions.
     friend FourMomentum sum_four_momenta(const Particle& particle1, const Particle& particle2);

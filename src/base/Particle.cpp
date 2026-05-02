@@ -160,6 +160,20 @@ void Particle::print_info() const
     std::cout << "Is an anti-particle (true/false): " << std::boolalpha << is_anti << std::noboolalpha << std::endl; // Using boolalpha to print bool as true/false instead of 1/0.
 }
 
+// Interacts with SubDetectors.
+// Only Tracker is implemented here as the same for all Particles, others will be overridden in derived classes.
+bool Particle::interacts_with_tracker() const
+{
+    if (charge_mag == 0)
+    {
+        return false; // Neutral Particles don't interact with Trackers.
+    }
+    else
+    {
+        return true; // Charged Particles interact with Trackers.
+    }
+}
+
 // Friend functions.
 FourMomentum sum_four_momenta(const Particle& particle1, const Particle& particle2)
 {
