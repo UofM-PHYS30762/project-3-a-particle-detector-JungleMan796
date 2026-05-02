@@ -313,7 +313,13 @@ I believe the only differentiation for the \texttt{Meson} derived classes will b
 
 \textcolor{red}{Do need to consider that the \texttt{Meson} neutral particles may be more unstable and hence behave differently with detectors.}
 
-Introduction of the base data member \texttt{charge\_mag} mean that I need to adjust all other \texttt{Particle} derived classses.
+Introduction of the base data member \texttt{charge\_mag} mean that I need to adjust all other \texttt{Particle} derived classes.
+
+Tracker is now charge dependent and defined in \texttt{Particle} as it is the same logic for all. This reduces code repetition.
+
+Also may make \texttt{Charged\_Lepton} class as \texttt{Electron} and \texttt{Muon} share \texttt{charge\_mag} and how charge is printed.
+
+\textcolor{red}{Should I have a separate folder for intermediate base classes.}
 
 
 \subsection{Misc}
