@@ -135,7 +135,8 @@ This decision was first based on the fact that it allowed for simpler inheritanc
 This is simpler and clearer than defining a \texttt{vector} data member that is shared between derived classes.
 Such a \texttt{vector} would store the result of the interaction logic, but would not express the logic itself as clearly as a dedicated member function as shown in Code snippet \ref{lst:interacts_with_tracker}.
 The member function approach also improves adaptability, where the \texttt{vector} limits it. For example, if future development required \texttt{Muon} objects below a certain energy to not  interact with \texttt{MuonChamber} objects, this behaviour could be implemented naturally inside the relevant member function.
-
+This design choice also makes \texttt{SubDetector} structure more straightforward. Each \texttt{SubDetector} only needs to call a single \texttt{bool} member function, rather than iterating through a \texttt{vector} to check whether the \texttt{Particle} interacts with it.
+\textcolor{red}{Maybe mention possible negatives: that a vector format could be got from a data file or that it may be simpler to introduce a new SubDetector as you only need to write one more word in each particles vector. However one could argue this would take longer than mine as I have inheritance built in}
 
 
 Upon reaching the minimum functionality for the \texttt{SubDetector} and \texttt{DetectorSystem}, bar having multiple derived \texttt{
