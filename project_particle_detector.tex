@@ -173,8 +173,8 @@ Meson::Meson(double E, double px, double py, double pz, bool is_anti,
 \end{lstlisting}
 The \texttt{Meson} construction logic is shown in Code snippet \ref{lst:meson_construction}. The \texttt{is\_charged} parameter determines what \texttt{charge\_mag} and \texttt{rest\_mass} are initialised, so that charged and neutral mesons can be handled within the same class structure.
 These data members are carried forward to the \texttt{Meson::print\_info} member function, allowing the output to reflect whether the \texttt{Meson} is charged or neutral.
-
-
+For a charged \texttt{Meson} the anti-particle is arbitrarily set as the negative particle. This way the already present \texttt{is\_anti} data member can control what charge the charged \texttt{Meson} is.
+Polymorphism of \texttt{print\_info} is used in the derived classes to differentiate between if the neutral \texttt{Meson} objects are their own anti-particle or if they are distinct. For example, the neutral \texttt{Kaon} has distinct anti-particles whereas the neutral \texttt{Pion} is its own anti-particle.
 
 \texttt{Muon} was developed
 
