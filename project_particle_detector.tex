@@ -88,6 +88,7 @@ As we move through this section, the approach of how these were met is discussed
 \textcolor{red}{The requirement of setters and getters being virtual is though on with its necessity questioned.}
 
 \subsubsection{Particles}
+\label{sec:min_func_Particles}
 
 \begin{lstlisting}[
     style=vscode, 
@@ -202,7 +203,10 @@ Polymorphism of \texttt{print\_info} is used in the derived classes to different
 
 \end{lstlisting}
 
-The \texttt{SubDetector} hierarchy was first developed with the pure abstract base class and a single derived class, keeping the early structure simple so that the core interface could be tested before adding further complexity. 
+The \texttt{SubDetector} hierarchy was first developed with the pure abstract base class and a single derived class, keeping the early structure simple so that the core interface could be tested before adding further complexity.
+As can be seen in Figure \ref{fig:SubDetector_UML} the base data members are \texttt{sd\_name} and \texttt{status}.
+\texttt{sd\_name} allows for \texttt{SubDetector} classes of the derived nature to be distinguished.
+\texttt{status} allows for a \texttt{Detector} to be on or off \textcolor{red}{and will be expanded upon in the advanced features section as it is not required for the minimum functionality.}
 
 
 \subsection{Detectors}
