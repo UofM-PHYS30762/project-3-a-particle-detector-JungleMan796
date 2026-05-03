@@ -214,6 +214,37 @@ If such a data member was introduced, the method used in \texttt{Particle} could
 To meet the minimum functionality requirement of passing \texttt{Particle} objects through \texttt{SubDetectors}, a virtual base member function \texttt{detect} was developed. This function passes the \texttt{Particle} object as an argument, and as virtual allows each derived \texttt{SubDetector} to define its own detection response.
 This design provides a common interface for all \texttt{SubDetector} objects while preserving derived class specific implementation. This common interface is utilised in \texttt{DetectorSystem} to pass a \texttt{Particle} through all contained \texttt{SubDetector} objects efficiently, as discussed in Section \ref{sec:min_func_DetctorSystems} later.
 
+\begin{lstlisting}[
+    style=vscode, 
+    caption={
+    Derived \texttt{MuonChamber} \texttt{detect} definition acts as an example for how the \texttt{Particle} object's \texttt{interacts\_with} function is utilised.},
+    label={lst:SubDetector_detect}
+]
+void MuonChamber::detect(const Particle& particle) const
+{
+    // Check status of SubDetector.
+    if (is_off())
+    {
+        return; // Exit function.
+    }
+
+    if (particle.interacts_with_muonchamber())
+    {
+        std::cout << "Muon Chamber (" << sd_name << ") measures the energy of the particle as: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
+        // Will differentiate these later.
+        std::cout << "The particle's true energy is: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
+        std::cout << std::endl; // Line break.
+    }
+    else
+    {
+        std::cout << "Particle does not interact with the muon chamber (" << sd_name << "), no energy measurement." << std::endl;
+        std::cout << std::endl; // Line break.
+    }
+}
+\end{lstlisting}
+
+As mentioned earlier in Section \ref{sec:min_func_Particles}, the \texttt{SubDetector::detect} function uses the \texttt{SubDetector} specific member function owned by the \texttt{Particle} passed, to determine if interaction can take place. Code snippet \ref{lst:SubDetector_detect} line 9, demonstrates the simplicity of this approach.
+
 \subsubsection{DetectorSystems}
 \label{sec:min_func_DetctorSystems}
 
