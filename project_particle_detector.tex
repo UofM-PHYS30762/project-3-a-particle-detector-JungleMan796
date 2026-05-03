@@ -244,7 +244,10 @@ void MuonChamber::detect(const Particle& particle) const
 \end{lstlisting}
 
 As mentioned earlier in Section \ref{sec:min_func_Particles}, the \texttt{SubDetector::detect} function uses the \texttt{SubDetector} specific member function owned by the \texttt{Particle} passed, to determine if interaction can take place. Code snippet \ref{lst:SubDetector_detect} line 9, demonstrates the simplicity of this approach.
-\textcolor{red}{Maybe mention the \texttt{is\_off} and how it is done for the intermediate base and its derived \texttt{Calorimeter}}
+\textcolor{red}{Maybe mention the \texttt{is\_off} and how it is done for the intermediate base and its derived \texttt{Calorimeter}.}
+
+One consideration is whether \texttt{detect} changes the \texttt{Particle} in question. If this is needed you can remove the \texttt{const}, for example in line 1 of Code snippet \ref{lst:SubDetector_detect}.
+\textcolor{red}{Maybe apply this for e.g \texttt{Calorimeter} and use friend fucntions.}
 
 \subsubsection{DetectorSystems}
 \label{sec:min_func_DetctorSystems}
