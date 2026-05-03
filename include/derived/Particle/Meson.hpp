@@ -26,7 +26,7 @@ class Meson : public Hadron
         bool is_charged, double neutral_rest_mass, double charged_rest_mass);
 
     // Destructor.
-    ~Meson();
+    virtual ~Meson() = 0;
 
     // Print function for characteristics common to Meson.
     void print_info() const override;
