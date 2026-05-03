@@ -148,11 +148,33 @@ The base member function \texttt{print\_info}, which should print the characteri
 Rather than removing it, I added a statement to the \texttt{Photon} classes' polymorphic \texttt{Photon::print\_info} regarding the fact that \texttt{Photon} objects are their own anti-particles. 
 The same was done for neutral the \texttt{Pion} \textcolor{red}{(and \texttt{Rho})}.
 
-Since hadronic particles share similar properties and behaviour, they were organised under the intermediate base class \texttt{Hadron}.
-A subsequent intermediate base class \texttt{Meson} was introduced, as they follow common charge dependent construction logic for the neutral and charged states. 
+Since hadronic particles share similar properties and behaviour, they were organised under the intermediate base class \texttt{Hadron}. All interaction member functions were defined here and hence inherited by the derived classes, reducing repeated implementation.
+A subsequent intermediate base class \texttt{Meson} was introduced, as they follow common charge dependent construction logic for the neutral and charged states.
 This inheritance reduced repetition across the derived \texttt{Meson} classes and makes the hierarchy clearer, as shown in Figure \ref{fig:Particle_UML}.
 The current choice not to group baryons under an additional intermediate base class like \texttt{Meson} was due to them not really sharing any behaviour that would make a move from \texttt{Hadron} valuable and worthwhile.
 \textcolor{red}{They are so varied, with the example of sigma particles ($\Sigma^+,\Sigma^0, \Sigma^-$) more similar to the \texttt{Meson} structure, \texttt{Proton} structured more like a reverse \texttt{Electron} and Xi particles ($\Xi^0, \Xi^-$) following neither.}
+\begin{lstlisting}[
+    style=vscode, 
+    caption={
+    \texttt{Meson} parameterised constructor. Arguments \texttt{neutral\_rest\_mass} and \texttt{charged\_rest\_mass} are fixed by the derived \texttt{Particle}, \texttt{is\_charged} is chosen by the user and determines what type of \texttt{Meson} is constructed.},
+    label={lst:meson_construction}
+]
+Meson::Meson(double E, double px, double py, double pz, bool is_anti,
+    bool is_charged, double neutral_rest_mass, double charged_rest_mass)
+    // Calling the intermediatebase class parameterised constructor.
+    : Hadron(E, px, py, pz, is_charged ? charged_rest_mass : neutral_rest_mass, is_anti, is_charged ? 1 : 0),
+    is_charged(is_charged)
+{
+    if (Debug::show_messages)
+    {
+        std::cout << "Calling Meson Parameterised Constructor." << std::endl;
+    }
+}
+\end{lstlisting}
+The \texttt{Meson} construction logic is shown in Code snippet \ref{lst:meson_construction}. The \texttt{is\_charged} parameter determines what \texttt{charge\_mag} and \texttt{rest\_mass} are initialised, so that charged and neutral mesons can be handled within the same class structure.
+These data members are carried forward to the \texttt{Meson::print\_info} member function, allowing the output to reflect whether the \texttt{Meson} is charged or neutral.
+
+
 
 \texttt{Muon} was developed
 
