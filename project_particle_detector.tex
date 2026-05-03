@@ -255,6 +255,8 @@ One consideration is whether \texttt{detect} changes the \texttt{Particle} in qu
 \texttt{DetectorSystem} is a generic detector class that stores \texttt{SubDetector} objects, meeting the final minimum functionality item. The first data member is \texttt{string sys\_name} which allows for \texttt{DetectorSystem} objects to be differentiated. For example, if the user wanted to know whether it was the \textcolor{red}{CMS or ATLAS} \texttt{DetectorSystem} that returned those measurements.
 The second data member, as declared in Code snippet \ref{lst:container_pointer}, is a \texttt{vector} of unique pointers owning \texttt{SubDetector} objects.
 This is what gives \texttt{DetectorSystem} its utility of being a container class.
+I chose to use \texttt{std::unique\_ptr} rather than \texttt{std::shared\_ptr} to store the \texttt{SubDetector} objects, as it seemed unrealistic for the same detector component to be part of multiple major \texttt{DetectorSystem} objects.
+Exclusive ownership also makes destroying \texttt{SubDetector} classes much easier, using shared ownership would therefore introduce unnecessary complexity without providing that much benefit.
 \begin{lstlisting}[
     style=vscode, 
     caption={Data member for \texttt{DetectorSystem} to manage the ownership of multiple \texttt{SubDetector} classes.},
