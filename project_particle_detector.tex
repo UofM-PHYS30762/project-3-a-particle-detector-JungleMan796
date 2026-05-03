@@ -138,9 +138,13 @@ The member function approach also improves adaptability, where the \texttt{vecto
 This design choice also makes \texttt{SubDetector} structure more straightforward. Each \texttt{SubDetector} only needs to call a single \texttt{bool} member function, rather than iterating through a \texttt{vector} to check whether the \texttt{Particle} interacts with it.
 \textcolor{red}{Maybe mention possible negatives: that a vector format could be got from a data file or that it may be simpler to introduce a new SubDetector as you only need to write one more word in each particles vector. However one could argue this would take longer than mine as I have inheritance built in}
 
+Upon reaching the minimum functionality for the \texttt{SubDetector} and \texttt{DetectorSystem} the class structures for \texttt{Muon}, \texttt{Photon} and \texttt{Hadron} were created.
 
-Upon reaching the minimum functionality for the \texttt{SubDetector} and \texttt{DetectorSystem}, bar having multiple derived \texttt{
-SubDetector} classes, the class structures for \texttt{Muon}, \texttt{Photon} and \texttt{Hadron} were created.
+It became clear in \texttt{Photon} that the inherited data members \texttt{rest\_mass} and \texttt{is\_anti} were a bit redundant as it has no mass and is its own anti particle.
+However, they are not damaging and a necessity for the majority of the \texttt{Particle} classes. Therefore it was worthwhile and safe to keep them as base data members.
+The base member function \texttt{print\_info}, which should print the characteristics common to all \texttt{Particle} objects did seem to be omitting information.
+Rather than removing it, I added a statement to the \texttt{Photon} classes' polymorphic \texttt{Photon::print\_info} regarding the fact that \texttt{Photon} objects are their own anti-particles. 
+The same was done for neutral the \texttt{Pion} \textcolor{red}{(and \texttt{Rho}}.
 
 \texttt{Muon} was developed 
 
