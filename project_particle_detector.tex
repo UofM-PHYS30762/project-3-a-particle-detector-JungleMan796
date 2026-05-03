@@ -96,7 +96,7 @@ The discussion is therefore split into the prior design decisions that formed th
 \textcolor{red}{Skip the prior for now.}
 \textcolor{red}{Mention abstract base class, four momentum and setters/getters}
 
-The responsibilities previously held by Assignment 5's \texttt{Lepton} class were moved to this project's \texttt{Particle} base class, now extend to not just Leptons.
+The responsibilities previously held by Assignment 5's \texttt{Lepton} class were moved to this project's \texttt{Particle} base class, now extended to not just leptons.
 To begin with, a simple \texttt{Electron} class was directly derived from \texttt{Particle}, without retaining the intermediate \texttt{ChargedLepton} layer used in Assignment 5. This simplified structure was chosen to test the initial interaction between the \texttt{Particle} and \texttt{SubDetector} classes before introducing a more complex class hierarchy.
 
 The information regarding which \texttt{SubDetector} classes a derived \texttt{Particle} interacts with is stored in the \texttt{Particle} hierarchy rather than the \texttt{SubDetector} hierarchy.
@@ -105,7 +105,8 @@ First, many interaction properties are shared by similar particles. Storing this
 For example, \textcolor{red}{as shown in Code snippet \ref{lst:interacts_with_tracker}}, the data member \texttt{charge\_mag} determines whether a \texttt{Particle} interacts with a \texttt{Tracker}.
 Since this logic/behaviour is the same for all particles it can be defined once in the base class rather than repeatedly implemented in each derived class.
 This design also supports future extension. If a new derived \texttt{Particle} is added, its interaction behaviour may already be defined and if not just needs introducing in that derived class implementation.
-In contrast, if the information was stored in the \texttt{SubDetector} hierarchy, each derived class would have to be updated whenever a new \texttt{Particle} was introduced.
+\textcolor{red}{An example of where a particle's behaviour is already defined is the case in which a new derived \texttt{Hadron} is created.}
+In contrast, if the information was stored in the \texttt{SubDetector} hierarchy, each \texttt{SubDetector} derived class would have to be updated whenever a new \texttt{Particle} was introduced.
 Note, it is also important to distinguish between whether a \texttt{Particle} can interact with a \texttt{SubDetector} and whether it is actually detected. The \texttt{interacts\_with} member functions define whether detection is physically possible for a given \texttt{Particle}.
 \texttt{SubDetector} specific conditions, such as whether a \texttt{SubDetector} is switched on through its \texttt{status} data member, are still handled by the \texttt{SubDetector} classes.
 This keeps the particle interaction logic separate from the detector measurement logic, improving both flexibility and clarity.
@@ -129,7 +130,12 @@ bool Particle::interacts_with_tracker() const
     }
 }
 \end{lstlisting}
-The choice to use virtual member functions, except in the case of \texttt{interacts\_with\_tracker} due to all \texttt{Particle} classes sharing the same logic, ...... rather than vector list.
+\texttt{Particle} member functions, with the name beginning with \texttt{interacts\_with}, were chosen to handle \texttt{Particle}/\texttt{SubDetector} interaction instead of another idea, a \texttt{vector} data member that stores a list of \texttt{string} or \texttt{enum} data types.
+This decision was first based on the fact that it allowed for simpler inheritance. Take for example the case of the \texttt{Hadron} class, like all \texttt{Particle} classes it inherited its \texttt{Tracker} behaviour from Code snippet \ref{lst:interacts_with_tracker} and for the other behaviour, it was shared and hence was defined in \texttt{Hadron} and inherited by the derived and intermediate base classes below it.
+This is simpler and clearer than defining a \texttt{vector} data member that is shared between derived classes.
+Such a \texttt{vector} would store the result of the interaction logic, but would not express the logic itself as clearly as a dedicated member function as shown in Code snippet \ref{lst:interacts_with_tracker}.
+The member function approach also improves adaptability, where the \texttt{vector} limits it. For example, if future development required \texttt{Muon} objects below a certain energy to not  interact with \texttt{MuonChamber} objects, this behaviour could be implemented naturally inside the relevant member function.
+
 
 
 Upon reaching the minimum functionality for the \texttt{SubDetector} and \texttt{DetectorSystem}, bar having multiple derived \texttt{
