@@ -207,6 +207,8 @@ The \texttt{SubDetector} hierarchy was first developed with the pure abstract ba
 As can be seen in Figure \ref{fig:SubDetector_UML} the base data members are \texttt{sd\_name} and \texttt{status}.
 \texttt{sd\_name} allows for \texttt{SubDetector} classes of the derived nature to be distinguished.
 \texttt{status} allows for a \texttt{Detector} to be on or off \textcolor{red}{and will be expanded upon in the advanced features section as it is not required for the minimum functionality.}
+Unlike \texttt{Particle}, \texttt{SubDetector} does not possess any dynamically stored data members. As seen in Figure \ref{fig:SubDetector_UML}, its data members are simple value types, so the default compiler copy/move constructors and assignment operators provide the correct behaviour. Therefore no custom copy/move semantics are implemented.
+If such a data member was introduced, the method used in \texttt{Particle} could be adapted for \texttt{SubDetector}.
 
 
 \subsection{Detectors}
