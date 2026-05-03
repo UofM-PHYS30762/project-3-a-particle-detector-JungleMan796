@@ -148,6 +148,9 @@ The base member function \texttt{print\_info}, which should print the characteri
 Rather than removing it, I added a statement to the \texttt{Photon} classes' polymorphic \texttt{Photon::print\_info} regarding the fact that \texttt{Photon} objects are their own anti-particles. 
 The same was done for neutral the \texttt{Pion} \textcolor{red}{(and \texttt{Rho})}.
 
+Since hadronic particles share similar properties and behaviour, they were organised under the intermediate base class \texttt{Hadron}.
+A subsequent intermediate base class \texttt{Meson} was introduced, as they follow common charge dependent construction logic for the neutral and charged states. This inheritance reduced repetition across the derived \texttt{Meson} classes and makes the hierarchy clearer, as shown in Figure \ref{fig:Particle_UML}.
+
 \texttt{Muon} was developed
 
 \begin{lstlisting}[
