@@ -192,6 +192,7 @@ Polymorphism of \texttt{print\_info} is used in the derived classes to different
 \textcolor{red}{I likely will make a \texttt{ChargedLepton} so talk on this. For now lets move on.}
 
 \subsubsection{SubDetectors}
+\label{sec:min_func_SubDetectors}
 
 \begin{lstlisting}[
     style=vscode, 
@@ -210,6 +211,11 @@ As can be seen in Figure \ref{fig:SubDetector_UML} the base data members are \te
 Unlike \texttt{Particle}, \texttt{SubDetector} does not possess any dynamically stored data members. As seen in Figure \ref{fig:SubDetector_UML}, its data members are simple value types, so the default compiler copy/move constructors and assignment operators provide the correct behaviour. Therefore no custom copy/move semantics are implemented.
 If such a data member was introduced, the method used in \texttt{Particle} could be adapted for \texttt{SubDetector}.
 
+To meet the minimum functionality requirement of passing \texttt{Particle} objects through \texttt{SubDetectors}, a virtual base member function \texttt{detect} was developed. This function passes the \texttt{Particle} object as an argument, and as virtual allows each derived \texttt{SubDetector} to define its own detection response.
+This design provides a common interface for all \texttt{SubDetector} objects while preserving derived class specific implementation. This common interface is utilised in \texttt{DetectorSystem} to pass a \texttt{Particle} through all contained \texttt{SubDetector} objects efficiently, as discussed in Section \ref{sec:min_func_DetctorSystems} later.
+
+\subsubsection{DetectorSystems}
+\label{sec:min_func_DetctorSystems}
 
 \subsection{Detectors}
 
