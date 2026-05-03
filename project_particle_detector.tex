@@ -140,6 +140,8 @@ This design choice also makes \texttt{SubDetector} structure more straightforwar
 
 Upon reaching the minimum functionality for the \texttt{SubDetector} and \texttt{DetectorSystem} the class structures for \texttt{Muon}, \texttt{Photon} and \texttt{Hadron} were created.
 
+As shown in Figure \ref{fig:Particle_UML}, the \texttt{Photon} class was derived directly from \texttt{Particle}.
+This was because it has distinct physical properties and does not share sufficient common behaviour with the other particles required for minimum functionality to justify an intermediate base class.
 It became clear in \texttt{Photon} that the inherited data members \texttt{rest\_mass} and \texttt{is\_anti} were a bit redundant as it has no mass and is its own anti particle.
 However, they are not damaging and a necessity for the majority of the \texttt{Particle} classes. Therefore it was worthwhile and safe to keep them as base data members.
 The base member function \texttt{print\_info}, which should print the characteristics common to all \texttt{Particle} objects did seem to be omitting information.
