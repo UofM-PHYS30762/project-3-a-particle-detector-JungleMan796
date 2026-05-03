@@ -149,7 +149,10 @@ Rather than removing it, I added a statement to the \texttt{Photon} classes' pol
 The same was done for neutral the \texttt{Pion} \textcolor{red}{(and \texttt{Rho})}.
 
 Since hadronic particles share similar properties and behaviour, they were organised under the intermediate base class \texttt{Hadron}.
-A subsequent intermediate base class \texttt{Meson} was introduced, as they follow common charge dependent construction logic for the neutral and charged states. This inheritance reduced repetition across the derived \texttt{Meson} classes and makes the hierarchy clearer, as shown in Figure \ref{fig:Particle_UML}.
+A subsequent intermediate base class \texttt{Meson} was introduced, as they follow common charge dependent construction logic for the neutral and charged states. 
+This inheritance reduced repetition across the derived \texttt{Meson} classes and makes the hierarchy clearer, as shown in Figure \ref{fig:Particle_UML}.
+The current choice not to group baryons under an additional intermediate base class like \texttt{Meson} was due to them not really sharing any behaviour that would make a move from \texttt{Hadron} valuable and worthwhile.
+\textcolor{red}{They are so varied, with the example of sigma particles ($\Sigma^+,\Sigma^0, \Sigma^-$) more similar to the \texttt{Meson} structure, \texttt{Proton} structured more like a reverse \texttt{Electron} and Xi particles ($\Xi^0, \Xi^-$) following neither.}
 
 \texttt{Muon} was developed
 
