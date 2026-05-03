@@ -252,6 +252,18 @@ One consideration is whether \texttt{detect} changes the \texttt{Particle} in qu
 \subsubsection{DetectorSystems}
 \label{sec:min_func_DetctorSystems}
 
+\texttt{DetectorSystem} is a generic detector class that stores \texttt{SubDetector} objects, meeting the final minimum functionality item. The first data member is \texttt{string sys\_name} which allows for \texttt{DetectorSystem} objects to be differentiated. For example, if the user wanted to know whether it was the \textcolor{red}{CMS or ATLAS} \texttt{DetectorSystem} that returned those measurements.
+The second data member, as declared in Code snippet \ref{lst:container_pointer}, is a \texttt{vector} of unique pointers owning \texttt{SubDetector} objects.
+This is what gives \texttt{DetectorSystem} its utility of being a container class.
+\begin{lstlisting}[
+    style=vscode, 
+    caption={Data member for \texttt{DetectorSystem} to manage the ownership of multiple \texttt{SubDetector} classes.},
+    label={lst:container_pointer}
+    ]
+    private:
+    std::vector<std::unique_ptr<SubDetector>> sub_detectors;
+\end{lstlisting}
+
 \subsection{Detectors}
 
 
@@ -259,14 +271,6 @@ One consideration is whether \texttt{detect} changes the \texttt{Particle} in qu
 
 Now will create the class that can store multiple \texttt{SubDetector} classes to match the likes of \textcolor{red}{ATLAS or CMS} and print the overall configuration. This will be a container class.
 My plan is to use pointers and vectors to control ownership of the multiple \texttt{SubDetector} classe, via having the data member shown in Code snippet \ref{lst:container_pointer}.
-\begin{lstlisting}[
-    style=vscode, 
-    caption={Data member for \texttt{DetectorSystem} to manage the ownership of multiple \texttt{SubDetector} classes},
-    label={lst:container_pointer}
-    ]
-    private:
-    std::vector<std::unique_ptr<SubDetector>> sub_detectors;
-\end{lstlisting}
 
 Do I have a getter for the data member in Code snippet \ref{lst:container_pointer}? I think not but have a function that prints the configuration.
 
