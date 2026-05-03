@@ -212,7 +212,7 @@ Unlike \texttt{Particle}, \texttt{SubDetector} does not possess any dynamically 
 If such a data member was introduced, the method used in \texttt{Particle} could be adapted for \texttt{SubDetector}.
 
 To meet the minimum functionality requirement of passing \texttt{Particle} objects through \texttt{SubDetectors}, a virtual base member function \texttt{detect} was developed. This function passes the \texttt{Particle} object as an argument, and as virtual allows each derived \texttt{SubDetector} to define its own detection response.
-This design provides a common interface for all \texttt{SubDetector} objects while preserving derived class specific implementation. This common interface is utilised in \texttt{DetectorSystem} to pass a \texttt{Particle} through all contained \texttt{SubDetector} objects efficiently, as discussed in Section \ref{sec:min_func_DetctorSystems} later.
+This design provides a common interface for all \texttt{SubDetector} objects while preserving derived class specific implementation. This common interface is utilised in \texttt{DetectorSystem} to pass a \texttt{Particle} through all contained \texttt{SubDetector} objects efficiently, as discussed in Section \ref{sec:min_func_DetctorSystems} later. \textcolor{red}{And config.}
 
 \begin{lstlisting}[
     style=vscode, 
@@ -255,12 +255,6 @@ One consideration is whether \texttt{detect} changes the \texttt{Particle} in qu
 \texttt{DetectorSystem} is a generic detector class that stores \texttt{SubDetector} objects, meeting the final minimum functionality item. The first data member is \texttt{string sys\_name} which allows for \texttt{DetectorSystem} objects to be differentiated. For example, if the user wanted to know whether it was the \textcolor{red}{CMS or ATLAS} \texttt{DetectorSystem} that returned the outputted measurements.
 The second data member, as declared in Code snippet \ref{lst:container_pointer}, is a \texttt{vector} of unique pointers owning \texttt{SubDetector} objects.
 This is what gives \texttt{DetectorSystem} its utility of being a container class.
-
-I chose to use \texttt{std::unique\_ptr} rather than \texttt{std::shared\_ptr} to store the \texttt{SubDetector} objects, as it seemed unrealistic for the same detector component to be part of multiple major \texttt{DetectorSystem} objects.
-Exclusive ownership also makes destroying \texttt{SubDetector} classes much easier, using shared ownership would therefore introduce unnecessary complexity without providing that much benefit.
-Copy constructors and assignment operators were deleted to prevent the copying of unique pointers.
-It is also non-physical that a whole \texttt{DetectorSystem} with its unique \texttt{SubDetector} objects would be copied exactly.
-The move constructors and assignment operators \textcolor{red}{(check that they work)} are \texttt{defualt} as the compiler provides the correct handling of \texttt{std::unique\_ptr}.
 \begin{lstlisting}[
     style=vscode, 
     caption={Data member for \texttt{DetectorSystem} to manage the ownership of multiple \texttt{SubDetector} classes.},
@@ -269,7 +263,39 @@ The move constructors and assignment operators \textcolor{red}{(check that they 
     private:
     std::vector<std::unique_ptr<SubDetector>> sub_detectors;
 \end{lstlisting}
+I chose to use \texttt{std::unique\_ptr} rather than \texttt{std::shared\_ptr} to store the \texttt{SubDetector} objects, as it seemed unrealistic for the same detector component to be part of multiple major \texttt{DetectorSystem} objects.
+Exclusive ownership also makes destroying \texttt{SubDetector} classes much easier, using shared ownership would therefore introduce unnecessary complexity without providing that much benefit.
+Copy constructors and assignment operators were deleted to prevent the copying of unique pointers.
+It is also non-physical that a whole \texttt{DetectorSystem} with its unique \texttt{SubDetector} objects would be copied exactly.
+The move constructors and assignment operators \textcolor{red}{(check that they work)} are \texttt{defualt} as the compiler provides the correct handling of \texttt{std::unique\_ptr}.
+\begin{lstlisting}[
+    style=vscode, 
+    caption={\texttt{DetectorSystem} member function interface to add \texttt{SubDetector} objects to the container.},
+    label={lst:add_sub_detector}
+    ]
+    void add_sub_detector(std::unique_ptr<SubDetector> sub_detector);
+\end{lstlisting}
+\texttt{SubDetector} objects can be added using the member function stated in Code snippet \ref{lst:add_sub_detector}, with the configuration printed via the member function \texttt{print\_configuration} using a \texttt{for} loop similar to the one seen in Code snippet \ref{lst:DetectorSystem_detect}.
+As mentioned earlier in Section \ref{sec:min_func_SubDetectors}, the fact that \texttt{SubDetector::detect} is virtual means that it can be called in the same way for all \texttt{SubDetector} objects, as seen in line 8.
+\begin{lstlisting}[
+    style=vscode, 
+    caption={\texttt{DetectorSystem} member function implementation to pass the \texttt{Particle} through the all the owned \texttt{SubDetector} objects.},
+    label={lst:DetectorSystem_detect}
+    ]
+    void DetectorSystem::detect(const Particle& particle) const
+{
+    std::cout << "--- Passing particle through DetectorSystem (" << sys_name << ") ---" << std::endl;
+    std::cout << std::endl; // Line break.
 
+    for (const auto& sub_detector : sub_detectors)
+    {
+        sub_detector->detect(particle);
+    }
+
+    std::cout << "-- Finished passing particle through DetectorSystem (" << sys_name << ") ---" << std::endl;
+    std::cout << std::endl; // Line break.
+}
+\end{lstlisting}
 
 \subsection{Detectors}
 
@@ -428,6 +454,20 @@ However there maybe for \texttt{Meson} as there structure of having neutral and 
 \textcolor{red}{Should I validate the SubDetector naming??}
 
 \textcolor{red}{I also note that I may want better error and exit logic.}
+
+Question to Caterina
+Hello,
+ 
+I hope you are well. 
+The word count of approximately 2500 seems much too small considering the size of my assignment 5 report.
+The assignment 5 report had 1700 words, most of which were in bullet point form which won't be continued for this report. 
+ 
+If important design choices from assignment 5 have to be mentioned in the final report (as would make sense) this will already bolster the word count. My assignment 5 report also assumed prior knowledge from assignment 4's readme on how we developed FourMomentum and implemented it in Particle. With design choices from both of these assignments mentioned, the word count may already be reached.
+Can our report inherit from previous reports and readmes like OOP ?
+ 
+On top of that this project includes many more decisions to mention. Please may you offer guidance on this, with feedback on our assignment 5 report being useful, as I may be writing in the wrong way.
+ 
+Thank you.
 
 \section{Results}
 
