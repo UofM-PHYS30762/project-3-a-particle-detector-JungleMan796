@@ -244,7 +244,7 @@ void MuonChamber::detect(const Particle& particle) const
 \end{lstlisting}
 
 As mentioned earlier in Section \ref{sec:min_func_Particles}, the \texttt{SubDetector::detect} function uses the \texttt{SubDetector} specific member function owned by the \texttt{Particle} passed, to determine if interaction can take place. Code snippet \ref{lst:SubDetector_detect} line 9, demonstrates the simplicity of this approach.
-\textcolor{red}{Maybe mention the \texttt{is\_off} and how it is done for the intermediate base and its derived \texttt{Calorimeter}.}
+\textcolor{red}{Maybe mention the \texttt{is\_off} and how it is done for the intermediate base and its derived \texttt{Calorimeter}. If space??}
 
 One consideration is whether \texttt{detect} changes the \texttt{Particle} in question. If this is needed you can remove the \texttt{const}, for example in line 1 of Code snippet \ref{lst:SubDetector_detect}.
 \textcolor{red}{Maybe apply this for e.g \texttt{Calorimeter} and use friend fucntions.}
@@ -253,130 +253,6 @@ One consideration is whether \texttt{detect} changes the \texttt{Particle} in qu
 \label{sec:min_func_DetctorSystems}
 
 \subsection{Detectors}
-
-\subsubsection{SubDetector}
-
-With the detectors, my initial plan is to have a pure abstract base class \texttt{SubDetector} from which \texttt{Tracker}, \texttt{Calorimeter} and \texttt{MuonChamber} etc can be derived.
-Then have a the generic overall detector \texttt{DetectorSystem} that stores the \texttt{SubDetector}s in a vector like.
-
-Should \texttt{SubDetector} change the Particle in anyway, what if the detection changes the energy due to a collision, something to consider.
-
-I don't believe any need for specific copy/move constructors/assignment operators as the data members are only \texttt{std::string} and \texttt{bool}.
-
-Considering how to control if a \texttt{SubDetector} detects a \texttt{Particle} passed through it.
-My two current ideas are using a \texttt{Particle} distinct data member that is a vector with strings, referring to which \texttt{SubDetectors} can detect this \texttt{Particle}. Then in the derived \texttt{SubDetector} member function \texttt{detect} it would use an if statement distinguishing if the \texttt{Particle} passed through can be detected.
-
-The other method I was considering was using a polymorphic virtual \texttt{Particle} member function, for example \texttt{interacts\_with\_calorimeter}, which will return a bool depending on if that derived \texttt{Particle} interacts with that detector.
-Then in the derived \texttt{SubDetector} member function \texttt{detect}, \texttt{particle.interacts\_with\_calorimeter} can be called which will just return true or false.
-
-I find this method cleaner as no loop through a vector of strings or enums is needed in the \texttt{detect}. It also allows for flexibility, in the sense perhaps \texttt{Electron} only interacts with \texttt{Calorimeter} when it has certain energies.
-
-Noted that \texttt{detect} for all \texttt{SubDetector} should first have their \texttt{status} checked as if it is off then nothing should be detected.
-As this is common to all \texttt{SubDetector} I initially thought to make it within the base \texttt{detect}. However, calling this function within the derived \texttt{detect} could not leave the derived function using \texttt{return} and stop the detection process. But I still did not like doing this for each derived class
-\begin{lstlisting}[
-    style=vscode, 
-    caption={Example of repetition for status check in derived SubDetectors},
-    label={lst:repetition_status}
-]
-if (!status)
-{
-    std::cout << "Calorimeter (" << sd_name << ") is off, no detection." << std::endl;
-    std::cout << std::endl; // Line break.
-    return; // Exit function.
-}
-\end{lstlisting}
-My solution was to make a base member function \texttt{is\_off}, as seen in Code snippet \ref{lst:repetition_status}, which prints the information required (the same for all \texttt{SubDetector}) and returns true if off and false if on.
-\begin{lstlisting}[
-    style=vscode, 
-    caption={Base function to check status, called in derived class detect.},
-    label={lst:is_off}
-    ]
-bool SubDetector::is_off() const
-{
-    if (!status)
-    {
-        std::cout << "SubDetector (" << sd_name << ") is off. No detection." << std::endl;
-        std::cout << std::endl; // Line break.
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-\end{lstlisting}
-This is then used in the derived \texttt{detect} function, being used to exit the function prior to detection. 
-
-
-Also detect should not necessarily keep \texttt{Particle} constant as the detection may change some of the kinematics something to note??
-
-Should I make \texttt{Tracker} dependent on charge. This goes to the discussion as to whether have charge as base data member.
-
-I am going to make a Hadronic and Electromagnetic Calorimeter class derived from Calorimeter as they interact with different particles as shown from the CMS detector. They will just use different member functions for \texttt{interacts\_with}.
-Actually I have decided not to have two different \texttt{detect} functions for the derived functions, as would have been like Code snippet  \ref{lst:two_calorimeter_detects}.
-\begin{lstlisting}[
-    style=vscode, 
-    caption={Previous data member function for \texttt{HadronCalorimeter}, which would have had code repetition.},
-    label={lst:two_calorimeter_detects}
-    ]
-    // Function for HadronCalorimeter detection of Particle class.
-void HadronCalorimeter::detect(const Particle& particle) const
-{
-    // Check status of SubDetector.
-    if (is_off())
-    {
-        return; // Exit function.
-    }
-
-    if (particle.interacts_with_hadron_calorimeter())
-    {
-        std::cout << "Calorimeter (" << sd_name << ") measures the energy of the particle as: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
-        // Will differentiate these later.
-        std::cout << "The particle's true energy is: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
-        std::cout << std::endl; // Line break.
-    }
-    else
-    {
-        std::cout << "Particle does not interact with the calorimeter (" << sd_name << "), no energy measurement." << std::endl;
-        std::cout << std::endl; // Line break.
-    }
-}
-\end{lstlisting}
-
-% Instead have it central to the base intermediate \texttt{Calorimeter}, as shown in Code snippet \ref{lst:efficient_calor_detect} , by introducing a virtual member function \texttt{particle\_interacts} which is overridden in the derived classes. It acts as a switch between the two \texttt{interacts\_with} functions. It also means only one line is changed in \texttt{Calorimeter::detect} to allow for the derived detection.
-\begin{lstlisting}[
-    style=vscode, 
-    caption={\texttt{Calorimeter::detect} function that means it does not need to be overridden in each derived class, which would cause code repetition. This is facilitate via the more simple \texttt{particle\_interacts} virtual function which is overidden in the derived classes.},
-    label={lst:efficient_calor_detect}
-    ]
-// Function for HadronCalorimeter detection of Particle class.
-void HadronCalorimeter::detect(const Particle& particle) const
-{
-    // Check status of SubDetector.
-    if (is_off())
-    {
-        return; // Exit function.
-    }
-
-    if (particle.interacts_with_hadron_calorimeter())
-    {
-        std::cout << "Calorimeter (" << sd_name << ") measures the energy of the particle as: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
-        // Will differentiate these later.
-        std::cout << "The particle's true energy is: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
-        std::cout << std::endl; // Line break.
-    }
-    else
-    {
-        std::cout << "Particle does not interact with the calorimeter (" << sd_name << "), no energy measurement." << std::endl;
-        std::cout << std::endl; // Line break.
-    }
-}
-\end{lstlisting}
-
-
-
-Also considering that perhaps a vector of what a particle interacts with is better. As if this possessed a lot of information it could be got from a dataset. With mine it is built into a data member function, on the otherhand it is set in stone what \texttt{Particle} a \texttt{SubDetector} can detect.
-
 
 
 \subsubsection{DetectorSystem}
