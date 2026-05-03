@@ -69,7 +69,7 @@ First, the development of the \texttt{Particle} class hierarchy is discussed, fo
 \subsection{Minimum functionality}
 
 The minimum functionality of this project is paraphrased from the project slides below:
-\begin{itemize}
+\begin{enumerate}
     \item Pure abstract base classes for a sub-detector and particle.
     
     \item Derived classes for sub-detectors: trackers, calorimeters and muon chambers.
@@ -83,7 +83,7 @@ The minimum functionality of this project is paraphrased from the project slides
     \item A detector that returns the energy of the particle it detected.
 
     \item A generic detector class that stores sub-detectors.    
-\end{itemize}
+\end{enumerate}
 As we move through this section, the approach of how these were met is discussed.
 \textcolor{red}{The requirement of setters and getters being virtual is though on with its necessity questioned.}
 
@@ -104,7 +104,9 @@ The discussion is therefore split into the prior design decisions that formed th
 \textcolor{red}{Should I put the repo link?}
 
 \textcolor{red}{Skip the prior for now.}
-\textcolor{red}{Mention abstract base class, four momentum and setters/getters}
+\textcolor{red}{Mention abstract base class, four momentum and setters/getters. Mention how this meets min-func items 1, 4, 5.}
+
+\textcolor{red}{Also need to mention my setters and getters were not virtual.}
 
 The responsibilities previously held by Assignment 5's \texttt{Lepton} class were moved to this project's \texttt{Particle} base class, now extended to not just leptons.
 To begin with, a simple \texttt{Electron} class was directly derived from \texttt{Particle}, without retaining the intermediate \texttt{ChargedLepton} layer used in Assignment 5. This simplified structure was chosen to test the initial interaction between the \texttt{Particle} and \texttt{SubDetector} classes before introducing a more complex class hierarchy.
@@ -148,7 +150,7 @@ The member function approach also improves adaptability, where the \texttt{vecto
 This design choice also makes \texttt{SubDetector} structure more straightforward. Each \texttt{SubDetector} only needs to call a single \texttt{bool} member function, rather than iterating through a \texttt{vector} to check whether the \texttt{Particle} interacts with it.
 \textcolor{red}{Maybe mention possible negatives: that a vector format could be got from a data file or that it may be simpler to introduce a new SubDetector as you only need to write one more word in each particles vector. However one could argue this would take longer than mine as I have inheritance built in}
 
-Upon reaching the minimum functionality for the \texttt{SubDetector} and \texttt{DetectorSystem} the class structures for \texttt{Muon}, \texttt{Photon} and \texttt{Hadron} were created.
+Upon reaching the minimum functionality for the \texttt{SubDetector} and \texttt{DetectorSystem} the class structures for \texttt{Muon}, \texttt{Photon} and \texttt{Hadron} were created, meeting item 3 of the minimum functionality.
 
 As shown in Figure \ref{fig:Particle_UML}, the \texttt{Photon} class was derived directly from \texttt{Particle}.
 This was because it has distinct physical properties and does not share sufficient common behaviour with the other particles required for minimum functionality to justify an intermediate base class.
@@ -184,9 +186,24 @@ Meson::Meson(double E, double px, double py, double pz, bool is_anti,
 The \texttt{Meson} construction logic is shown in Code snippet \ref{lst:meson_construction}. The \texttt{is\_charged} parameter determines what \texttt{charge\_mag} and \texttt{rest\_mass} are initialised, so that charged and neutral mesons can be handled within the same class structure.
 These data members are carried forward to the \texttt{Meson::print\_info} member function, allowing the output to reflect whether the \texttt{Meson} is charged or neutral.
 For a charged \texttt{Meson} the anti-particle is arbitrarily set as the negative particle. This way the already present \texttt{is\_anti} data member can control what charge the charged \texttt{Meson} is.
-Polymorphism of \texttt{print\_info} is used in the derived classes to differentiate between if the neutral \texttt{Meson} objects are their own anti-particle or if they are distinct. For example, the neutral \texttt{Kaon} has distinct anti-particles whereas the neutral \texttt{Pion} is its own anti-particle.
+Polymorphism of \texttt{print\_info} is used in the derived classes to differentiate between if the neutral \texttt{Meson} objects are their own anti-particle or if they are distinct. For example, the neutral \texttt{Kaon} has distinct anti-particles whereas the neutral \texttt{Pion} is its own anti-particle. 
 
 \textcolor{red}{I likely will make a \texttt{ChargedLepton} so talk on this. For now lets move on.}
+
+\subsubsection{SubDetectors}
+
+\begin{lstlisting}[
+    style=vscode, 
+    caption={
+    Code snippet acting as placeholder for SubDetector UML diagram},
+    label={fig:SubDetector_UML}
+]
+
+
+\end{lstlisting}
+
+The \texttt{SubDetector} hierarchy was first developed with the pure abstract base class and a single derived class, keeping the early structure simple so that the core interface could be tested before adding further complexity. 
+
 
 \subsection{Detectors}
 
