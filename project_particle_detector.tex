@@ -89,6 +89,16 @@ As we move through this section, the approach of how these were met is discussed
 
 \subsubsection{Particles}
 
+\begin{lstlisting}[
+    style=vscode, 
+    caption={
+    Code snippet acting as placeholder for Particle UML diagram},
+    label={fig:Particle_UML}
+]
+
+
+\end{lstlisting}
+
 Much of the \texttt{Particle} architecture used in this project was initially developed in Assignments 4 and 5.
 The discussion is therefore split into the prior design decisions that formed the starting point for the project and the present development carried out for this project.
 \textcolor{red}{Should I put the repo link?}
@@ -176,17 +186,7 @@ These data members are carried forward to the \texttt{Meson::print\_info} member
 For a charged \texttt{Meson} the anti-particle is arbitrarily set as the negative particle. This way the already present \texttt{is\_anti} data member can control what charge the charged \texttt{Meson} is.
 Polymorphism of \texttt{print\_info} is used in the derived classes to differentiate between if the neutral \texttt{Meson} objects are their own anti-particle or if they are distinct. For example, the neutral \texttt{Kaon} has distinct anti-particles whereas the neutral \texttt{Pion} is its own anti-particle.
 
-\texttt{Muon} was developed
-
-\begin{lstlisting}[
-    style=vscode, 
-    caption={
-    Code snippet acting as placeholder for Particle UML diagram},
-    label={fig:Particle_UML}
-]
-
-
-\end{lstlisting}
+\textcolor{red}{I likely will make a \texttt{ChargedLepton} so talk on this. For now lets move on.}
 
 \subsection{Detectors}
 
