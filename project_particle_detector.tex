@@ -302,28 +302,54 @@ As mentioned earlier in Section \ref{sec:min_func_SubDetectors}, the fact that \
 
 \subsection{Advanced features}
 
-\subsubsection{Particles}
-\label{ad_feat_particles}
+The advanced features section includes code that implements higher level C++ techniques or goes beyond the minimum functionality.
 
-The \texttt{namespace} \texttt{Debug}, as shown in Code snippet  advanced C++
+\subsubsection{Particles}
+\label{sec:ad_feat_particles}
+
+The advanced C++ feature \texttt{namespace}, was employed in \texttt{Particle} to globally control whether debug messages are printed or not, as shown in Code snippet \ref{lst:namespace_debug}. This was later adopted for the whole program.
+These messages are useful for debugging, however overwhelming for a general user, hence the utility to switch on or off is valuable.
+The choice to use a \texttt{namespace} instead of a simple global variable \texttt{show\_messages} can avoid name clashes between other variables similarly named.
+This organisational benefit is clearly demonstrated by the \texttt{DetectorSystem} specific messages, as shown in Code snippet \ref{lst:namespace_DSMessages_ex}.
+\textcolor{red}{Mention if I turn on validation exit or just messages?}
 
 \begin{lstlisting}[
     style=vscode, 
-    caption={},
+    caption={
+    \texttt{Debug} \texttt{namespace} to control globally whether debug messages, such as ``Calling Particle Destructor." are printed.
+    },
     label={lst:namespace_debug}
     ]
 namespace Debug
 {
     inline bool show_messages = false;
 }
+\end{lstlisting}
+
+\begin{lstlisting}[
+    style=vscode, 
+    caption={
+    Demonstration of \texttt{DetectorSystem} specific messages controlled by the \texttt{namespace} \texttt{DSMessages}. This snippet is taken from the \texttt{add\_sub\_detector} member function, whose interface is shwon in  Code snippet \ref{lst:add_sub_detector}. 
+    },
+    label={lst:namespace_DSMessages_ex}
+    ]
+if (DSMessages::show_messages)
+{
+    std::cout << "Added SubDetector (" << new_sub_detector->get_sd_name() << ") to DetectorSystem (" << sys_name << ")." << std::endl;
+    std::cout << std::endl;
 }
 \end{lstlisting}
 
 \subsubsection{SubDetectors}
-\label{ad_feat_subdetectors}
+\label{sec:ad_feat_subdetectors}
+
+The data member \texttt{status} goes beyond the minimum functionality, adding realism to the class. It makes physical sense to be able to switch a \texttt{SubDetector} on or off.
+\textcolor{red}{As will be seen in Section \ref{sec:ad_feat_detectorsystems}, a \texttt{SubDetector} contained within a \texttt{DetectorSystem} can have its \texttt{status} modified by the said \texttt{DetectorSystem} container.}
+
+\textcolor{red}{Maybe mention static detector ids and friend functions for the }
 
 \subsubsection{DetectorSystems}
-\label{ad_feat_detectorsystems}
+\label{sec:ad_feat_detectorsystems}
 
 \section{Results}
 
