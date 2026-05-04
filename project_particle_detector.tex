@@ -394,8 +394,39 @@ A lambda function returns \texttt{true} if the \texttt{SubDetector} name of that
 \texttt{std::find\_if} then returns the iterator associated with the matching \texttt{SubDetector} or \texttt{sub\_detectors.end()} if no match is found.  
 Its use here maintains clarity of the process because the search condition is defined directly where it is needed. Defining the same function elsewhere would achieve the same result but make this simple procedure less visible.
 The lambda function therefore acts as a beneficial, small local attachment to \texttt{std::find\_if}, as seen in in lines 7 to 10 in Code snippet \ref{lst:remove_sub_detector}.
+Note the member function \texttt{get\_sub\_detector}, mentioned below and in Code snippet \ref{lst:set_sub_detector_status}, uses the same \texttt{std::find\_if} and lambda function logic.
 
-A wrapper member function \textcolor{red}{\texttt{set\_sub\_detector\_status} maybe delete as word count} as seen in Code snippet \ref{}, was created to modify the \texttt{status} of a \texttt{SubDetector} contained in a \texttt{DetectorSystem}.
+A wrapper member function \textcolor{red}{\texttt{set\_sub\_detector\_status} maybe delete as word count}, as seen in Code snippet \ref{lst:set_sub_detector_status}, was created to modify the \texttt{status} of a \texttt{SubDetector} contained in a \texttt{DetectorSystem}, increasing the functionality.
+
+\begin{lstlisting}[
+    style=vscode, 
+    caption={
+    \texttt{DetectorSystem} member function to set a contained \texttt{SubDetector} object's \texttt{status}. It employs another member function \texttt{get\_sub\_detector} to return a non-owning pointer of \texttt{SubDetector}.
+    },
+    label={lst:set_sub_detector_status}
+    ]
+void DetectorSystem::set_sub_detector_status(const std::string& sub_detector_name, bool new_status)
+{
+    SubDetector* sub_detector = get_sub_detector(sub_detector_name);
+
+    if (!sub_detector)
+    {
+        std::cerr << "Error: SubDetector (" << sub_detector_name << ") not found in DetectorSystem (" << sys_name << ")." << std::endl;    
+        std::cout << std::endl;
+        return;
+    }
+    
+    sub_detector->set_status(new_status);
+    if (DSMessages::show_messages)
+    {
+        std::cout << "Set SubDetector (" << sub_detector_name << ") status to -" << (new_status ? "on" : "off") 
+        << "- in DetectorSystem (" << sys_name << ")." << std::endl;
+        std::cout << std::endl;
+    }
+}
+\end{lstlisting}
+
+
 
 
 \section{Results}
