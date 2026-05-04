@@ -388,6 +388,12 @@ void DetectorSystem::remove_sub_detector(const std::string& rem_sub_detector_nam
     }
 }
 \end{lstlisting}
+Both member functions utilise a lambda function, an advanced C++ technique, when finding if the selected \texttt{SubDetector} is contained within the \texttt{DetectorSystem}.
+This is carried out using the \texttt{algorithm} \texttt{std::find\_if} function which searches through the containing data member \texttt{sub\_detectors}.
+A lambda function returns \texttt{true} if the \texttt{SubDetector} name of that iteration  matches the requested name.
+\texttt{std::find\_if} then returns the iterator associated with the matching \texttt{SubDetector} or \texttt{sub\_detectors.end()} if no match is found.  
+Its use here maintains clarity of the process because the search condition is defined directly where it is needed. Defining the same function elsewhere would achieve the same result but make this simple procedure less visible.
+The lambda function therefore acts as a beneficial, small local attachment to \texttt{std::find\_if}, as seen in in lines 7 to 10 in Code snippet \ref{lst:remove_sub_detector}.
 
 
 
