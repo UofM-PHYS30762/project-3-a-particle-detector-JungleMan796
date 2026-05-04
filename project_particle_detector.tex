@@ -116,7 +116,8 @@ The information regarding which \texttt{SubDetector} classes a derived \texttt{P
 This design choice was made for several considerations.
 First, many interaction properties are shared by similar particles. Storing this information in the \texttt{Particle} hierarchy allows for common behaviour to be encoded through inheritance, reducing code repetition.
 For example, \textcolor{red}{as shown in Code snippet \ref{lst:interacts_with_tracker}}, the data member \texttt{charge\_mag} determines whether a \texttt{Particle} interacts with a \texttt{Tracker}.
-Since this logic/behaviour is the same for all particles it can be defined once in the base class rather than repeatedly implemented in each derived class.
+Since this logic/behaviour is the same for all particles, it can be defined once in the base class rather than repeatedly implemented in each derived class.
+
 This design also supports future extension. If a new derived \texttt{Particle} is added, its interaction behaviour may already be defined and if not just needs introducing in that derived class implementation.
 \textcolor{red}{An example of where a particle's behaviour is already defined is the case in which a new derived \texttt{Hadron} is created.}
 In contrast, if the information was stored in the \texttt{SubDetector} hierarchy, each \texttt{SubDetector} derived class would have to be updated whenever a new \texttt{Particle} was introduced.
@@ -144,9 +145,10 @@ bool Particle::interacts_with_tracker() const
 }
 \end{lstlisting}
 \texttt{Particle} member functions, with the name beginning with \texttt{interacts\_with}, were chosen to handle \texttt{Particle}/\texttt{SubDetector} interaction instead of another idea, a \texttt{vector} data member that stores a list of \texttt{string} or \texttt{enum} data types.
-This decision was first based on the fact that it allowed for simpler inheritance. Take for example the case of the \texttt{Hadron} class, like all \texttt{Particle} classes it inherited its \texttt{Tracker} behaviour from Code snippet \ref{lst:interacts_with_tracker} and for the other behaviour, it was shared and hence was defined in \texttt{Hadron} and inherited by the derived and intermediate base classes below it.
+This decision was first based on the fact that it allowed for simpler inheritance. Take for example the case of the \texttt{Hadron} class, like all \texttt{Particle} classes it inherited its \texttt{Tracker} behaviour from Code snippet \ref{lst:interacts_with_tracker}, and as its other behaviours were shared they were defined in \texttt{Hadron} and inherited by the derived and intermediate base classes below it.
 This is simpler and clearer than defining a \texttt{vector} data member that is shared between derived classes.
 Such a \texttt{vector} would store the result of the interaction logic, but would not express the logic itself as clearly as a dedicated member function as shown in Code snippet \ref{lst:interacts_with_tracker}.
+
 The member function approach also improves adaptability, where the \texttt{vector} limits it. For example, if future development required \texttt{Muon} objects below a certain energy to not  interact with \texttt{MuonChamber} objects, this behaviour could be implemented naturally inside the relevant member function.
 This design choice also makes \texttt{SubDetector} structure more straightforward. Each \texttt{SubDetector} only needs to call a single \texttt{bool} member function, rather than iterating through a \texttt{vector} to check whether the \texttt{Particle} interacts with it.
 \textcolor{red}{Maybe mention possible negatives: that a vector format could be got from a data file or that it may be simpler to introduce a new SubDetector as you only need to write one more word in each particles vector. However one could argue this would take longer than mine as I have inheritance built in}
@@ -154,8 +156,8 @@ This design choice also makes \texttt{SubDetector} structure more straightforwar
 Upon reaching the minimum functionality for the \texttt{SubDetector} and \texttt{DetectorSystem} the class structures for \texttt{Muon}, \texttt{Photon} and \texttt{Hadron} were created, meeting item 3 of the minimum functionality.
 
 As shown in Figure \ref{fig:Particle_UML}, the \texttt{Photon} class was derived directly from \texttt{Particle}.
-This was because it has distinct physical properties and does not share sufficient common behaviour with the other particles required for minimum functionality to justify an intermediate base class.
-It became clear in \texttt{Photon} that the inherited data members \texttt{rest\_mass} and \texttt{is\_anti} were a bit redundant as it has no mass and is its own anti particle.
+This was because it has distinct physical properties and does not share sufficient common behaviour with the other particles required for minimum functionality, to justify an intermediate base class.
+It became clear in \texttt{Photon} that the inherited data members \texttt{rest\_mass} and \texttt{is\_anti} were a bit redundant as it has no mass and is its own anti-particle.
 However, they are not damaging and a necessity for the majority of the \texttt{Particle} classes. Therefore it was worthwhile and safe to keep them as base data members.
 The base member function \texttt{print\_info}, which should print the characteristics common to all \texttt{Particle} objects did seem to be omitting information.
 Rather than removing it, I added a statement to the \texttt{Photon} classes' polymorphic \texttt{Photon::print\_info} regarding the fact that \texttt{Photon} objects are their own anti-particles. 
@@ -211,13 +213,13 @@ As can be seen in Figure \ref{fig:SubDetector_UML} the base data members are \te
 Unlike \texttt{Particle}, \texttt{SubDetector} does not possess any dynamically stored data members. As seen in Figure \ref{fig:SubDetector_UML}, its data members are simple value types, so the default compiler copy/move constructors and assignment operators provide the correct behaviour. Therefore no custom copy/move semantics are implemented.
 If such a data member was introduced, the method used in \texttt{Particle} could be adapted for \texttt{SubDetector}.
 
-To meet the minimum functionality requirement of passing \texttt{Particle} objects through \texttt{SubDetectors}, a virtual base member function \texttt{detect} was developed. This function passes the \texttt{Particle} object as an argument, and as virtual allows each derived \texttt{SubDetector} to define its own detection response.
+To meet the minimum functionality requirement of passing \texttt{Particle} objects through \texttt{SubDetectors}, a virtual base member function \texttt{detect} was developed. This function passes the \texttt{Particle} object as an argument, and as virtual, allows each derived \texttt{SubDetector} to define its own detection response.
 This design provides a common interface for all \texttt{SubDetector} objects while preserving derived class specific implementation. This common interface is utilised in \texttt{DetectorSystem} to pass a \texttt{Particle} through all contained \texttt{SubDetector} objects efficiently, as discussed in Section \ref{sec:min_func_DetctorSystems} later. \textcolor{red}{And config.}
 
 \begin{lstlisting}[
     style=vscode, 
     caption={
-    Derived \texttt{MuonChamber} \texttt{detect} definition acts as an example for how the \texttt{Particle} object's \texttt{interacts\_with} function is utilised.},
+    Derived \texttt{MuonChamber::detect} definition acts as an example for how the \texttt{Particle} object's \texttt{interacts\_with} function is utilised.},
     label={lst:SubDetector_detect}
 ]
 void MuonChamber::detect(const Particle& particle) const
@@ -243,7 +245,7 @@ void MuonChamber::detect(const Particle& particle) const
 }
 \end{lstlisting}
 
-As mentioned earlier in Section \ref{sec:min_func_Particles}, the \texttt{SubDetector::detect} function uses the \texttt{SubDetector} specific member function owned by the \texttt{Particle} passed, to determine if interaction can take place. Code snippet \ref{lst:SubDetector_detect} line 9, demonstrates the simplicity of this approach.
+As mentioned earlier in Section \ref{sec:min_func_Particles}, the \texttt{SubDetector::detect} function uses the \texttt{SubDetector} specific member function owned by the \texttt{Particle} passed, to determine if interaction can take place. Code snippet \ref{lst:SubDetector_detect}, line 9, demonstrates the simplicity of this approach.
 \textcolor{red}{Maybe mention the \texttt{is\_off} and how it is done for the intermediate base and its derived \texttt{Calorimeter}. If space??}
 
 One consideration is whether \texttt{detect} changes the \texttt{Particle} in question. If this is needed you can remove the \texttt{const}, for example in line 1 of Code snippet \ref{lst:SubDetector_detect}.
@@ -275,7 +277,7 @@ The move constructors and assignment operators \textcolor{red}{(check that they 
     ]
     void add_sub_detector(std::unique_ptr<SubDetector> sub_detector);
 \end{lstlisting}
-\texttt{SubDetector} objects can be added using the member function stated in Code snippet \ref{lst:add_sub_detector}, with the configuration printed via the member function \texttt{print\_configuration} using a \texttt{for} loop similar to the one seen in Code snippet \ref{lst:DetectorSystem_detect}.
+\texttt{SubDetector} objects can be added using the member function stated in Code snippet \ref{lst:add_sub_detector}, with the configuration printed via the member function \texttt{print\_configuration}, which uses a \texttt{for} loop similar to the one seen in Code snippet \ref{lst:DetectorSystem_detect}.
 As mentioned earlier in Section \ref{sec:min_func_SubDetectors}, the fact that \texttt{SubDetector::detect} is virtual means that it can be called in the same way for all \texttt{SubDetector} objects, as seen in line 8.
 \begin{lstlisting}[
     style=vscode, 
@@ -297,6 +299,31 @@ As mentioned earlier in Section \ref{sec:min_func_SubDetectors}, the fact that \
 }
 \end{lstlisting}
 \textcolor{red}{Check the copy for the additional \texttt{DetectorSystem} features. Talk on namespace feature also.}
+
+\subsection{Advanced features}
+
+\subsubsection{Particles}
+\label{ad_feat_particles}
+
+The \texttt{namespace} \texttt{Debug}, as shown in Code snippet  advanced C++
+
+\begin{lstlisting}[
+    style=vscode, 
+    caption={},
+    label={lst:namespace_debug}
+    ]
+namespace Debug
+{
+    inline bool show_messages = false;
+}
+}
+\end{lstlisting}
+
+\subsubsection{SubDetectors}
+\label{ad_feat_subdetectors}
+
+\subsubsection{DetectorSystems}
+\label{ad_feat_detectorsystems}
 
 \section{Results}
 
