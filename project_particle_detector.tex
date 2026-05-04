@@ -351,6 +351,46 @@ The data member \texttt{status} goes beyond the minimum functionality, adding re
 \subsubsection{DetectorSystems}
 \label{sec:ad_feat_detectorsystems}
 
+Member functions for both removing and releasing \texttt{SubDetector} objects were added to the \texttt{DetectorSystem} container to add higher functionality. 
+The \texttt{remove\_sub\_detector} function deletes a \texttt{SubDetector}, as seen in Code snippet \ref{lst:remove_sub_detector}. This was physically motivated by the possibility of a detector component failing and needing to be removed or replaced.
+\texttt{release\_sub\_detector} transfers ownership from the container to an external \texttt{std::unique\_ptr}. This allows the user to extract the \texttt{SubDetector} from the container while preserving the object itself, for example if the component is useful alone or in another \texttt{DetectorSystem}. It is applied in much the same way as Code snippet \ref{lst:remove_sub_detector}.
+\begin{lstlisting}[
+    style=vscode, 
+    caption={
+    \texttt{DetectorSystem} member function to remove a \texttt{SubDetector} it owns. A lambda function is used in line 7.
+    },
+    label={lst:remove_sub_detector}
+    ]
+void DetectorSystem::remove_sub_detector(const std::string& rem_sub_detector_name)
+{
+    // Find which index the SubDetector is at in the vector, if it exists.
+    std::vector<std::unique_ptr<SubDetector>>::iterator it = std::find_if(
+        sub_detectors.begin(),
+        sub_detectors.end(),
+        [&rem_sub_detector_name](const std::unique_ptr<SubDetector>& sub_detector)
+        {
+            return sub_detector->get_sd_name() == rem_sub_detector_name;
+        }
+    );
+
+    if (it == sub_detectors.end())
+    {
+        std::cerr << "Error: SubDetector (" << rem_sub_detector_name << ") not found in DetectorSystem (" << sys_name << ")." << std::endl;
+        std::cout << std::endl;
+        return;
+    }
+
+    sub_detectors.erase(it);
+    if (DSMessages::show_messages)
+    {
+        std::cout << "Removed SubDetector (" << rem_sub_detector_name << ") from DetectorSystem (" << sys_name << ")." << std::endl;
+        std::cout << std::endl;
+    }
+}
+\end{lstlisting}
+
+
+
 \section{Results}
 
 \section{Discussion}
