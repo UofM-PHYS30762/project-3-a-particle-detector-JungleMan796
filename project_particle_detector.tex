@@ -395,6 +395,7 @@ A lambda function returns \texttt{true} if the \texttt{SubDetector} name of that
 Its use here maintains clarity of the process because the search condition is defined directly where it is needed. Defining the same function elsewhere would achieve the same result but make this simple procedure less visible.
 The lambda function therefore acts as a beneficial, small local attachment to \texttt{std::find\_if}, as seen in in lines 7 to 10 in Code snippet \ref{lst:remove_sub_detector}.
 
+A wrapper member function \textcolor{red}{\texttt{set\_sub\_detector\_status} maybe delete as word count} as seen in Code snippet \ref{}, was created to modify the \texttt{status} of a \texttt{SubDetector} contained in a \texttt{DetectorSystem}.
 
 
 \section{Results}
