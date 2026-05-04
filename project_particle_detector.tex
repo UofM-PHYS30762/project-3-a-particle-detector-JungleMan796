@@ -357,7 +357,7 @@ The \texttt{remove\_sub\_detector} function deletes a \texttt{SubDetector}, as s
 \begin{lstlisting}[
     style=vscode, 
     caption={
-    \texttt{DetectorSystem} member function to remove a \texttt{SubDetector} it owns. A lambda function is used in line 7.
+    \texttt{DetectorSystem} member function to remove a \texttt{SubDetector} it owns. A lambda function is used in lines 7 to 10.
     },
     label={lst:remove_sub_detector}
     ]
@@ -397,11 +397,11 @@ The lambda function therefore acts as a beneficial, small local attachment to \t
 Note the member function \texttt{get\_sub\_detector}, mentioned below and in Code snippet \ref{lst:set_sub_detector_status}, uses the same \texttt{std::find\_if} and lambda function logic.
 
 A wrapper member function \textcolor{red}{\texttt{set\_sub\_detector\_status} maybe delete as word count}, as seen in Code snippet \ref{lst:set_sub_detector_status}, was created to modify the \texttt{status} of a \texttt{SubDetector} contained in a \texttt{DetectorSystem}, increasing the functionality.
-
+It does so by using \texttt{get\_sub\_detector} to return a non owning pointer to a contained \texttt{SubDetector}, if the requested name exists.
 \begin{lstlisting}[
     style=vscode, 
     caption={
-    \texttt{DetectorSystem} member function to set a contained \texttt{SubDetector} object's \texttt{status}. It employs another member function \texttt{get\_sub\_detector} to return a non-owning pointer of \texttt{SubDetector}.
+    \texttt{DetectorSystem} member function to set a contained \texttt{SubDetector} object's \texttt{status}. It employs another member function \texttt{get\_sub\_detector} to return a non-owning pointer of \texttt{SubDetector}, as seen in line 3.
     },
     label={lst:set_sub_detector_status}
     ]
