@@ -398,6 +398,8 @@ Note the member function \texttt{get\_sub\_detector}, mentioned below and in Cod
 
 A wrapper member function \textcolor{red}{\texttt{set\_sub\_detector\_status} maybe delete as word count}, as seen in Code snippet \ref{lst:set_sub_detector_status}, was created to modify the \texttt{status} of a \texttt{SubDetector} contained in a \texttt{DetectorSystem}, increasing the functionality.
 It does so by using \texttt{get\_sub\_detector} to return a non owning pointer to a contained \texttt{SubDetector}, if the requested name exists.
+It is important that this pointer does not transfer ownership, so that the \texttt{DetectorSystem} object's \texttt{std::unique\_ptr} remains intact.
+The returned pointer is only used to access and modify the contained \texttt{SubDetector}.
 \begin{lstlisting}[
     style=vscode, 
     caption={
@@ -430,6 +432,17 @@ void DetectorSystem::set_sub_detector_status(const std::string& sub_detector_nam
 
 
 \section{Results}
+
+\subsection{Minimum functionality}
+
+First we see the creation of the arbitrary container \texttt{DetectorSystem} as the CMS detector.
+
+All sub-detector components (\texttt{SubDetector} classes) are added, after which the configuration is printed. 
+
+A \texttt{Muon} is created so that its pass through the \texttt{det\_sys\_CMS} can demonstrate the minimum functionality. Its information is also printed.
+
+
+\textcolor{red}{Should I have the Forward Calorimeter.}
 
 \section{Discussion}
 
