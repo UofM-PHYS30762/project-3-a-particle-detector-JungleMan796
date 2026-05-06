@@ -441,6 +441,23 @@ All sub-detector components (\texttt{SubDetector} classes) are added, after whic
 
 A \texttt{Muon} is created so that its pass through the \texttt{det\_sys\_CMS} can demonstrate the minimum functionality. Its information is also printed.
 
+The detection of the \texttt{Muon} is as expected, as shown in \ref{fig:min_func_detect_muon}.
+As the \texttt{Muon} is charged it is detected by the \texttt{Tracker}. It does not interact with any of the \texttt{Calorimeter} objects \textcolor{red}{(as its interaction with the \texttt{EMCalorimeter} is so small I didn't include it)}.
+It is detected by the \texttt{MuonChamber}, with both detections outputting the detected energy and its true energy, both the same as I did not progress this part of the project.
+\begin{lstlisting}[
+    style=vscode, 
+    caption={
+    Figure for detection min func placeholder.
+    },
+    label={fig:min_func_detect_muon}
+    ]
+
+\end{lstlisting}
+
+\subsection{Advanced features}
+
+Show wrapper change of status and how that effects the next detection.
+
 
 \textcolor{red}{Should I have the Forward Calorimeter.}
 
