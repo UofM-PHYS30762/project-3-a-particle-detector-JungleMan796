@@ -54,10 +54,25 @@ int main()
     Photon photon_1(30.0, 7.0, 9.0, 11.0, false);
     // photon_1.print_info();
 
+    Pion pion_1(15.0, 4.0, 5.0, 6.0, false, false);
+    Pion pion_2(15.0, 4.0, 5.0, 6.0, false, true);
+
+    Proton proton_1(100.0, 10.0, 20.0, 30.0, false);
+
+    Neutron neutron_1(100.0, 10.0, 20.0, 30.0, true);
+
     // Detection.
     // det_sys_CMS.detect(electron_1);
     // det_sys_CMS.detect(muon_1);
-    det_sys_CMS.detect(photon_1);
+    // det_sys_CMS.detect(photon_1);
+
+    // det_sys_CMS.detect(pion_1);
+    // det_sys_CMS.detect(pion_2);
+
+    // det_sys_CMS.detect(proton_1);
+
+    det_sys_CMS.detect(neutron_1);
+
 
     
     return 0;
