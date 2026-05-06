@@ -435,13 +435,17 @@ void DetectorSystem::set_sub_detector_status(const std::string& sub_detector_nam
 
 \subsection{Minimum functionality}
 
+\textcolor{red}{Should I have the Forward Calorimeter.}
+
+\textcolor{red}{Should I have an option to loop through many particle detections?}
+
 First we see the creation of the arbitrary container \texttt{DetectorSystem} as the CMS detector.
 
 All sub-detector components (\texttt{SubDetector} classes) are added, after which the configuration is printed. 
 
 A \texttt{Muon} is created so that its pass through the \texttt{det\_sys\_CMS} can demonstrate the minimum functionality. Its information is also printed.
 
-The detection of the \texttt{Muon} is as expected, as shown in \ref{fig:min_func_detect_muon}.
+The detection of the \texttt{Muon} is as expected, as shown in Figure \ref{fig:min_func_detect_muon}.
 As the \texttt{Muon} is charged it is detected by the \texttt{Tracker}. It does not interact with any of the \texttt{Calorimeter} objects \textcolor{red}{(as its interaction with the \texttt{EMCalorimeter} is so small I didn't include it)}.
 It is detected by the \texttt{MuonChamber}, with both detections outputting the detected energy and its true energy, both the same as I did not progress this part of the project.
 \begin{lstlisting}[
@@ -456,10 +460,31 @@ It is detected by the \texttt{MuonChamber}, with both detections outputting the 
 
 \subsection{Advanced features}
 
-Show wrapper change of status and how that effects the next detection.
+The effect of the wrapper member function can be seen in the output in Figure \ref{fig:ad_feat_wrapper_detect}. Due to the \texttt{MuonChamber} now being off, there is no detection via that \texttt{SubDetector}.
+\begin{lstlisting}[
+    style=vscode, 
+    caption={
+    Figure for effect of wrapper function turning off MuonChamber and seeing how that changes the Muon detection process, placeholder.
+    },
+    label={fig:ad_feat_wrapper_detect}
+    ]
 
+\end{lstlisting}
 
-\textcolor{red}{Should I have the Forward Calorimeter.}
+Then another \texttt{DetectorSystem} is used to illustrate the \texttt{remove} and \texttt{release} \textcolor{red}{(Should I name them all fully)} member functions.
+With the extracted \texttt{SubDetector} shown to work alone.
+
+The utility of \texttt{namespaces} are shown by turning  \texttt{Debug} on and seeing that the main.cpp is now bloated, as shown in Figure. However this can be very useful for debugging.
+Similar could be done for \texttt{DSMessages}.
+\begin{lstlisting}[
+    style=vscode, 
+    caption={
+    Figure for effect of turning on \texttt{Debug} \texttt{namespace}, placeholder.
+    },
+    label={fig:ad_feat_namespace_debug}
+    ]
+
+\end{lstlisting}
 
 \section{Discussion}
 
