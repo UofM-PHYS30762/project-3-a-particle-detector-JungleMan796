@@ -15,26 +15,17 @@
 class Muon : public Particle
 {
     private:
-    int muon_chamber_hits; // Number of hits from this Muon in the chamber.
+    // No distinct data members for Muon yet.
 
     public:
     // Defualt constructor.
     Muon();
 
     // Parameterised constructor.
-    Muon(double E, double px, double py, double pz, bool is_anti, int muon_chamber_hits);
+    Muon(double E, double px, double py, double pz, bool is_anti);
 
     // Destructor.
     ~Muon();
-
-    // Validation of muon chamber hits.
-    void validate_muon_chamber_hits(int muon_chamber_hits) const;
-
-    // Getters.
-    int get_muon_chamber_hits() const;
-
-    // Setters.
-    void set_muon_chamber_hits(int new_muon_chamber_hits);
 
     // Print function for characteristics common to Muons.
     void print_info() const override;

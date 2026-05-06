@@ -11,8 +11,7 @@
 #include <memory>
 
 // Defualt constructor.
-Muon::Muon() : Particle(0.0, 0.0, 0.0, 0.0, 105.66, false, 1), // Calling the base class paramerterised constuctor.
-    muon_chamber_hits(0.0)
+Muon::Muon() : Particle(0.0, 0.0, 0.0, 0.0, 105.66, false, 1) // Calling the base class paramerterised constuctor.
 {
     if (Debug::show_messages)
     {
@@ -21,12 +20,9 @@ Muon::Muon() : Particle(0.0, 0.0, 0.0, 0.0, 105.66, false, 1), // Calling the ba
 }
 
 // Parameterised Constructor.
-Muon::Muon(double E, double px, double py, double pz, bool is_anti, int muon_chamber_hits)
+Muon::Muon(double E, double px, double py, double pz, bool is_anti)
     : Particle(E, px, py, pz, 105.66, is_anti, 1) // Calling the base class parameterised constructor.
 {
-    validate_muon_chamber_hits(muon_chamber_hits);
-    this->muon_chamber_hits = muon_chamber_hits;
-
     if (Debug::show_messages)
     {
         std::cout << "Calling Muon Parameterised Constructor." << std::endl;
@@ -40,31 +36,6 @@ Muon::~Muon()
     {
         std::cout << "Calling Muon Destructor." << std::endl;
     }
-}
-
-// Validation of muon chamber hits.
-void Muon::validate_muon_chamber_hits(int muon_chamber_hits) const
-{
-    if (muon_chamber_hits < 0.0)
-    {
-        std::cerr << "Invalid Muon chamber hits: '" << muon_chamber_hits << std::endl;
-        std::cerr << "Please enter a non-negative number of muon chamber hits." << std::endl;
-        std::cerr << "Exiting program." << std::endl;
-        std::exit(1); // Exit.
-    }
-}
-
-// Getters.
-int Muon::get_muon_chamber_hits() const
-{
-    return muon_chamber_hits;
-}
-
-// Setters.
-void Muon::set_muon_chamber_hits(int new_muon_chamber_hits)
-{
-    validate_muon_chamber_hits(new_muon_chamber_hits);
-    muon_chamber_hits = new_muon_chamber_hits;
 }
 
 // Print function for characteristics common to all Muons.
@@ -81,7 +52,6 @@ void Muon::print_info() const
     std::cout << "Charge: " << (is_anti ? "+1" : "-1") << std::endl;
 
     // Additional characteristics common to Muons.
-    std::cout << "Number of muon chamber hits: " << muon_chamber_hits << std::endl;
     
     std::cout << std::endl; // Line break.
 }
