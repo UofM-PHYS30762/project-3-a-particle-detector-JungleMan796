@@ -26,5 +26,10 @@
 
 int main()
 {
+    // Demonstration of minimum functionality.
+
+    // Creation of arbitrary detector (DetectorSystem) with sub-detector (SubDetector) components.
+    DetectorSystem det_sys_CMS("CMS Detector System");
+
     return 0;
 }
