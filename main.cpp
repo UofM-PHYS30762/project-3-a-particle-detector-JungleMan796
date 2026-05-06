@@ -61,6 +61,34 @@ int main()
     std::cout << "Demonstrating how this alters the detection process." << std::endl;
     det_sys_CMS.set_sub_detector_status("Muon Chamber", false);
     det_sys_CMS.detect(muon_1); // Demonstration of how this changes the detection process.
+    det_sys_CMS.set_sub_detector_status("Muon Chamber", true); // Turning the MuonChamber back on.
+
+    // Demonstration of Calorimeters absorbing particles, returning the Particles with no 3-momenta and their rest_mass energy.
+    std::cout << "Demonstrating with Calorimeter interacting Particles that they are absorbed." << std::endl;
+    std::cout << std::endl; // Line break.
+
+    std::cout << "Demonstrating with a Positron (anti-Electron)." << std::endl;
+    Electron electron_1(10.0, 1.0, 2.0, 3.0, true);
+
+    electron_1.print_info();
+    det_sys_CMS.detect(electron_1);
+    electron_1.print_info();
+
+    // Demonstration of a Hadron - Neutral Pion.
+    std::cout << "Demonstrating with a Neutral Pion." << std::endl;
+    Pion pion_1(15.0, 4.0, 5.0, 6.0, false, false);
+
+    pion_1.print_info();
+    det_sys_CMS.detect(pion_1);
+    pion_1.print_info();
+
+    // Demonstration of a Photon.
+    std::cout << "Demonstrating with a Photon." << std::endl;
+    Photon photon_1(15.0, 4.0, 5.0, 6.0, false);
+
+    photon_1.print_info();
+    det_sys_CMS.detect(photon_1);
+    photon_1.print_info();
 
     std::cout << "Creating another DetectorSystem to demonstrate deletion and extraction of the contained SubDetectors." << std::endl;
     DetectorSystem det_sys_2("DetectorSystem 2"); // Creating Detector System to remove and release SubDetectors.
@@ -84,7 +112,7 @@ int main()
     Debug::show_messages = true; // Turn Debug messages on.
 
     // Created object to show constructor messages.
-    Electron electron_1(10.0, 1.0, 2.0, 3.0, false);
+    Neutron neutron_1(10.0, 1.0, 2.0, 3.0, false);
 
     Debug::show_messages = false; // Turn Debug messages off.
     std::cout << std::endl; // Line break.
