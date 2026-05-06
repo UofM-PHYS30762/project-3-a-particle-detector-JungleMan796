@@ -40,7 +40,16 @@ int main()
     det_sys_CMS.add_sub_detector(std::make_unique<Tracker>("Silicon Tracker", true));
     det_sys_CMS.add_sub_detector(std::make_unique<EMCalorimeter>("Crystal Electromagnetic Calorimeter", true));
     det_sys_CMS.add_sub_detector(std::make_unique<HadronCalorimeter>("Hadron Calorimeter", true));
-    det_sys_CMS.add_sub_detector(std::make_unique<MuonChamber>("Muon Chamber", false)); // MuonChamber is off for testing purposes.
+    det_sys_CMS.add_sub_detector(std::make_unique<MuonChamber>("Muon Chamber", true));
+    det_sys_CMS.print_configuration(); // Demonstration of printing entire configuration.
+
+    // Creation of Muon to pass through det_sys_CMS to demonstrate minimum functionality.
+    Muon muon_1(20.0, 2.0, 3.0, 4.0, false);
+    muon_1.print_info();
+
+    // det_sys_CMS.detect(muon_1); // Pass muon_1 throught the DetectorSystem.
+
+    
 
     return 0;
 }
