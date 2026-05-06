@@ -9,6 +9,9 @@
 #include <vector>
 
 // Header includes.
+#include "core/Debug.hpp"
+#include "core/DSMessages.hpp"
+
 #include "core/DetectorSystem.hpp"
 
 #include "derived/Particle/Electron.hpp"
@@ -53,7 +56,10 @@ int main()
     std::cout << "--- Demonstration of advanced features in main.cpp ---" << std::endl;
     std::cout << std::endl; // Line break.
 
-    det_sys_CMS.set_sub_detector_status("Muon Chamber", false); // Example of wrapper function to alter SubDetector status.
+    // Example of wrapper function to alter SubDetector status.
+    std::cout << "Using a wrapper function to alter the status of a contained SubDetector." << std::endl;
+    std::cout << "Demonstrating how this alters the detection process." << std::endl;
+    det_sys_CMS.set_sub_detector_status("Muon Chamber", false);
     det_sys_CMS.detect(muon_1); // Demonstration of how this changes the detection process.
 
     std::cout << "Creating another DetectorSystem to demonstrate deletion and extraction of the contained SubDetectors." << std::endl;
@@ -69,8 +75,20 @@ int main()
     det_sys_2.print_configuration(); // Uncomment if wish to see process clearer.
 
     std::unique_ptr<SubDetector> released_sub_detector = det_sys_2.release_sub_detector("Silicon Tracker 2");
-
+    std::cout << "Example of released SubDetector detecting alone." << std::endl;
     released_sub_detector->detect(muon_1); // Example of released SubDetector acting alone.
+
+    // Demonstration of Debug namespace, turned on and then off.
+    std::cout << "Example of Debug namespace turned on when an object is created." << std::endl;
+    std::cout << std::endl; // Line break.
+    Debug::show_messages = true; // Turn Debug messages on.
+
+    // Created object to show constructor messages.
+    Electron electron_1(10.0, 1.0, 2.0, 3.0, false);
+
+    Debug::show_messages = false; // Turn Debug messages off.
+    std::cout << std::endl; // Line break.
+    std::cout << "Debug namespace has now been turned off again." << std::endl;
 
     return 0;
 }
