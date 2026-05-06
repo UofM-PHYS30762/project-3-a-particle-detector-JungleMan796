@@ -70,6 +70,9 @@ class Particle
     virtual bool interacts_with_muonchamber() const = 0;
     virtual bool interacts_with_tracker() const;
 
+    // Calorimeter absorption.
+    void absorb();
+
     // Friend functions.
     friend FourMomentum sum_four_momenta(const Particle& particle1, const Particle& particle2);
     friend double dot_product(const Particle& particle1, const Particle& particle2);

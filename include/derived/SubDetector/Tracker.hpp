@@ -28,7 +28,7 @@ class Tracker : public SubDetector
     void print_info() const override;
 
     // Function for Tracker detection of Particle class.
-    void detect(const Particle& particle) const override;
+    void detect(Particle& particle) const override;
 };
 
 #endif

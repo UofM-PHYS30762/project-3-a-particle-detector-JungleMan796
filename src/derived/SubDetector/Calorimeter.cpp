@@ -55,7 +55,7 @@ void Calorimeter::print_info() const
 }
 
 // Function for Calorimeter detection of Particle class.
-void Calorimeter::detect(const Particle& particle) const
+void Calorimeter::detect(Particle& particle) const
 {
     // Check status of SubDetector.
     if (is_off())
@@ -68,6 +68,8 @@ void Calorimeter::detect(const Particle& particle) const
         std::cout << "Calorimeter (" << sd_name << ") measures the energy of the particle as: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
         // Will differentiate these later.
         std::cout << "The particle's true energy is: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
+        std::cout << "The particle is absorbed." << std::endl;
+        particle.absorb();
         std::cout << std::endl; // Line break.
     }
     else

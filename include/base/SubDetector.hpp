@@ -43,7 +43,7 @@ class SubDetector
     virtual void print_info() const = 0;
 
     // Pure abstract function for detection of Particle class.
-    virtual void detect(const Particle& particle) const = 0;
+    virtual void detect(Particle& particle) const = 0;
 
     // Base function to check if off or on, will be called in derived class detect function.
     bool is_off() const;

@@ -28,7 +28,7 @@ class MuonChamber : public SubDetector
     void print_info() const override;
 
     // Function for MuonChamber detection of Particle class.
-    void detect(const Particle& particle) const override;
+    void detect(Particle& particle) const override;
 };
 
 #endif

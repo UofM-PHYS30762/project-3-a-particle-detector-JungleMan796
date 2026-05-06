@@ -66,7 +66,7 @@ class DetectorSystem
     void print_configuration() const;
 
     // Pass a particle through the DetectorSystem, calling detect on each SubDetector.
-    void detect(const Particle& particle) const;
+    void detect(Particle& particle) const;
 };
 
 #endif

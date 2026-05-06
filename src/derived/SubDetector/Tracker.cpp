@@ -55,7 +55,7 @@ void Tracker::print_info() const
 }
 
 // Function for Tracker detection of Particle class.
-void Tracker::detect(const Particle& particle) const
+void Tracker::detect(Particle& particle) const
 {
     // Check status of SubDetector.
     if (is_off())

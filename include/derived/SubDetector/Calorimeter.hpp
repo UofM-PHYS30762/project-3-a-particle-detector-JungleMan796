@@ -33,7 +33,7 @@ class Calorimeter : public SubDetector
     void print_info() const override;
 
     // Function for Calorimeter detection of Particle class.
-    void detect(const Particle& particle) const override;
+    void detect(Particle& particle) const override;
 };
 
 #endif

@@ -174,6 +174,15 @@ bool Particle::interacts_with_tracker() const
     }
 }
 
+// Calorimeter absorption.
+void Particle::absorb()
+{
+    four_momentum->set_E(rest_mass);
+    four_momentum->set_px(0.0);
+    four_momentum->set_py(0.0);
+    four_momentum->set_pz(0.0);
+}
+
 // Friend functions.
 FourMomentum sum_four_momenta(const Particle& particle1, const Particle& particle2)
 {

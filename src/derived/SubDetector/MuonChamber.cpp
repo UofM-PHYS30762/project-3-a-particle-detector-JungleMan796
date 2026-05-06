@@ -55,7 +55,7 @@ void MuonChamber::print_info() const
 }
 
 // Function for MuonChamber detection of Particle class.
-void MuonChamber::detect(const Particle& particle) const
+void MuonChamber::detect(Particle& particle) const
 {
     // Check status of SubDetector.
     if (is_off())
