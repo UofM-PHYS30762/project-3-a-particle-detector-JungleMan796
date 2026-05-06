@@ -47,7 +47,7 @@ int main()
     Muon muon_1(20.0, 2.0, 3.0, 4.0, false);
     muon_1.print_info();
 
-    // det_sys_CMS.detect(muon_1); // Pass muon_1 throught the DetectorSystem.
+    det_sys_CMS.detect(muon_1); // Pass muon_1 throught the DetectorSystem.
 
     
 
