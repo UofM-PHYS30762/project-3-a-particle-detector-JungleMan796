@@ -15,26 +15,17 @@
 class Electron : public Particle
 {
     private:
-    double shower_depth; // Shower depth of the electron in a detector [cm].
+    // No Electron distinct data members yet.
 
     public:
     // Defualt constructor.
     Electron();
 
     // Parameterised constructor.
-    Electron(double E, double px, double py, double pz, bool is_anti, double shower_depth);
+    Electron(double E, double px, double py, double pz, bool is_anti);
 
     // Destructor.
     ~Electron();
-
-    // Validation of shower depth.
-    void validate_shower_depth(double shower_depth) const;
-
-    // Getters.
-    double get_shower_depth() const;
-
-    // Setters.
-    void set_shower_depth(double new_shower_depth);
 
     // Print function for characteristics common to Electrons.
     void print_info() const override;
