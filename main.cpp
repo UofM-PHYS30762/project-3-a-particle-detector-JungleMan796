@@ -49,7 +49,10 @@ int main()
 
     det_sys_CMS.detect(muon_1); // Pass muon_1 throught the DetectorSystem.
 
-    
+    // Demonstration of advanced features.
+
+    det_sys_CMS.set_sub_detector_status("Muon Chamber", false); // Example of wrapper function to alter SubDetector status.
+    det_sys_CMS.detect(muon_1); // Demonstration of how this changes the detection process.
 
     return 0;
 }
