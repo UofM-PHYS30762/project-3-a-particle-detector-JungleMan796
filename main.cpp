@@ -50,9 +50,27 @@ int main()
     det_sys_CMS.detect(muon_1); // Pass muon_1 throught the DetectorSystem.
 
     // Demonstration of advanced features.
+    std::cout << "--- Demonstration of advanced features in main.cpp ---" << std::endl;
+    std::cout << std::endl; // Line break.
 
     det_sys_CMS.set_sub_detector_status("Muon Chamber", false); // Example of wrapper function to alter SubDetector status.
     det_sys_CMS.detect(muon_1); // Demonstration of how this changes the detection process.
+
+    std::cout << "Creating another DetectorSystem to demonstrate deletion and extraction of the contained SubDetectors." << std::endl;
+    DetectorSystem det_sys_2("DetectorSystem 2"); // Creating Detector System to remove and release SubDetectors.
+    std::cout << std::endl; // Line break.
+
+    det_sys_2.add_sub_detector(std::make_unique<Tracker>("Silicon Tracker 2", true));
+    det_sys_2.add_sub_detector(std::make_unique<EMCalorimeter>("Crystal Electromagnetic Calorimeter 2", true));
+
+    det_sys_2.print_configuration(); // Comment if wish to reduce bloat.
+
+    det_sys_2.remove_sub_detector("Crystal Electromagnetic Calorimeter 2"); // Deleting this Calorimeter.
+    det_sys_2.print_configuration(); // Uncomment if wish to see process clearer.
+
+    std::unique_ptr<SubDetector> released_sub_detector = det_sys_2.release_sub_detector("Silicon Tracker 2");
+
+    released_sub_detector->detect(muon_1); // Example of released SubDetector acting alone.
 
     return 0;
 }
