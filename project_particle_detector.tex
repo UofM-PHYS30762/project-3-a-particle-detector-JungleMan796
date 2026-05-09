@@ -152,8 +152,29 @@ This is implemented using a \texttt{std::unique\_ptr}, enforcing exclusive owner
 \texttt{FourMomentum} \texttt{components} remain stored by a raw pointer from Assignment 4 \texttt{components}.
 The decision to implement dynamic memory meant that custom move/copy semantics were required.
 
-The responsibilities previously held by Assignment 5's \texttt{Lepton} class were moved to this project's \texttt{Particle} base class, now extended to not just leptons.
-To begin with, a simple \texttt{Electron} class was directly derived from \texttt{Particle}, without retaining the intermediate \texttt{ChargedLepton} layer used in Assignment 5. This simplified structure was chosen to test the initial interaction between the \texttt{Particle} and \texttt{SubDetector} classes before introducing a more complex class hierarchy.
+Interaction logic was chosen to be stored in the \texttt{Particle} hierarchy rather than the \texttt{SubDetector} hierarchy.
+This allowed for shared behaviour, such as charged particles interacting with the \texttt{Tracker} in Code snippet \ref{lst:interacts_with_tracker}, to be inherited by derived particles, reducing repetition and improving extensibility.
+New particles can reuse existing logic where appropriate, while any particle specific interactions can be distinctly implemented.
+This follows the open closed principle unlike if we chose to store in the \texttt{SubDetector} hierarchy, where every derived \texttt{SubDetector} would have to be updated if a new particle was created.
+Detector specific conditions, such as \texttt{status}, remain within the \texttt{SubDetector} classes, separating whether interaction is physically possible from whether detection actually occurs, increasing flexibility and clarity.
+\begin{lstlisting}[
+    style=vscode, 
+    caption={
+    \texttt{Particle} member function \texttt{interacts\_with\_tracker}. Only \texttt{interacts\_with} member function defined in \texttt{Particle} and not overridden in the derived classes.},
+    label={lst:interacts_with_tracker}
+]
+bool Particle::interacts_with_tracker() const
+{
+    if (charge_mag == 0)
+    {
+        return false; // Neutral Particles don't interact with Trackers.
+    }
+    else
+    {
+        return true; // Charged Particles interact with Trackers.
+    }
+}
+\end{lstlisting}
 
 The information regarding which \texttt{SubDetector} classes a derived \texttt{Particle} interacts with is stored in the \texttt{Particle} hierarchy rather than the \texttt{SubDetector} hierarchy.
 This design choice was made for several considerations.
