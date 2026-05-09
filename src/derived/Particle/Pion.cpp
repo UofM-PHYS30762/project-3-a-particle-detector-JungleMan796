@@ -53,9 +53,6 @@ void Pion::print_info() const
     {
         std::cout << "Note: Neutral Pions are their own anti-particles." << std::endl;
     }
-
-    // Additional characteristics common to Pions.
-    std::cout << "Additional Pion characteristics placeholder." << std::endl;
     
     std::cout << std::endl; // Line break.
 }

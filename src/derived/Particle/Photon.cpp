@@ -54,7 +54,6 @@ void Photon::print_info() const
 
     // Additional characteristics common to Photons.
     std::cout << "Note: Photons are their own anti-particles." << std::endl;
-    std::cout << "Additional Photon characteristics placeholder." << std::endl;
     
     std::cout << std::endl; // Line break.
 }

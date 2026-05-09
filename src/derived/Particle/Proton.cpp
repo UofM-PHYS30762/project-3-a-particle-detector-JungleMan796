@@ -51,9 +51,6 @@ void Proton::print_info() const
 
     // Test for charge info.
     std::cout << "Charge: " << (is_anti ? (-1 * charge_mag) : (+1 * charge_mag)) << "e" << std::endl;
-
-    // Additional characteristics common to Protons`.
-    std::cout << "Additional Proton characteristics placeholder." << std::endl;
     
     std::cout << std::endl; // Line break.
 }

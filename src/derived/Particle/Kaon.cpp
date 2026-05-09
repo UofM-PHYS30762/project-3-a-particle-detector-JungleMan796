@@ -53,9 +53,6 @@ void Kaon::print_info() const
     {
         std::cout << "Note: Neutral Kaons possess distinct anti-particles." << std::endl;
     }
-
-    // Additional characteristics common to Kaons.
-    std::cout << "Additional Kaons characteristics placeholder." << std::endl;
     
     std::cout << std::endl; // Line break.
 }

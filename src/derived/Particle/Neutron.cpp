@@ -51,9 +51,6 @@ void Neutron::print_info() const
 
     // Test for charge info.
     std::cout << "Charge: 0e" << std::endl;
-
-    // Additional characteristics common to Neutrons.
-    std::cout << "Additional Neutron characteristics placeholder." << std::endl;
     
     std::cout << std::endl; // Line break.
 }

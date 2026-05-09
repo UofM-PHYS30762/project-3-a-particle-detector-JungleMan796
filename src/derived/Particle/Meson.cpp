@@ -66,7 +66,4 @@ void Meson::print_info() const
     {
         std::cout << "Charge: 0e (Neutral Meson)" << std::endl;
     }
-
-    // Additional characteristics common to Mesons.
-    std::cout << "Additional Meson characteristics placeholder." << std::endl;
 }
