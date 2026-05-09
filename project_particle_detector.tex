@@ -189,6 +189,10 @@ The same was done for the neutral \texttt{Pion}.
 
 
 The charged leptons, \texttt{Electron} and \texttt{Muon}, were grouped under the intermediate base class \texttt{ChargedLepton} due to their shared properties and interaction behaviour, which can seen to be defined once in Figure \ref{fig:Particle_UML}.
+Similar is done for the hadronic particles, where the common interaction logic is implemented in \texttt{Hadron} and consequently inherited by the derived objects.
+A further intermediate base class, \texttt{Meson}, was introduced because all mesons follow a general construction logic depending on the distinct data member \texttt{is\_charged}.
+As shown in Code snippet \ref{lst:meson_construction} this parameter controls if a charged or neutral \texttt{Meson} is instantiated, setting the \texttt{charged\_mag} and \texttt{rest\_mass}, and consequently reducing unnecessary code repetition.
+
 
 Upon reaching the minimum functionality for the \texttt{SubDetector} and \texttt{DetectorSystem} the class structures for \texttt{Muon}, \texttt{Photon} and \texttt{Hadron} were created, meeting item 3 of the minimum functionality.
 
