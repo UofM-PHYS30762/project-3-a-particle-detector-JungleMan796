@@ -147,7 +147,13 @@ As mentioned previously, the key design considerations are discussed in two part
 \end{figure}
 
 
+Much of the \texttt{Particle} architecture used in this project was initially developed in Assignments 4 and 5. 
 
+Figure \ref{fig:Particle_UML} shows the \texttt{Particle} base class data members, which were chosen because they represent intrinsic properties shared by all particles.
+Figure \ref{fig:Particle_UML} also shows the composition relationship between \texttt{FourMomentum} and the \texttt{Particle} data member, meeting Table \ref{tab:min_func_summary} requirement 5.
+This is implemented using a \texttt{std::unique\_ptr}, to preserve ownership of \texttt{four\_momentum}.
+\texttt{FourMomentum} uses a raw pointer for its \texttt{components}, a design choice maintained from assignment 4, due to its already robust nature. 
+The decision to implement dynamic memory meant that custom move/copy semantics were required.
 
 
 The discussion is therefore split into the prior design decisions that formed the starting point for the project and the present development carried out for this project.
