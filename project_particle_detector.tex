@@ -176,38 +176,7 @@ bool Particle::interacts_with_tracker() const
 }
 \end{lstlisting}
 
-The information regarding which \texttt{SubDetector} classes a derived \texttt{Particle} interacts with is stored in the \texttt{Particle} hierarchy rather than the \texttt{SubDetector} hierarchy.
-This design choice was made for several considerations.
-First, many interaction properties are shared by similar particles. Storing this information in the \texttt{Particle} hierarchy allows for common behaviour to be encoded through inheritance, reducing code repetition.
-For example, \textcolor{red}{as shown in Code snippet \ref{lst:interacts_with_tracker}}, the data member \texttt{charge\_mag} determines whether a \texttt{Particle} interacts with a \texttt{Tracker}.
-Since this logic/behaviour is the same for all particles, it can be defined once in the base class rather than repeatedly implemented in each derived class.
 
-This design also supports future extension. If a new derived \texttt{Particle} is added, its interaction behaviour may already be defined and if not just needs introducing in that derived class implementation.
-\textcolor{red}{An example of where a particle's behaviour is already defined is the case in which a new derived \texttt{Hadron} is created.}
-In contrast, if the information was stored in the \texttt{SubDetector} hierarchy, each \texttt{SubDetector} derived class would have to be updated whenever a new \texttt{Particle} was introduced.
-Note, it is also important to distinguish between whether a \texttt{Particle} can interact with a \texttt{SubDetector} and whether it is actually detected. The \texttt{interacts\_with} member functions define whether detection is physically possible for a given \texttt{Particle}.
-\texttt{SubDetector} specific conditions, such as whether a \texttt{SubDetector} is switched on through its \texttt{status} data member, are still handled by the \texttt{SubDetector} classes.
-This keeps the particle interaction logic separate from the detector measurement logic, improving both flexibility and clarity.
-
-\textcolor{red}{Maybe too much and need to keep it lighter. But all true.}
-\begin{lstlisting}[
-    style=vscode, 
-    caption={
-    \texttt{Particle} member function \texttt{interacts\_with\_tracker}. Only \texttt{interacts\_with} member function defined in \texttt{Particle} and not overridden in the derived classes.},
-    label={lst:interacts_with_tracker}
-]
-bool Particle::interacts_with_tracker() const
-{
-    if (charge_mag == 0)
-    {
-        return false; // Neutral Particles don't interact with Trackers.
-    }
-    else
-    {
-        return true; // Charged Particles interact with Trackers.
-    }
-}
-\end{lstlisting}
 \texttt{Particle} member functions, with the name beginning with \texttt{interacts\_with}, were chosen to handle \texttt{Particle}/\texttt{SubDetector} interaction instead of another idea, a \texttt{vector} data member that stores a list of \texttt{string} or \texttt{enum} data types.
 This decision was first based on the fact that it allowed for simpler inheritance. Take for example the case of the \texttt{Hadron} class, like all \texttt{Particle} classes it inherited its \texttt{Tracker} behaviour from Code snippet \ref{lst:interacts_with_tracker}, and as its other behaviours were shared they were defined in \texttt{Hadron} and inherited by the derived and intermediate base classes below it.
 This is simpler and clearer than defining a \texttt{vector} data member that is shared between derived classes.
