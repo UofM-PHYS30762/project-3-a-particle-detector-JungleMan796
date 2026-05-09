@@ -478,17 +478,17 @@ The effect of the wrapper member function \textcolor{red}{Name it?} can be seen 
 Then another \texttt{DetectorSystem} is used to illustrate the \texttt{remove} and \texttt{release} \textcolor{red}{(Should I name them all fully)} member functions.
 With the extracted \texttt{SubDetector} shown to work alone.
 
-The utility of \texttt{namespaces} are shown by turning  \texttt{Debug} on and seeing that the main.cpp is now bloated, as shown in Figure. However this can be very useful for debugging.
-Similar could be done for \texttt{DSMessages}.
-\begin{lstlisting}[
-    style=vscode, 
-    caption={
-    Figure for effect of turning on \texttt{Debug} \texttt{namespace}, placeholder.
-    },
-    label={fig:ad_feat_namespace_debug}
-    ]
+The utility of \texttt{namespaces} are shown in Figure \ref{fig:ad_feat_namespace_debug}, by turning  \texttt{Debug::show\_messages} to \texttt{true} and creating an object. These messages are useful for debugging, however they substantially bloat the main and hence the ability to be turned off is essential for the general user.
+Similar can be done for \texttt{DSMessages}.
+\begin{figure}[H]
+      \centering
+      \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_figures/namespace_debug_on.png}
+      \caption[Short caption for list of figures]{
+      Screenshot of the terminal's output for when a \texttt{Neutron} is created while \texttt{Debug} messages are on. \textcolor{red}{Zoomed in compared to others. What else can I do?}
+      }
+      \label{fig:ad_feat_namespace_debug}
+\end{figure}
 
-\end{lstlisting}
 
 \section{Discussion}
 
