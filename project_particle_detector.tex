@@ -42,7 +42,7 @@
     showstringspaces=false
 }
 
-\title{Assignment 5 report}
+\title{Particle Detector report}
 \author{Callum Williamson}
 
 \begin{document}
@@ -219,7 +219,7 @@ This design provides a common interface for all \texttt{SubDetector} objects whi
 \begin{lstlisting}[
     style=vscode, 
     caption={
-    Derived \texttt{MuonChamber::detect} definition acts as an example for how the \texttt{Particle} object's \texttt{interacts\_with} function is utilised.},
+    Derived \texttt{MuonChamber::detect} definition acts as an example for how the \texttt{Particle} object's \texttt{interacts\_with} function is utilised. \textcolor{red}{Need to change for the const.}},
     label={lst:SubDetector_detect}
 ]
 void MuonChamber::detect(const Particle& particle) const
@@ -251,6 +251,8 @@ As mentioned earlier in Section \ref{sec:min_func_Particles}, the \texttt{SubDet
 One consideration is whether \texttt{detect} changes the \texttt{Particle} in question. If this is needed you can remove the \texttt{const}, for example in line 1 of Code snippet \ref{lst:SubDetector_detect}.
 \textcolor{red}{Maybe apply this for e.g \texttt{Calorimeter} and use friend fucntions.}
 
+\textcolor{red}{It now does will mention this in advanced functionality.}
+
 \subsubsection{DetectorSystems}
 \label{sec:min_func_DetctorSystems}
 
@@ -281,7 +283,7 @@ The move constructors and assignment operators \textcolor{red}{(check that they 
 As mentioned earlier in Section \ref{sec:min_func_SubDetectors}, the fact that \texttt{SubDetector::detect} is virtual means that it can be called in the same way for all \texttt{SubDetector} objects, as seen in line 8.
 \begin{lstlisting}[
     style=vscode, 
-    caption={\texttt{DetectorSystem} member function implementation to pass the \texttt{Particle} through the all the owned \texttt{SubDetector} objects.},
+    caption={\texttt{DetectorSystem} member function implementation to pass the \texttt{Particle} through the all the owned \texttt{SubDetector} objects. \textcolor{red}{Need to change for the const.}},
     label={lst:DetectorSystem_detect}
     ]
     void DetectorSystem::detect(const Particle& particle) const
@@ -329,7 +331,7 @@ namespace Debug
 \begin{lstlisting}[
     style=vscode, 
     caption={
-    Demonstration of \texttt{DetectorSystem} specific messages controlled by the \texttt{namespace} \texttt{DSMessages}. This snippet is taken from the \texttt{add\_sub\_detector} member function, whose interface is shwon in  Code snippet \ref{lst:add_sub_detector}. 
+    Demonstration of \texttt{DetectorSystem} specific messages controlled by the \texttt{namespace} \texttt{DSMessages}. This snippet is taken from the \texttt{add\_sub\_detector} member function, whose interface is shwon in  Code snippet \ref{lst:add_sub_detector}. \textcolor{red}{If deleting code snip 7 may have to do delete this or change it.} 
     },
     label={lst:namespace_DSMessages_ex}
     ]
@@ -347,6 +349,8 @@ The data member \texttt{status} goes beyond the minimum functionality, adding re
 \textcolor{red}{As will be seen in Section \ref{sec:ad_feat_detectorsystems}, a \texttt{SubDetector} contained within a \texttt{DetectorSystem} can have its \texttt{status} modified by the said \texttt{DetectorSystem} container.}
 
 \textcolor{red}{Maybe mention static detector ids and friend functions for the }
+
+\textcolor{red}{Mention the absorption and energy validation if you think its needed.}
 
 \subsubsection{DetectorSystems}
 \label{sec:ad_feat_detectorsystems}
