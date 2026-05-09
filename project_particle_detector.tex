@@ -464,22 +464,13 @@ It is detected by the \texttt{MuonChamber}, with both detections outputting the 
 \subsection{Advanced features}
 
 The effect of the wrapper member function \textcolor{red}{Name it?} can be seen by the output in Figure \ref{fig:ad_feat_wrapper_detect}. Due to the \texttt{MuonChamber} now being off, there is no detection via that \texttt{SubDetector}.
-\begin{lstlisting}[
-    style=vscode, 
-    caption={
-    Figure for effect of wrapper function turning off MuonChamber and seeing how that changes the Muon detection process, placeholder.
-    },
-    label={fig:ad_feat_wrapper_detect}
-    ]
-
-\end{lstlisting}
 \begin{figure}[H]
       \centering
-      \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_figures/det_sys_CMS_Muon.png}
+      \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_figures/det_sys_wrapper_set_muonchamber_off.png}
       \caption[Short caption for list of figures]{
-      Screenshot of the terminal's output for the \texttt{det\_sys\_CMS::detect} of the \texttt{Muon} object. 
+      Screenshot of the terminal's output for the \texttt{det\_sys\_CMS::detect} of the \texttt{Muon} object after the wrapper function \texttt{det\_sys\_CMS.set\_sub\_detector\_status("Muon Chamber", false)} has been applied. 
       }
-      \label{fig:min_func_detect_muon}
+      \label{fig:ad_feat_wrapper_detect}
 \end{figure}
 
 \textcolor{red}{Need to mention the absorption here and in the advanced features. Was going to be a friend etc.}
