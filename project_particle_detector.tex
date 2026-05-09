@@ -177,6 +177,9 @@ bool Particle::interacts_with_tracker() const
 \end{lstlisting}
 
 As seen in Figure \ref{fig:Particle_UML}, the member functions, \texttt{interacts\_with}, were used instead of an alternative idea of storing \texttt{SubDetector} names in a \texttt{vector} of \texttt{std::string} or \texttt{enum} data types.
+This decision allows for the logic behind the interaction rule to be expressed, as shown by Code snippet \ref{lst:interacts_with_tracker}, rather than the rule just being stored.
+It also improves adaptability with any future conditions, for example \texttt{Particle} energy thresholds, able to be added inside the relevant member function.
+On top of this, the design choice greatly simplifies the detection with \texttt{SubDetector} only having to call a single \texttt{bool} member function. 
 
 
 \texttt{Particle} member functions, with the name beginning with \texttt{interacts\_with}, were chosen to handle \texttt{Particle}/\texttt{SubDetector} interaction instead of another idea, a \texttt{vector} data member that stores a list of \texttt{string} or \texttt{enum} data types.
