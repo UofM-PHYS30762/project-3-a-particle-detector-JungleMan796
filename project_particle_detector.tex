@@ -190,29 +190,15 @@ The same was done for the neutral \texttt{Pion}.
 
 The charged leptons, \texttt{Electron} and \texttt{Muon}, were grouped under the intermediate base class \texttt{ChargedLepton} due to their shared properties and interaction behaviour, which can seen to be defined once in Figure \ref{fig:Particle_UML}.
 Similar is done for the hadronic particles, where the common interaction logic is implemented in \texttt{Hadron} and consequently inherited by the derived objects.
-A further intermediate base class, \texttt{Meson}, was introduced because all mesons follow a general construction logic depending on the distinct data member \texttt{is\_charged}.
-As shown in Code snippet \ref{lst:meson_construction} this parameter controls if a charged or neutral \texttt{Meson} is instantiated, setting the \texttt{charged\_mag} and \texttt{rest\_mass}, and consequently reducing unnecessary code repetition.
-
-
-Upon reaching the minimum functionality for the \texttt{SubDetector} and \texttt{DetectorSystem} the class structures for \texttt{Muon}, \texttt{Photon} and \texttt{Hadron} were created, meeting item 3 of the minimum functionality.
-
-As shown in Figure \ref{fig:Particle_UML}, the \texttt{Photon} class was derived directly from \texttt{Particle}.
-This was because it has distinct physical properties and does not share sufficient common behaviour with the other particles required for minimum functionality, to justify an intermediate base class.
-It became clear in \texttt{Photon} that the inherited data members \texttt{rest\_mass} and \texttt{is\_anti} were a bit redundant as it has no mass and is its own anti-particle.
-However, they are not damaging and a necessity for the majority of the \texttt{Particle} classes. Therefore it was worthwhile and safe to keep them as base data members.
-The base member function \texttt{print\_info}, which should print the characteristics common to all \texttt{Particle} objects did seem to be omitting information.
-Rather than removing it, I added a statement to the \texttt{Photon} classes' polymorphic \texttt{Photon::print\_info} regarding the fact that \texttt{Photon} objects are their own anti-particles. 
-The same was done for neutral the \texttt{Pion} \textcolor{red}{(and \texttt{Rho})}.
-
-Since hadronic particles share similar properties and behaviour, they were organised under the intermediate base class \texttt{Hadron}. All interaction member functions were defined here and hence inherited by the derived classes, reducing repeated implementation.
-A subsequent intermediate base class \texttt{Meson} was introduced, as they follow common charge dependent construction logic for the neutral and charged states.
-This inheritance reduced repetition across the derived \texttt{Meson} classes and makes the hierarchy clearer, as shown in Figure \ref{fig:Particle_UML}.
-The current choice not to group baryons under an additional intermediate base class like \texttt{Meson} was due to them not really sharing any behaviour that would make a move from \texttt{Hadron} valuable and worthwhile.
-\textcolor{red}{They are so varied, with the example of sigma particles ($\Sigma^+,\Sigma^0, \Sigma^-$) more similar to the \texttt{Meson} structure, \texttt{Proton} structured more like a reverse \texttt{Electron} and Xi particles ($\Xi^0, \Xi^-$) following neither.}
+A further intermediate base class, \texttt{Meson}, was introduced because mesons follow a general construction logic depending on the distinct data member \texttt{is\_charged}.
+As shown in Code snippet \ref{lst:meson_construction} this parameter controls if a charged or neutral \texttt{Meson} is instantiated, setting the appropriate \texttt{charged\_mag} and \texttt{rest\_mass}.
+For charged mesons, \texttt{is\_anti} then determines the charge sign, while the polymorphic \texttt{print\_info} functions distinguish neutral particles that are their own anti-particles, such as \texttt{Pion}, from mesons with distinct anti-particles, such as \texttt{Kaon}.
+This reduces repeated constructor and output  logic across derived \texttt{Meson} objects.
+Baryons were not given an intermediate base class because their construction logic is not consistent, while the hierarchy still allows a baryon base class to be introduced later if more shared behaviour is added.
 \begin{lstlisting}[
     style=vscode, 
     caption={
-    \texttt{Meson} parameterised constructor. Arguments \texttt{neutral\_rest\_mass} and \texttt{charged\_rest\_mass} are fixed by the derived \texttt{Particle}, \texttt{is\_charged} is chosen by the user and determines what type of \texttt{Meson} is constructed.},
+    \texttt{Meson} parameterised constructor. Arguments \texttt{neutral\_rest\_mass} and \texttt{charged\_rest\_mass} are fixed by the derived \texttt{Particle}, \texttt{is\_charged} is chosen by the user and determines what type of \texttt{Meson} is constructed. The charge of the charged mesons is determined my \texttt{is\_anti}, with the anti-particle arbitrarily set as the negative particle.},
     label={lst:meson_construction}
 ]
 Meson::Meson(double E, double px, double py, double pz, bool is_anti,
@@ -227,10 +213,6 @@ Meson::Meson(double E, double px, double py, double pz, bool is_anti,
     }
 }
 \end{lstlisting}
-The \texttt{Meson} construction logic is shown in Code snippet \ref{lst:meson_construction}. The \texttt{is\_charged} parameter determines what \texttt{charge\_mag} and \texttt{rest\_mass} are initialised, so that charged and neutral mesons can be handled within the same class structure.
-These data members are carried forward to the \texttt{Meson::print\_info} member function, allowing the output to reflect whether the \texttt{Meson} is charged or neutral.
-For a charged \texttt{Meson} the anti-particle is arbitrarily set as the negative particle. This way the already present \texttt{is\_anti} data member can control what charge the charged \texttt{Meson} is.
-Polymorphism of \texttt{print\_info} is used in the derived classes to differentiate between if the neutral \texttt{Meson} objects are their own anti-particle or if they are distinct. For example, the neutral \texttt{Kaon} has distinct anti-particles whereas the neutral \texttt{Pion} is its own anti-particle. 
 
 \textcolor{red}{I likely will make a \texttt{ChargedLepton} so talk on this. For now lets move on.}
 
