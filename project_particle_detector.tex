@@ -176,20 +176,14 @@ bool Particle::interacts_with_tracker() const
 }
 \end{lstlisting}
 
-As seen in Figure \ref{fig:Particle_UML}, the member functions, \texttt{interacts\_with}, were used instead of an alternative idea of storing \texttt{SubDetector} names in a \texttt{vector} of \texttt{std::string} or \texttt{enum} data types.
-This decision allows for the logic behind the interaction rule to be expressed, as shown by Code snippet \ref{lst:interacts_with_tracker}, rather than the rule just being stored.
-It also improves adaptability with any future conditions, for example \texttt{Particle} energy thresholds, able to be added inside the relevant member function.
-On top of this, the design choice greatly simplifies the detection with \texttt{SubDetector} only having to call a single \texttt{bool} member function. 
+As seen in Figure \ref{fig:Particle_UML}, the member functions, \texttt{interacts\_with}, were used instead of storing \texttt{SubDetector} names in a \texttt{vector} of \texttt{std::string} or \texttt{enum} data types.
+This decision allows for the logic behind the interaction rule to be expressed where defined, as shown by Code snippet \ref{lst:interacts_with_tracker}, rather than stored only as a fixed result. 
+Hence it also improves adaptability, since any future conditions such as energy thresholds can be added inside the relevant member function.
+On top of this, it will be seen that the design choice greatly simplifies the detection, with \texttt{SubDetector} only having to call a single \texttt{bool} member function. 
 
+The class hierarchy seen in Figure \ref{fig:Particle_UML} was decided upon based on shared properties of the particles.
+\texttt{Photon} was derived directly from \texttt{Particle} due to it possessing distinct properties, not sharing behaviour with the other particles.
 
-\texttt{Particle} member functions, with the name beginning with \texttt{interacts\_with}, were chosen to handle \texttt{Particle}/\texttt{SubDetector} interaction instead of another idea, a \texttt{vector} data member that stores a list of \texttt{string} or \texttt{enum} data types.
-This decision was first based on the fact that it allowed for simpler inheritance. Take for example the case of the \texttt{Hadron} class, like all \texttt{Particle} classes it inherited its \texttt{Tracker} behaviour from Code snippet \ref{lst:interacts_with_tracker}, and as its other behaviours were shared they were defined in \texttt{Hadron} and inherited by the derived and intermediate base classes below it.
-This is simpler and clearer than defining a \texttt{vector} data member that is shared between derived classes.
-Such a \texttt{vector} would store the result of the interaction logic, but would not express the logic itself as clearly as a dedicated member function as shown in Code snippet \ref{lst:interacts_with_tracker}.
-
-The member function approach also improves adaptability, where the \texttt{vector} limits it. For example, if future development required \texttt{Muon} objects below a certain energy to not  interact with \texttt{MuonChamber} objects, this behaviour could be implemented naturally inside the relevant member function.
-This design choice also makes \texttt{SubDetector} structure more straightforward. Each \texttt{SubDetector} only needs to call a single \texttt{bool} member function, rather than iterating through a \texttt{vector} to check whether the \texttt{Particle} interacts with it.
-\textcolor{red}{Maybe mention possible negatives: that a vector format could be got from a data file or that it may be simpler to introduce a new SubDetector as you only need to write one more word in each particles vector. However one could argue this would take longer than mine as I have inheritance built in}
 
 Upon reaching the minimum functionality for the \texttt{SubDetector} and \texttt{DetectorSystem} the class structures for \texttt{Muon}, \texttt{Photon} and \texttt{Hadron} were created, meeting item 3 of the minimum functionality.
 
