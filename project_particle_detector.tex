@@ -70,8 +70,8 @@ Different particle types are passed through the detector, with the sub-detectors
 \end{figure}
 
 The main aim of the project was to practice object oriented programming principles, building a clear and extensible class structure for both particles and detectors.
-The program possesses separate class hierarchies for both particles and sub-detectors, with inheritance and polymorphism simplifying the code and reducing repetition for the derived objects.
-Sub-detectors are owned via unique pointers by a large detectors system which acts as a container class.
+The program possesses separate class hierarchies for both particles and sub-detectors, with base classes' \texttt{Particle} and \texttt{SubDetector}, respectively. Inheritance and polymorphism simplify the code and reduce repetition for the derived objects.
+\texttt{SubDetector} objects are owned via unique pointers by a large detector class, \texttt{DetectorSystem}, which acts as a container class.
 
 This report describes the key choices made throughout the design process, first considering the decisions required to meet the minimum functionality to a high standard, before discussing the choices that enabled more advanced features.
 The final sections discuss how the program is used in \texttt{main()}, using figures to demonstrate the functionality, and how it could be improved.
@@ -87,9 +87,7 @@ Due to this, the initial English used in my earlier commits may not be the best 
 
 \section{Design process \& considerations}
 
-The design process is discussed in two stages: the implementation of the minimum functionality, followed by the reasoning behind the advanced features.
-Both sections are structured around the main components of the program.
-First, the development of the \texttt{Particle} class hierarchy is discussed, followed by the development of the \texttt{SubDetector} class hierarchy. Finally, the construction of the \texttt{DetectorSystem} class is described.
+As mentioned previously, the key design considerations are discussed in two parts: minimum functionality and advanced features. These are further divided around the three main components of the program: the \texttt{Particle} and \texttt{SubDetector} hierarchies and the \texttt{DetectorSystem} class.
 
 \subsection{Minimum functionality}
 
