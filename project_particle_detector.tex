@@ -133,7 +133,7 @@ As mentioned previously, the key design considerations are discussed in two part
         \hline
     \end{tabularx}
 \end{table}
-\textcolor{red}{The requirement of setters and getters being virtual is though on with its necessity questioned.}
+Although requirement 4 of Table \ref{tab:min_func_summary} refers to virtual setters and getters, these were kept non-virtual within all hierarchies as their behaviour is identical across derived classes, avoiding unnecessary overriding.
 
 \subsubsection{Particles}
 \label{sec:min_func_Particles}
@@ -145,25 +145,12 @@ As mentioned previously, the key design considerations are discussed in two part
       }
       \label{fig:Particle_UML}
 \end{figure}
-
-
-Much of the \texttt{Particle} architecture used in this project was initially developed in Assignments 4 and 5. 
-
 \texttt{Particle} was created as a pure abstract base class from which the particles are derived, meeting requirement 1 of Table \ref{tab:min_func_summary}.
 Figure \ref{fig:Particle_UML} shows the \texttt{Particle} base class data members, which were chosen because they represent intrinsic properties shared by all particles.
 Figure \ref{fig:Particle_UML} shows the composition relationship between \texttt{FourMomentum} and \texttt{Particle}, satisfying requirement 5 in Table \ref{tab:min_func_summary}.
 This is implemented using a \texttt{std::unique\_ptr}, enforcing exclusive ownership of \texttt{four\_momentum}.
 \texttt{FourMomentum} \texttt{components} remain stored by a raw pointer from Assignment 4 \texttt{components}.
 The decision to implement dynamic memory meant that custom move/copy semantics were required.
-
-
-The discussion is therefore split into the prior design decisions that formed the starting point for the project and the present development carried out for this project.
-\textcolor{red}{Should I put the repo link?}
-
-\textcolor{red}{Skip the prior for now.}
-\textcolor{red}{Mention abstract base class, four momentum and setters/getters. Mention how this meets min-func items 1, 4, 5.}
-
-\textcolor{red}{Also need to mention my setters and getters were not virtual.}
 
 The responsibilities previously held by Assignment 5's \texttt{Lepton} class were moved to this project's \texttt{Particle} base class, now extended to not just leptons.
 To begin with, a simple \texttt{Electron} class was directly derived from \texttt{Particle}, without retaining the intermediate \texttt{ChargedLepton} layer used in Assignment 5. This simplified structure was chosen to test the initial interaction between the \texttt{Particle} and \texttt{SubDetector} classes before introducing a more complex class hierarchy.
