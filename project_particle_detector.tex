@@ -452,7 +452,6 @@ A \texttt{Muon} is created so that its pass through the \texttt{det\_sys\_CMS} c
 The detection of the \texttt{Muon} is as expected, as shown in Figure \ref{fig:min_func_detect_muon}.
 As the \texttt{Muon} is charged it is detected by the \texttt{Tracker}. It does not interact with any of the \texttt{Calorimeter} objects \textcolor{red}{(as its interaction with the \texttt{EMCalorimeter} is so small I didn't include it)}.
 It is detected by the \texttt{MuonChamber}, with both detections outputting the detected energy and its true energy, both the same as I did not progress this part of the project.
-
 \begin{lstlisting}[
     style=vscode, 
     caption={
@@ -462,6 +461,14 @@ It is detected by the \texttt{MuonChamber}, with both detections outputting the 
     ]
 
 \end{lstlisting}
+\begin{figure}[H]
+      \centering
+      \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_figures/det_sys_CMS_Muon.png}
+      \caption[Short caption for list of figures]{
+      Screenshot of the terminal's output for the \texttt{det\_sys\_CMS::detect} of the \texttt{Muon} object. 
+      }
+      \label{fig:min_func_detect_muon}
+\end{figure}
 
 \subsection{Advanced features}
 
