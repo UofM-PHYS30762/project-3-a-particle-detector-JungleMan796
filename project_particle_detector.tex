@@ -18,6 +18,8 @@
 \usepackage{float}
 \usepackage{xcolor}
 \usepackage{comment}
+\usepackage{booktabs}
+\usepackage{tabularx}
 
 \usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
 \addbibresource{report_assets/references.bib}
@@ -90,24 +92,47 @@ Due to this, the initial English used in my earlier commits may not be the best 
 As mentioned previously, the key design considerations are discussed in two parts: minimum functionality and advanced features. These are further divided around the three main components of the program: the \texttt{Particle} and \texttt{SubDetector} hierarchies and the \texttt{DetectorSystem} class.
 
 \subsection{Minimum functionality}
-
-The minimum functionality of this project is paraphrased from the project slides below:
-\begin{enumerate}
-    \item Pure abstract base classes for a sub-detector and particle.
-    
-    \item Derived classes for sub-detectors: trackers, calorimeters and muon chambers.
-    
-    \item Derived classes for sub-detectors: electrons, muons, photons and hadrons.
-
-    \item Virtual functions to set and get characteristics of the detectors and particles.
-
-    \item Four-momentum is stored as a class in each particle.
-
-    \item A detector that returns the energy of the particle it detected.
-
-    \item A generic detector class that stores sub-detectors.    
-\end{enumerate}
-As we move through this section, the approach of how these were met is discussed.
+\begin{table}[H]
+    \centering
+    \caption{Summary of where the minimum functionality requirements were implemented.}
+    \label{tab:min_func_summary}
+    \begin{tabularx}{\textwidth}{|X|X|}
+        \hline
+        \textbf{Requirement} & \textbf{Implementation} \\
+        \hline
+        
+        1. Pure abstract base classes for a particle and sub-detector.
+        & \texttt{Particle} and \texttt{SubDetector}.\\
+        \hline
+        
+        2. Derived classes for sub-detectors: trackers, muon chambers and calorimeters.
+        & \texttt{Tracker}, \texttt{MuonChamber},
+        \texttt{EMCalorimeter} and
+        \texttt{HadronCalorimeter}.
+        \\
+        \hline
+        
+        3. Derived classes for particles: electrons, muons, photons and hadrons.
+        & \texttt{Electron}, \texttt{Muon}, \texttt{Photon} and derived \texttt{Hadron} objects. \\
+        \hline
+        
+        4. Virtual functions to set and get characteristics of the detectors and particles.
+        & Not employed, just normal setters and getters. \\
+        \hline
+        
+        5. Four-momentum is stored as a class in each particle.
+        & \texttt{FourMomentum} composed within \texttt{Particle}. \\
+        \hline
+        
+        6. A detector that returns the energy of the particle it detected.
+        & \texttt{detect()}.\\
+        \hline
+        
+        7. A generic detector class that stores sub-detectors.
+        & \texttt{DetectorSystem} stores sub-detectors using \texttt{std::vector<std::unique\_ptr<SubDetector>>}. \\
+        \hline
+    \end{tabularx}
+\end{table}
 \textcolor{red}{The requirement of setters and getters being virtual is though on with its necessity questioned.}
 
 \subsubsection{Particles}
