@@ -19,6 +19,9 @@
 \usepackage{xcolor}
 \usepackage{comment}
 
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\addbibresource{report_assets/references.bib}
+
 \setlength{\parskip}{0.8em}
 \setlength{\parindent}{0pt}
 
@@ -54,7 +57,20 @@
 
 \section{Introduction}
 
-This report includes design considerations for the particle detector final project and a description of the software built.
+This report talks through the C++ particle detector project which simulates particles passing through a detector.
+The detector must be composed of sub-detectors, like the example of the \textcolor{red}{CMS} detector in Figure \ref{fig:CMS_schematic}.
+\begin{figure}[H]
+      \centering
+      \includegraphics[alt={Put short description for screen readers here},width=0.9\textwidth,keepaspectratio=true]{report_assets/report_figures/CMS_schematic.png}
+      \caption[Short caption for list of figures]{
+      Schematic of the CMS detector \cite{cms_detector}. Sub-detectors of note are the: silicon tracker, muon chamber, ECAL and the HCAL.
+      }
+      \label{fig:CMS_schematic}
+\end{figure}
+
+The minimum class-design and functionality is shown by \textcolor{red}{Table}
+
+
 
 Git pushes for this report will have been done regularly throughout.
 Also please note, the design considerations and process will be written as I go along and then refined later, so as to see a clear history and to align with my code commits.
@@ -454,7 +470,7 @@ As the \texttt{Muon} is charged it is detected by the \texttt{Tracker}. It does 
 It is detected by the \texttt{MuonChamber}, with both detections outputting the detected energy and its true energy, both the same as I did not progress this part of the project.
 \begin{figure}[H]
       \centering
-      \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_figures/det_sys_CMS_Muon.png}
+      \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_assets/report_figures/det_sys_CMS_Muon.png}
       \caption[Short caption for list of figures]{
       Screenshot of the terminal's output for the \texttt{det\_sys\_CMS::detect} of the \texttt{Muon} object. 
       }
@@ -466,14 +482,16 @@ It is detected by the \texttt{MuonChamber}, with both detections outputting the 
 The effect of the wrapper member function \textcolor{red}{Name it?} can be seen by the output in Figure \ref{fig:ad_feat_wrapper_detect}. Due to the \texttt{MuonChamber} now being off, there is no detection via that \texttt{SubDetector}.
 \begin{figure}[H]
       \centering
-      \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_figures/det_sys_wrapper_set_muonchamber_off.png}
+      \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_assets/report_figures/det_sys_wrapper_set_muonchamber_off.png}
       \caption[Short caption for list of figures]{
       Screenshot of the terminal's output for the \texttt{det\_sys\_CMS::detect} of the \texttt{Muon} object after the wrapper function \texttt{det\_sys\_CMS.set\_sub\_detector\_status("Muon Chamber", false)} has been applied. 
       }
       \label{fig:ad_feat_wrapper_detect}
 \end{figure}
 
-\textcolor{red}{Need to mention the absorption here and in the advanced features. Was going to be a friend etc.}
+Demonstrated \texttt{Particle} objects that interact with the \texttt{Calorimeter} classes showing their absorption.
+
+\textcolor{red}{Need to mention the absorption here and in the advanced features of design process. Was going to be a friend etc.}
 
 Then another \texttt{DetectorSystem} is used to illustrate the \texttt{remove} and \texttt{release} \textcolor{red}{(Should I name them all fully)} member functions.
 With the extracted \texttt{SubDetector} shown to work alone.
@@ -482,7 +500,7 @@ The utility of \texttt{namespaces} are shown in Figure \ref{fig:ad_feat_namespac
 Similar can be done for \texttt{DSMessages}.
 \begin{figure}[H]
       \centering
-      \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_figures/namespace_debug_on.png}
+      \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_assets/report_figures/namespace_debug_on.png}
       \caption[Short caption for list of figures]{
       Screenshot of the terminal's output for when a \texttt{Neutron} is created while \texttt{Debug} messages are on. \textcolor{red}{Zoomed in compared to others. What else can I do?}
       }
@@ -490,10 +508,10 @@ Similar can be done for \texttt{DSMessages}.
 \end{figure}
 
 
-\section{Discussion}
+\section{Discussion and conclusions}
 
-Mention I would improve my energy validation beyond the E >=0, as \texttt{Photon} that has energy and then just px comp greater is unphysical.
+Mention I would improve my energy validation beyond the $E >=0$, as \texttt{Photon} that has energy and then just px comp greater is unphysical.
 
-\section{Conclusions}
+\printbibliography
 
 \end{document}
