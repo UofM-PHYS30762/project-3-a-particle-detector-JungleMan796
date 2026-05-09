@@ -58,7 +58,8 @@
 \section{Introduction}
 
 This report talks through the C++ particle detector project which simulates particles passing through a detector.
-The detector must be composed of sub-detectors, like the example of the \textcolor{red}{CMS} detector in Figure \ref{fig:CMS_schematic}.
+The detector was composed of sub-detectors, like the example of the \textcolor{red}{CMS} detector in Figure \ref{fig:CMS_schematic}.
+Different particle types are passed through the detector, with the sub-detectors response depending on the physical properties of the particle.
 \begin{figure}[H]
       \centering
       \includegraphics[alt={Put short description for screen readers here},width=0.9\textwidth,keepaspectratio=true]{report_assets/report_figures/CMS_schematic.png}
@@ -67,6 +68,10 @@ The detector must be composed of sub-detectors, like the example of the \textcol
       }
       \label{fig:CMS_schematic}
 \end{figure}
+
+The main aim of the project was to practice object oriented programming principles, developing a clear and extensible class structure for both particles and detectors.
+The program possesses separate class hierarchies for both particles and sub-detectors, with inheritance and polymorphism simplifying the code and reducing repetition for the derived objects.
+Sub-detectors are owned via unique pointers by a large detectors system which acts as a container class.
 
 The minimum class-design and functionality is shown by \textcolor{red}{Table}
 
