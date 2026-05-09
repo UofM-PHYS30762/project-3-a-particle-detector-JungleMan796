@@ -160,7 +160,7 @@ Detector specific conditions, such as \texttt{status}, remain within the \texttt
 \begin{lstlisting}[
     style=vscode, 
     caption={
-    \texttt{Particle} member function \texttt{interacts\_with\_tracker}. Only \texttt{interacts\_with} member function defined in \texttt{Particle} and not overridden in the derived classes.},
+    \texttt{Particle} member function \texttt{interacts\_with\_tracker}. As seen in Figure \ref{fig:Particle_UML}, only \texttt{interacts\_with} member function defined in \texttt{Particle} and not overridden in the derived classes.},
     label={lst:interacts_with_tracker}
 ]
 bool Particle::interacts_with_tracker() const
@@ -175,6 +175,8 @@ bool Particle::interacts_with_tracker() const
     }
 }
 \end{lstlisting}
+
+As seen in Figure \ref{fig:Particle_UML}, the member functions, \texttt{interacts\_with}, were used instead of an alternative idea of storing \texttt{SubDetector} names in a \texttt{vector} of \texttt{std::string} or \texttt{enum} data types.
 
 
 \texttt{Particle} member functions, with the name beginning with \texttt{interacts\_with}, were chosen to handle \texttt{Particle}/\texttt{SubDetector} interaction instead of another idea, a \texttt{vector} data member that stores a list of \texttt{string} or \texttt{enum} data types.
