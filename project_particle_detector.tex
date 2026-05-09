@@ -445,13 +445,14 @@ void DetectorSystem::set_sub_detector_status(const std::string& sub_detector_nam
 
 First we see the creation of the arbitrary container \texttt{DetectorSystem} as the CMS detector.
 
-All sub-detector components (\texttt{SubDetector} classes) are added, after which the configuration is printed. 
+All sub-detector components (\texttt{SubDetector} classes) are added, after which the configuration is printed. \textcolor{red}{Should I have a figure for this.}
 
 A \texttt{Muon} is created so that its pass through the \texttt{det\_sys\_CMS} can demonstrate the minimum functionality. Its information is also printed.
 
 The detection of the \texttt{Muon} is as expected, as shown in Figure \ref{fig:min_func_detect_muon}.
 As the \texttt{Muon} is charged it is detected by the \texttt{Tracker}. It does not interact with any of the \texttt{Calorimeter} objects \textcolor{red}{(as its interaction with the \texttt{EMCalorimeter} is so small I didn't include it)}.
 It is detected by the \texttt{MuonChamber}, with both detections outputting the detected energy and its true energy, both the same as I did not progress this part of the project.
+
 \begin{lstlisting}[
     style=vscode, 
     caption={
