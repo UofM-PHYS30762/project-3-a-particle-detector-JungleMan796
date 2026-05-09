@@ -183,6 +183,8 @@ On top of this, it will be seen that the design choice greatly simplifies the de
 
 The class hierarchy seen in Figure \ref{fig:Particle_UML} was decided upon based on shared properties of the particles.
 \texttt{Photon} was derived directly from \texttt{Particle} due to it possessing distinct properties, not sharing behaviour with the other particles.
+It became clear the inherited data members, \texttt{rest\_mass} and \texttt{is\_anti}, were redundant for \texttt{Photon} as it has not mass and is its own anti-particle. However, since they are not damaging and a necessity for most of the particles, it was worthwhile for them to remain as base data members.
+
 
 
 Upon reaching the minimum functionality for the \texttt{SubDetector} and \texttt{DetectorSystem} the class structures for \texttt{Muon}, \texttt{Photon} and \texttt{Hadron} were created, meeting item 3 of the minimum functionality.
