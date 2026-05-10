@@ -568,6 +568,12 @@ Similar can be done for \texttt{DSMessages}.
 
 \section{Discussion and conclusions}
 
+The main program successfully demonstrates an object oriented simulation of a particle detector, using the class structure described.
+The abstract base classes \texttt{Particle} and \texttt{SubDetector} provide a clear interface, allowing common properties to be inherited and derived class specific properties to be implemented polymorphically.
+This allowed \texttt{DetectorSystem} to store different derived \texttt{SubDetector} objects and pass different derived \texttt{Particle} objects through a detection function, meeting the minimum functionality.
+
+
+
 Mention I would improve my energy validation beyond the $E >=0$, as \texttt{Photon} that has energy and then just px comp greater is unphysical.
 
 \printbibliography
