@@ -416,16 +416,11 @@ void Calorimeter::detect(Particle& particle) const
 }
 \end{lstlisting}
 
-
-\textcolor{red}{Maybe mention static detector ids and friend functions for the }
-
-\textcolor{red}{Mention the absorption and energy validation if you think its needed.}
-
 \subsubsection{DetectorSystems}
 \label{sec:ad_feat_detectorsystems}
 
 Member functions for both removing and releasing \texttt{SubDetector} objects were added to the \texttt{DetectorSystem} container to add higher functionality. 
-The \texttt{remove\_sub\_detector} function deletes a \texttt{SubDetector}, as seen in Code snippet \ref{lst:remove_sub_detector}. This was physically motivated by the possibility of a detector component failing and needing to be removed or replaced.
+The \texttt{remove\_sub\_detector} function removes and destroys the owned \texttt{SubDetector}, as seen in Code snippet \ref{lst:remove_sub_detector}. This was physically motivated by the possibility of a detector component failing and needing to be removed or replaced.
 \texttt{release\_sub\_detector} transfers ownership from the container to an external \texttt{std::unique\_ptr}. This allows the user to extract the \texttt{SubDetector} from the container while preserving the object itself, for example if the component is useful alone or in another \texttt{DetectorSystem}. It is applied in much the same way as Code snippet \ref{lst:remove_sub_detector}.
 \begin{lstlisting}[
     style=vscode, 
@@ -469,7 +464,7 @@ Its use here maintains clarity of the process because the search condition is de
 The lambda function therefore acts as a beneficial, small local attachment to \texttt{std::find\_if}, as seen in in lines 7 to 10 in Code snippet \ref{lst:remove_sub_detector}.
 Note the member function \texttt{get\_sub\_detector}, mentioned below and in Code snippet \ref{lst:set_sub_detector_status}, uses the same \texttt{std::find\_if} and lambda function logic.
 
-A wrapper member function \textcolor{red}{\texttt{set\_sub\_detector\_status} maybe delete as word count}, as seen in Code snippet \ref{lst:set_sub_detector_status}, was created to modify the \texttt{status} of a \texttt{SubDetector} contained in a \texttt{DetectorSystem}, increasing the functionality.
+A wrapper member function \texttt{set\_sub\_detector\_status}, as seen in Code snippet \ref{lst:set_sub_detector_status}, was created to modify the \texttt{status} of a \texttt{SubDetector} contained in a \texttt{DetectorSystem}, increasing the functionality.
 It does so by using \texttt{get\_sub\_detector} to return a non owning pointer to a contained \texttt{SubDetector}, if the requested name exists.
 It is important that this pointer does not transfer ownership, so that the \texttt{DetectorSystem} object's \texttt{std::unique\_ptr} remains intact.
 The returned pointer is only used to access and modify the contained \texttt{SubDetector}.
@@ -501,9 +496,6 @@ void DetectorSystem::set_sub_detector_status(const std::string& sub_detector_nam
 }
 \end{lstlisting}
 
-
-
-
 \section{Results}
 
 \subsection{Minimum functionality}
@@ -511,6 +503,9 @@ void DetectorSystem::set_sub_detector_status(const std::string& sub_detector_nam
 \textcolor{red}{Should I have the Forward Calorimeter.}
 
 \textcolor{red}{Should I have an option to loop through many particle detections?}
+
+The minimum functionality was tested by constructing a \texttt{DetectorSystem} named \texttt{det\_sys\_CMS}, which is composed of the major CMS \texttt{SubDetector} components seen in Figure \ref{fig:CMS_schematic}.
+The resulting configuration was printed using \texttt{print\_configuration} to verify that each \texttt{SubDetector} had been successfully added to the container.
 
 First we see the creation of the arbitrary container \texttt{DetectorSystem} as the CMS detector.
 
