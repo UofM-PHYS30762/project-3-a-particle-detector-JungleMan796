@@ -511,12 +511,6 @@ A \texttt{Muon} object is created and passed through \texttt{det\_sys\_CMS}, wit
 The success of this can be seen in the \texttt{DetectorSystem::detect} output in Figure \ref{fig:min_func_detect_muon}.
 For each successful detection, the detected energy and its true energy are outputted.
 These values are equal because the detector response is modelled as perfect.
-
-A \texttt{Muon} is created so that its pass through the \texttt{det\_sys\_CMS} can demonstrate the minimum functionality. Its information is also printed.
-
-The detection of the \texttt{Muon} is as expected, as shown in Figure \ref{fig:min_func_detect_muon}.
-As the \texttt{Muon} is charged it is detected by the \texttt{Tracker}. It does not interact with any of the \texttt{Calorimeter} objects \textcolor{red}{(as its interaction with the \texttt{EMCalorimeter} is so small I didn't include it)}.
-It is detected by the \texttt{MuonChamber}, with both detections outputting the detected energy and its true energy, both the same as I did not progress this part of the project.
 \begin{figure}[H]
       \centering
       \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_assets/report_figures/det_sys_CMS_Muon.png}
@@ -528,7 +522,10 @@ It is detected by the \texttt{MuonChamber}, with both detections outputting the 
 
 \subsection{Advanced features}
 
-The effect of the wrapper member function \textcolor{red}{Name it?} can be seen by the output in Figure \ref{fig:ad_feat_wrapper_detect}. Due to the \texttt{MuonChamber} now being off, there is no detection via that \texttt{SubDetector}.
+The first advanced functionality tested was the wrapper member function \texttt{DetectorSystem::set\_detector\_status}.
+This was tested by switching off the \texttt{MuonChamber} before passing the same \texttt{Muon} through the \texttt{DetectorSystem} again.
+The output can be seen in Figure \ref{fig:ad_feat_wrapper_detect}, with as expected no detection occuring for the \texttt{MuonChamber} as it is inactive.
+This demsonstrates that the wrapper function successfully modifies the \texttt{SubDetector}'s \texttt{status} via \texttt{DetectorSystem}.
 \begin{figure}[H]
       \centering
       \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_assets/report_figures/det_sys_wrapper_set_muonchamber_off.png}
