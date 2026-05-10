@@ -362,9 +362,11 @@ if (DSMessages::show_messages)
 The data member \texttt{status} goes beyond the minimum functionality, adding realism to the class. It makes physical sense to be able to switch a \texttt{SubDetector} on or off.
 As will be seen in Section \ref{sec:ad_feat_detectorsystems}, a \texttt{SubDetector} contained within a \texttt{DetectorSystem} can also have its \texttt{status} modified by the said \texttt{DetectorSystem} container.
 
-The omission of \texttt{const} in the \texttt{SubDetector::detect} argument was made due to the additional feature that \texttt{Calorimeter} objects stop the detected particles completely \cite{cms_detector}, hence altering the \texttt{Particle} object's \texttt{four\_momentum}.
-This was implemented by using a \texttt{Particle} base member function \texttt{adsorb()} in the \texttt{Calorimeter::detect} function, as shown by Code snippets \ref{lst:ad_feat_absorb} and \ref{lst:ad_feat_calor_detect}.
-
+The \texttt{Particle} argument in  \texttt{SubDetector::detect} was not \texttt{const} to support the additional feature where \texttt{Calorimeter} objects stop the detected particles completely \cite{cms_detector}, hence altering the \texttt{Particle} object's \texttt{four\_momentum}.
+This was implemented using the \texttt{Particle} base member function \texttt{absorb()} inside \texttt{Calorimeter::detect} function, as shown by Code snippets \ref{lst:ad_feat_absorb} and \ref{lst:ad_feat_calor_detect}.
+A friend function approach, was considered as as I initially it thought it would allow a more physically aligned process to be programmed, with the \texttt{SubDetector} altering the \texttt{four\_momentum}.
+However, this wasn't the case and hence granting the \texttt{SubDetector} access to the \texttt{Particle} protected data members produced no value.
+Instead \texttt{Particle::absorb} was simpler and preserved encapsulation while still being applied within the \texttt{SubDetector::detect}.
 \begin{lstlisting}[
     style=vscode, 
     caption={
