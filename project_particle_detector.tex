@@ -219,15 +219,14 @@ Meson::Meson(double E, double px, double py, double pz, bool is_anti,
 \subsubsection{SubDetectors}
 \label{sec:min_func_SubDetectors}
 
-\begin{lstlisting}[
-    style=vscode, 
-    caption={
-    Code snippet acting as placeholder for SubDetector UML diagram},
-    label={fig:SubDetector_UML}
-]
-
-
-\end{lstlisting}
+\begin{figure}[H]
+      \centering
+      \includegraphics[alt={Put short description for screen readers here},width=0.9\textwidth,keepaspectratio=true]{report_assets/report_figures/UML_DetectorSystem_SubDetector_2.png}
+      \caption[Short caption for list of figures]{
+      UML class diagram for the \texttt{SubDetector} hierarchy and its composition in \texttt{DetectorSystem}. \textcolor{red}{Needs to be improved.}
+      }
+      \label{fig:SubDetector_UML}
+\end{figure}
 
 The \texttt{SubDetector} hierarchy was first developed with the pure abstract base class and a single derived class, keeping the early structure simple so that the core interface could be tested before adding further complexity.
 As can be seen in Figure \ref{fig:SubDetector_UML} the base data members are \texttt{sd\_name} and \texttt{status}.
