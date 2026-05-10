@@ -7,7 +7,9 @@ src/base/*.cpp `
 src/derived/Particle/*.cpp `
 src/derived/SubDetector/*.cpp `
 -Iinclude `
--o main.exe```
+-o main.exe```.
+Please ensure the files in the "include" and "src" folders and "main.cpp" are in your directory.
+Also please note that the files within the "test_files" are not part of the project and purely for my testing.
 
 ## Declaration of AI use.
 Sharing of prompts will be included if it regards "Code Generation" or "comments".
