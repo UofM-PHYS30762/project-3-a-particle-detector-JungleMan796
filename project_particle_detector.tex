@@ -238,16 +238,13 @@ To meet requirement 6 of Table \ref{tab:min_func_summary}, \texttt{Particle} obj
 This was implemented via a virtual base member function \texttt{detect}. As virtual it allowed each derived \texttt{SubDetector} to define its own detection response while sharing a common interface.
 This common interface was utilised in \texttt{DetectorSystem} to pass a \texttt{Particle} through all contained \texttt{SubDetector} objects clearly and efficiently, as discussed later.
 
-To meet the minimum functionality requirement of passing \texttt{Particle} objects through \texttt{SubDetectors}, a virtual base member function \texttt{detect} was developed. This function passes the \texttt{Particle} object as an argument, and as virtual, allows each derived \texttt{SubDetector} to define its own detection response.
-This design provides a common interface for all \texttt{SubDetector} objects while preserving derived class specific implementation. This common interface is utilised in \texttt{DetectorSystem} to pass a \texttt{Particle} through all contained \texttt{SubDetector} objects efficiently, as discussed in Section \ref{sec:min_func_DetctorSystems} later. \textcolor{red}{And config.}
-
 \begin{lstlisting}[
     style=vscode, 
     caption={
-    Derived \texttt{MuonChamber::detect} definition acts as an example for how the \texttt{Particle} object's \texttt{interacts\_with} function is utilised. \textcolor{red}{Need to change for the const.}},
+    Derived \texttt{MuonChamber::detect} definition acts as an example for how the \texttt{Particle} object's \texttt{interacts\_with} function is utilised in line 9.},
     label={lst:SubDetector_detect}
 ]
-void MuonChamber::detect(const Particle& particle) const
+void MuonChamber::detect(Particle& particle) const
 {
     // Check status of SubDetector.
     if (is_off())
@@ -270,13 +267,9 @@ void MuonChamber::detect(const Particle& particle) const
 }
 \end{lstlisting}
 
-As mentioned earlier in Section \ref{sec:min_func_Particles}, the \texttt{SubDetector::detect} function uses the \texttt{SubDetector} specific member function owned by the \texttt{Particle} passed, to determine if interaction can take place. Code snippet \ref{lst:SubDetector_detect}, line 9, demonstrates the simplicity of this approach.
-\textcolor{red}{Maybe mention the \texttt{is\_off} and how it is done for the intermediate base and its derived \texttt{Calorimeter}. If space??}
-
-One consideration is whether \texttt{detect} changes the \texttt{Particle} in question. If this is needed you can remove the \texttt{const}, for example in line 1 of Code snippet \ref{lst:SubDetector_detect}.
-\textcolor{red}{Maybe apply this for e.g \texttt{Calorimeter} and use friend fucntions.}
-
-\textcolor{red}{It now does will mention this in advanced functionality.}
+Following the interaction design discussed in Section \ref{sec:min_func_Particles}, the \texttt{SubDetector::detect} uses the passed \texttt{Particle}'s relevant  \texttt{interacts\_with...} function to determine whether detection is physically possible.
+Code snippet \ref{lst:SubDetector_detect}, line 9, demonstrates the simplicity of this approach.
+The omission of \texttt{const} in the \texttt{particle} argument is discussed later in the advanced features section.
 
 \subsubsection{DetectorSystems}
 \label{sec:min_func_DetctorSystems}
