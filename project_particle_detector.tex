@@ -535,11 +535,19 @@ This demsonstrates that the wrapper function successfully modifies the \texttt{S
       \label{fig:ad_feat_wrapper_detect}
 \end{figure}
 
-Demonstrated \texttt{Particle} objects that interact with the \texttt{Calorimeter} classes showing their absorption.
+The next advanced functionality demonstrated was the \texttt{Calorimeter::detect} and how it affects \texttt{Particle} objects that interact with it.
+Like the \texttt{Tracker} and \texttt{MuonChamber}, the \texttt{Calorimeter} objects print both the measured and true energy.
+It then applies the \texttt{absorb} member function with this behaviour being shown in Figure \ref{fig:ad_feat_absorb_pion} by comparing the \texttt{print\_info} output before and after detection.
+\begin{figure}[H]
+      \centering
+      \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_assets/report_figures/result_calorimeter_absorb.png}
+      \caption[Short caption for list of figures]{
+      Screenshot of the terminal's output for before and after a \texttt{Pion} has been detected by a \texttt{HadronCalorimeter}. Appropiate change in \texttt{Pion}'s \texttt{four\_momentum} is illustrated.
+      }
+      \label{fig:ad_feat_absorb_pion}
+\end{figure}
 
-\textcolor{red}{Need to mention the absorption here and in the advanced features of design process. Was going to be a friend etc.}
-
-Then another \texttt{DetectorSystem} is used to illustrate the \texttt{remove} and \texttt{release} \textcolor{red}{(Should I name them all fully)} member functions.
+Another \texttt{DetectorSystem}, \texttt{det\_sys\_2}, is used to test the \texttt{remove} and \texttt{release} \textcolor{red}{(Should I name them all fully)} member functions.
 With the extracted \texttt{SubDetector} shown to work alone.
 
 The utility of \texttt{namespaces} are shown in Figure \ref{fig:ad_feat_namespace_debug}, by turning  \texttt{Debug::show\_messages} to \texttt{true} and creating an object. These messages are useful for debugging, however they substantially bloat the main and hence the ability to be turned off is essential for the general user.
