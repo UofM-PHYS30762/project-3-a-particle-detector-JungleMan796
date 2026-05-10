@@ -18,7 +18,11 @@ main.cpp demonstrates the minimum functionality and advanced features of my code
 - Wrapper function ```set_sub_detector_status``` is used to turn off the ```MuonChamber``` with this functionality shown by running ```det_sys_CMS::detect``` again.
 - ```Calorimeter``` interacting ```Particle``` objects are created (```Electron```, neutral ```Pion``` and ```Photon```) and passed through ```det_sys_CMS``` to demonstrate the ```absorb``` functionality.
 - Another ```DetectorSystem```, ```det_sys_2```, was created to demonstrate the functionality of the ```remove_sub_detector``` and ```release_sub_detector``` member functions, with the extracted ```SubDetector```, ```released_sub_detector```, shown to work independently.
-- Turned ```Debug::show_messages``` on and created a ```Neutron``` object to show the messages that can be sent.  
+- Turned ```Debug::show_messages``` on and created a ```Neutron``` object to show the messages that can be sent.
+
+Modification and additions to the classes can be applied simply due them being made with extensibility in mind, as discussed in the report. Some examples are:
+- Can add a new ```Hadron``` by following how ```Proton``` and ```Neutron``` are derived. Construction logic may have to differ depending on the ```Hadron``` chosen. For example a Xi particle has a negative and neutral type whereas a Sigma particle would follow construction similar to ```Meson``` due to its positive, negative and neutral types.
+- Could add energy thresholds to whether ```MuonChamber``` objects can detect a ```Muon```, this would be done by modifying the member function ```interacts_with_muon_chamber```. 
 
 ## Declaration of AI use.
 Sharing of prompts will be included if it regards "Code Generation" or "comments".
