@@ -301,10 +301,10 @@ Move construction and assignment were defaulted as \texttt{std::unique\_ptr} alr
 As mentioned earlier in Section \ref{sec:min_func_SubDetectors}, the fact that \texttt{SubDetector::detect} is virtual means that it can be called in the same way for all \texttt{SubDetector} objects, as seen in line 8.
 \begin{lstlisting}[
     style=vscode, 
-    caption={\texttt{DetectorSystem} member function implementation to pass the \texttt{Particle} through the all the owned \texttt{SubDetector} objects. \textcolor{red}{Need to change for the const.}},
+    caption={\texttt{DetectorSystem} member function implementation to pass the \texttt{Particle} through the all the owned \texttt{SubDetector} objects.},
     label={lst:DetectorSystem_detect}
     ]
-    void DetectorSystem::detect(const Particle& particle) const
+void DetectorSystem::detect(Particle& particle) const
 {
     std::cout << "--- Passing particle through DetectorSystem (" << sys_name << ") ---" << std::endl;
     std::cout << std::endl; // Line break.
