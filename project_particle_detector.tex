@@ -228,12 +228,11 @@ Meson::Meson(double E, double px, double py, double pz, bool is_anti,
       \label{fig:SubDetector_UML}
 \end{figure}
 
-The \texttt{SubDetector} hierarchy was first developed with the pure abstract base class and a single derived class, keeping the early structure simple so that the core interface could be tested before adding further complexity.
-As can be seen in Figure \ref{fig:SubDetector_UML} the base data members are \texttt{sd\_name} and \texttt{status}.
-\texttt{sd\_name} allows for \texttt{SubDetector} classes of the derived nature to be distinguished.
-\texttt{status} allows for a \texttt{Detector} to be on or off \textcolor{red}{and will be expanded upon in the advanced features section as it is not required for the minimum functionality.}
-Unlike \texttt{Particle}, \texttt{SubDetector} does not possess any dynamically stored data members. As seen in Figure \ref{fig:SubDetector_UML}, its data members are simple value types, so the default compiler copy/move constructors and assignment operators provide the correct behaviour. Therefore no custom copy/move semantics are implemented.
-If such a data member was introduced, the method used in \texttt{Particle} could be adapted for \texttt{SubDetector}.
+The \texttt{SubDetector} hierarchy was initially developed using a pure abstract base class and one derived class, allowing the core interface to be tested before adding more derived classes.
+Figure \ref{fig:SubDetector_UML} shows that base class has two data members \texttt{sd\_name} and \texttt{status}.
+\texttt{sd\_name} simply distinguishes between \texttt{SubDetector} objects while \texttt{status} controls whether a \texttt{SubDetector} is active.
+Since \texttt{SubDetector} manages no dynamically allocated data members, the default compiler copy/move operations are sufficient, so no custom copy/move semantics were required.
+\textcolor{red}{How to mention status as advanced.}
 
 To meet the minimum functionality requirement of passing \texttt{Particle} objects through \texttt{SubDetectors}, a virtual base member function \texttt{detect} was developed. This function passes the \texttt{Particle} object as an argument, and as virtual, allows each derived \texttt{SubDetector} to define its own detection response.
 This design provides a common interface for all \texttt{SubDetector} objects while preserving derived class specific implementation. This common interface is utilised in \texttt{DetectorSystem} to pass a \texttt{Particle} through all contained \texttt{SubDetector} objects efficiently, as discussed in Section \ref{sec:min_func_DetctorSystems} later. \textcolor{red}{And config.}
