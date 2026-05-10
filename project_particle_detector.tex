@@ -234,6 +234,10 @@ Figure \ref{fig:SubDetector_UML} shows that base class has two data members \tex
 Since \texttt{SubDetector} manages no dynamically allocated data members, the default compiler copy/move operations are sufficient, so no custom copy/move semantics were required.
 \textcolor{red}{How to mention status as advanced.}
 
+To meet requirement 6 of Table \ref{tab:min_func_summary}, \texttt{Particle} objects must be passed through the derived \texttt{SubDetector}, which return the particle's energy.
+This was implemented via a virtual base member function \texttt{detect}. As virtual it allowed each derived \texttt{SubDetector} to define its own detection response while sharing a common interface.
+This common interface was utilised in \texttt{DetectorSystem} to pass a \texttt{Particle} through all contained \texttt{SubDetector} objects clearly and efficiently, as discussed later.
+
 To meet the minimum functionality requirement of passing \texttt{Particle} objects through \texttt{SubDetectors}, a virtual base member function \texttt{detect} was developed. This function passes the \texttt{Particle} object as an argument, and as virtual, allows each derived \texttt{SubDetector} to define its own detection response.
 This design provides a common interface for all \texttt{SubDetector} objects while preserving derived class specific implementation. This common interface is utilised in \texttt{DetectorSystem} to pass a \texttt{Particle} through all contained \texttt{SubDetector} objects efficiently, as discussed in Section \ref{sec:min_func_DetctorSystems} later. \textcolor{red}{And config.}
 
