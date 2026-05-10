@@ -62,13 +62,13 @@
 \section{Introduction}
 
 This project develops an object oriented C++ program to simulate a particle detector.
-The detector was composed of sub-detectors, like the example of the \textcolor{red}{CMS} detector \cite{cms_detector} in Figure \ref{fig:CMS_schematic}.
-Different particle types are passed through the detector, with the sub-detectors response depending on the physical properties of the particle.
+The detector was composed of sub-detectors, like the example of the CMS detector in Figure \ref{fig:CMS_schematic}.
+Different particle types are passed through the detector, with the sub-detectors response depending on the physical properties of the particle. My code modelled this based on the responses indicated in Figure \ref{fig:CMS_schematic} and outlined in \cite{cms_detector}.
 \begin{figure}[H]
       \centering
-      \includegraphics[alt={Put short description for screen readers here},width=0.9\textwidth,keepaspectratio=true]{report_assets/report_figures/CMS_schematic.png}
+      \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_assets/report_figures/CMS_cross section.png}
       \caption[Short caption for list of figures]{
-      Schematic of the CMS detector \cite{cms_detector}. Sub-detectors of note are the: silicon tracker, muon chamber, ECAL and the HCAL.
+      Cross sectional schematic of the CMS detector \cite{CMS_schematic_cross}. Sub-detectors of note are the: silicon tracker, muon chamber, electromagnetic and hadron calorimeters. The particles interaction is illustrated by their paths which can be distinguished using the key.
       }
       \label{fig:CMS_schematic}
 \end{figure}
@@ -78,16 +78,7 @@ The program possesses separate class hierarchies for both particles and sub-dete
 \texttt{SubDetector} objects are owned via unique pointers by a large detector class, \texttt{DetectorSystem}, which acts as a container class.
 
 This report describes the key choices made throughout the design process, first considering the decisions required to meet the minimum functionality to a high standard, before discussing the choices that enabled more advanced features.
-The final sections discuss how the program is used in \texttt{main()}, using figures to demonstrate the functionality, and how it could be improved.
-
-
-The minimum class-design and functionality is shown by \textcolor{red}{Table}
-
-
-
-Git pushes for this report will have been done regularly throughout.
-Also please note, the design considerations and process will be written as I go along and then refined later, so as to see a clear history and to align with my code commits.
-Due to this, the initial English used in my earlier commits may not be the best and is more note like.
+The final sections discuss how the program is used in \texttt{main()}, where it is successful, and how it could be improved.
 
 \section{Design process \& considerations}
 
@@ -103,7 +94,7 @@ As mentioned previously, the key design considerations are discussed in two part
         \textbf{Requirement} & \textbf{Implementation} \\
         \hline
         
-        1. Pure abstract base classes for a particle and sub-detector.
+        1. Abstract base classes for a particle and sub-detector.
         & \texttt{Particle} and \texttt{SubDetector}.\\
         \hline
         
@@ -141,13 +132,13 @@ Although requirement 4 of Table \ref{tab:min_func_summary} refers to virtual set
 \label{sec:min_func_Particles}
 \begin{figure}[H]
       \centering
-      \includegraphics[alt={Put short description for screen readers here},width=0.9\textwidth,keepaspectratio=true]{report_assets/report_figures/UML_Particle_1.png}
+      \makebox[\textwidth][c]{\includegraphics[alt={Put short description for screen readers here},width=1.2\textwidth,keepaspectratio=true]{report_assets/report_figures/UML_Particle_2.png}}
       \caption[Short caption for list of figures]{
-      UML class diagram for the \texttt{Particle} hierarchy. \textcolor{red}{Needs to be improved. Especially friends???}
+      UML class diagram for the \texttt{Particle} hierarchy. Note no default, parametrised constructors or destructors are included to maintain simplicity.
       }
       \label{fig:Particle_UML}
 \end{figure}
-\texttt{Particle} was created as a pure abstract base class from which the particles are derived, meeting requirement 1 of Table \ref{tab:min_func_summary}.
+\texttt{Particle} was created as an abstract base class from which the particles are derived, meeting requirement 1 of Table \ref{tab:min_func_summary}.
 Figure \ref{fig:Particle_UML} shows the \texttt{Particle} base class data members, which were chosen because they represent intrinsic properties shared by all particles.
 Figure \ref{fig:Particle_UML} also shows the composition relationship between \texttt{FourMomentum} and \texttt{Particle}, satisfying requirement 5 in Table \ref{tab:min_func_summary}.
 This is implemented using a \texttt{std::unique\_ptr}, enforcing exclusive ownership of \texttt{four\_momentum}.
@@ -223,9 +214,9 @@ Meson::Meson(double E, double px, double py, double pz, bool is_anti,
 
 \begin{figure}[H]
       \centering
-      \includegraphics[alt={Put short description for screen readers here},width=0.9\textwidth,keepaspectratio=true]{report_assets/report_figures/UML_DetectorSystem_SubDetector_2.png}
+      \makebox[\textwidth][c]{\includegraphics[alt={Put short description for screen readers here},width=1.2\textwidth,keepaspectratio=true]{report_assets/report_figures/UML_DetectorSystem_SubDetector_2.png}}
       \caption[Short caption for list of figures]{
-      UML class diagram for the \texttt{SubDetector} hierarchy and its composition in \texttt{DetectorSystem}. \textcolor{red}{Needs to be improved.}
+      UML class diagram for the \texttt{SubDetector} hierarchy and its composition in \texttt{DetectorSystem}. Note no constructors or destructors are included to maintain simplicity.
       }
       \label{fig:SubDetector_UML}
 \end{figure}
@@ -575,9 +566,9 @@ The abstract base classes \texttt{Particle} and \texttt{SubDetector} provide a c
 This allowed \texttt{DetectorSystem} to store different derived \texttt{SubDetector} objects and pass different derived \texttt{Particle} objects through a detection function, meeting the minimum functionality.
 
 The advanced features increased the physical realism and the usability of the program while applying advanced C++ techniques.
-Further improvements would be to model the detectors as imperfect, including detector efficiency and fluctuations in measured energy.
+Future improvements would be to model the detectors as imperfect, including detector efficiency and fluctuations in measured energy.
 The current \texttt{Particle} \texttt{four\_momentum} validation could also be improved, as only preventing negative energy does not stop unphysical \texttt{four\_momenta}, such as massive particles with $E^2 < p^2 +m^2$.
-An interesting possibility would be to create a mechanism for particle interactions.
+An interesting further extension to would be to create a mechanism for particle interactions, allowing particles to produce secondary particles as they pass through the detector.
 
 \printbibliography
 
