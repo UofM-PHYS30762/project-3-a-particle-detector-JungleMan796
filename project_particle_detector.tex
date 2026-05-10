@@ -324,14 +324,10 @@ void DetectorSystem::detect(Particle& particle) const
 
 The advanced features section includes code that implements higher level C++ techniques or goes beyond the minimum functionality.
 
-\subsubsection{Particles}
-\label{sec:ad_feat_particles}
-
-The advanced C++ feature \texttt{namespace}, was employed in \texttt{Particle} to globally control whether debug messages are printed or not, as shown in Code snippet \ref{lst:namespace_debug}. This was later adopted for the whole program.
+The advanced C++ feature \texttt{namespace}, was employed the whole program to globally control whether debug messages are printed or not, as shown in Code snippet \ref{lst:namespace_debug}.
 These messages are useful for debugging, however overwhelming for a general user, hence the utility to switch on or off is valuable.
 The choice to use a \texttt{namespace} instead of a simple global variable \texttt{show\_messages} can avoid name clashes between other variables similarly named.
 This organisational benefit is clearly demonstrated by the \texttt{DetectorSystem} specific messages, as shown in Code snippet \ref{lst:namespace_DSMessages_ex}.
-\textcolor{red}{Mention if I turn on validation exit or just messages?}
 
 \begin{lstlisting}[
     style=vscode, 
@@ -349,7 +345,7 @@ namespace Debug
 \begin{lstlisting}[
     style=vscode, 
     caption={
-    Demonstration of \texttt{DetectorSystem} specific messages controlled by the \texttt{namespace} \texttt{DSMessages}. This snippet is taken from the \texttt{add\_sub\_detector} member function, whose interface is shwon in  Code snippet \ref{lst:add_sub_detector}. \textcolor{red}{If deleting code snip 7 may have to do delete this or change it.} 
+    Demonstration of \texttt{DetectorSystem} specific messages controlled by the \texttt{namespace} \texttt{DSMessages}. This snippet is taken from the \texttt{add\_sub\_detector} member function, whose interface is shown in  Code snippet \ref{lst:add_sub_detector}.
     },
     label={lst:namespace_DSMessages_ex}
     ]
@@ -364,7 +360,60 @@ if (DSMessages::show_messages)
 \label{sec:ad_feat_subdetectors}
 
 The data member \texttt{status} goes beyond the minimum functionality, adding realism to the class. It makes physical sense to be able to switch a \texttt{SubDetector} on or off.
-\textcolor{red}{As will be seen in Section \ref{sec:ad_feat_detectorsystems}, a \texttt{SubDetector} contained within a \texttt{DetectorSystem} can have its \texttt{status} modified by the said \texttt{DetectorSystem} container.}
+As will be seen in Section \ref{sec:ad_feat_detectorsystems}, a \texttt{SubDetector} contained within a \texttt{DetectorSystem} can also have its \texttt{status} modified by the said \texttt{DetectorSystem} container.
+
+The omission of \texttt{const} in the \texttt{SubDetector::detect} argument was made due to the additional feature that \texttt{Calorimeter} objects stop the detected particles completely \cite{cms_detector}, hence altering the \texttt{Particle} object's \texttt{four\_momentum}.
+This was implemented by using a \texttt{Particle} base member function \texttt{adsorb()} in the \texttt{Calorimeter::detect} function, as shown by Code snippets \ref{lst:ad_feat_absorb} and \ref{lst:ad_feat_calor_detect}.
+
+\begin{lstlisting}[
+    style=vscode, 
+    caption={
+    \texttt{Particle::absorb} that alters the \texttt{Particle}'s \texttt{four\_momentum} returning its energy as its \texttt{rest\_mass} and hence that it is stationary.
+    },
+    label={lst:ad_feat_absorb}
+    ]
+void Particle::absorb()
+{
+    four_momentum->set_E(rest_mass);
+    four_momentum->set_px(0.0);
+    four_momentum->set_py(0.0);
+    four_momentum->set_pz(0.0);
+}
+}
+\end{lstlisting}
+\begin{lstlisting}[
+    style=vscode, 
+    caption={
+    Demonstration of how \texttt{Calorimeter} objects apply the \texttt{Particle::absorb} function to mimic the reality that the particles are completely stopped.
+    },
+    label={lst:ad_feat_calor_detect}
+    ]
+void Calorimeter::detect(Particle& particle) const
+{
+    // Check status of SubDetector.
+    if (is_off())
+    {
+        return; // Exit function.
+    }
+
+    if (particle_interacts(particle)) // Removes code repetition by having detect differ in the derived classes.
+    {
+        std::cout << "Calorimeter (" << sd_name << ") measures the energy of the particle as: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
+        // Will differentiate these later.
+        std::cout << "The particle's true energy is: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
+        std::cout << "The particle is absorbed." << std::endl;
+        particle.absorb();
+        std::cout << std::endl; // Line break.
+    }
+    else
+    {
+        std::cout << "Particle does not interact with the calorimeter (" << sd_name << "), no energy measurement." << std::endl;
+        std::cout << std::endl; // Line break.
+    }
+}
+}
+\end{lstlisting}
+
 
 \textcolor{red}{Maybe mention static detector ids and friend functions for the }
 
