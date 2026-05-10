@@ -507,9 +507,10 @@ void DetectorSystem::set_sub_detector_status(const std::string& sub_detector_nam
 The minimum functionality was tested by constructing a \texttt{DetectorSystem} named \texttt{det\_sys\_CMS}, which is composed of the major CMS \texttt{SubDetector} components seen in Figure \ref{fig:CMS_schematic}.
 The resulting configuration was printed using \texttt{print\_configuration} to verify that each \texttt{SubDetector} had been successfully added to the container.
 
-First we see the creation of the arbitrary container \texttt{DetectorSystem} as the CMS detector.
-
-All sub-detector components (\texttt{SubDetector} classes) are added, after which the configuration is printed. \textcolor{red}{Should I have a figure for this.}
+A \texttt{Muon} object is created and passed through \texttt{det\_sys\_CMS}, with the expectation that it will be detected by the \texttt{Tracker} and \texttt{MuonChamber} but not by the \texttt{Calorimeter} objects as they deposit little energy.
+The success of this can be seen in the \texttt{DetectorSystem::detect} output in Figure \ref{fig:min_func_detect_muon}.
+For each successful detection, the detected energy and its true energy are outputted.
+These values are equal because the detector response is modelled as perfect.
 
 A \texttt{Muon} is created so that its pass through the \texttt{det\_sys\_CMS} can demonstrate the minimum functionality. Its information is also printed.
 
