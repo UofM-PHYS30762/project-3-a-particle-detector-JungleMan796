@@ -54,7 +54,7 @@
 \maketitle
 
 \begin{abstract}
-    This is my placeholder abstract.
+    abstract
 \end{abstract}
 
 \section{Introduction}
@@ -568,13 +568,14 @@ Similar can be done for \texttt{DSMessages}.
 
 \section{Discussion and conclusions}
 
-The main program successfully demonstrates an object oriented simulation of a particle detector, using the class structure described.
-The abstract base classes \texttt{Particle} and \texttt{SubDetector} provide a clear interface, allowing common properties to be inherited and derived class specific properties to be implemented polymorphically.
+The main program successfully demonstrates an object oriented simulation of a particle detector.
+The abstract base classes \texttt{Particle} and \texttt{SubDetector} provide a clear interface, allowing common properties to be inherited, and derived class specific properties to be implemented polymorphically.
 This allowed \texttt{DetectorSystem} to store different derived \texttt{SubDetector} objects and pass different derived \texttt{Particle} objects through a detection function, meeting the minimum functionality.
 
-
-
-Mention I would improve my energy validation beyond the $E >=0$, as \texttt{Photon} that has energy and then just px comp greater is unphysical.
+The advanced features increased the physical realism and the usability of the program while applying advanced C++ techniques.
+Further improvements would be to model the detectors as imperfect, including detector efficiency and fluctuations in measured energy.
+The current \texttt{Particle} \texttt{four\_momentum} validation could also be improved, as only preventing negative energy does not stop unphysical \texttt{four\_momenta}, such as massive particles with $E^2 < p^2 +m^2$.
+An interesting possibility would be to create a mechanism for particle interactions.
 
 \printbibliography
 
