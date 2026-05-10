@@ -130,20 +130,20 @@ Although requirement 4 of Table \ref{tab:min_func_summary} refers to virtual set
 
 \subsubsection{Particles}
 \label{sec:min_func_Particles}
-\begin{figure}[H]
-      \centering
-      \makebox[\textwidth][c]{\includegraphics[alt={Put short description for screen readers here},width=1.2\textwidth,keepaspectratio=true]{report_assets/report_figures/UML_Particle_2.png}}
-      \caption[Short caption for list of figures]{
-      UML class diagram for the \texttt{Particle} hierarchy. Note no default, parametrised constructors or destructors are included to maintain simplicity.
-      }
-      \label{fig:Particle_UML}
-\end{figure}
 \texttt{Particle} was created as an abstract base class from which the particles are derived, meeting requirement 1 of Table \ref{tab:min_func_summary}.
 Figure \ref{fig:Particle_UML} shows the \texttt{Particle} base class data members, which were chosen because they represent intrinsic properties shared by all particles.
 Figure \ref{fig:Particle_UML} also shows the composition relationship between \texttt{FourMomentum} and \texttt{Particle}, satisfying requirement 5 in Table \ref{tab:min_func_summary}.
 This is implemented using a \texttt{std::unique\_ptr}, enforcing exclusive ownership of \texttt{four\_momentum}.
 \texttt{FourMomentum} \texttt{components} remain stored by a raw pointer from Assignment 4.
 The decision to implement dynamic memory meant that custom move/copy semantics were required.
+\begin{figure}[H]
+      \centering
+      \makebox[\textwidth][c]{\includegraphics[alt={Put short description for screen readers here},width=1.2\textwidth,keepaspectratio=true]{report_assets/report_figures/UML_Particle_3.drawio.png}}
+      \caption[Short caption for list of figures]{
+      UML class diagram for the \texttt{Particle} hierarchy. Note no default, parametrised constructors or destructors are included to maintain simplicity.
+      }
+      \label{fig:Particle_UML}
+\end{figure}
 
 Interaction logic was chosen to be stored in the \texttt{Particle} hierarchy rather than the \texttt{SubDetector} hierarchy.
 This allowed for shared behaviour, such as charged particles interacting with the \texttt{Tracker} in Code snippet \ref{lst:interacts_with_tracker}, to be inherited by derived particles, reducing repetition and improving extensibility.
@@ -181,8 +181,8 @@ To mitigate this the polymorphic \texttt{Photon::print\_info()} addresses the fa
 The same was done for the neutral \texttt{Pion}.
 
 
-The charged leptons, \texttt{Electron} and \texttt{Muon}, were grouped under the intermediate base class \texttt{ChargedLepton} due to their shared properties and interaction behaviour, which can seen to be defined once in Figure \ref{fig:Particle_UML}.
-Similar is done for the hadronic particles, where the common interaction logic is implemented in \texttt{Hadron} and consequently inherited by the derived objects.
+The charged leptons, \texttt{Electron} and \texttt{Muon}, were not grouped under an intermediate base class due to interaction behaviour not being shared.
+Hadronic particles were grouped under an intermediate base class, where the common interaction logic is implemented in \texttt{Hadron} and consequently inherited by the derived objects.
 A further intermediate base class, \texttt{Meson}, was introduced because mesons follow a general construction logic depending on the distinct data member \texttt{is\_charged}.
 As shown in Code snippet \ref{lst:meson_construction}, this parameter controls if a charged or neutral \texttt{Meson} is instantiated, setting the appropriate \texttt{charged\_mag} and \texttt{rest\_mass}.
 For charged mesons, \texttt{is\_anti} then determines the charge sign, while the polymorphic \texttt{print\_info} functions distinguish neutral particles that are their own anti-particles, such as \texttt{Pion}, from mesons with distinct anti-particles, such as \texttt{Kaon}.
@@ -207,8 +207,6 @@ Meson::Meson(double E, double px, double py, double pz, bool is_anti,
 }
 \end{lstlisting}
 
-\textcolor{red}{I likely will make a \texttt{ChargedLepton} so talk on this. For now lets move on.}
-
 \subsubsection{SubDetectors}
 \label{sec:min_func_SubDetectors}
 
@@ -216,7 +214,7 @@ Meson::Meson(double E, double px, double py, double pz, bool is_anti,
       \centering
       \makebox[\textwidth][c]{\includegraphics[alt={Put short description for screen readers here},width=1.2\textwidth,keepaspectratio=true]{report_assets/report_figures/UML_DetectorSystem_SubDetector_2.png}}
       \caption[Short caption for list of figures]{
-      UML class diagram for the \texttt{SubDetector} hierarchy and its composition in \texttt{DetectorSystem}. Note no constructors or destructors are included to maintain simplicity.
+      UML class diagram for the \texttt{SubDetector} hierarchy and its composition in \texttt{DetectorSystem}. Note, no constructors or destructors are included to maintain simplicity.
       }
       \label{fig:SubDetector_UML}
 \end{figure}
@@ -225,11 +223,15 @@ The \texttt{SubDetector} hierarchy was initially developed using a pure abstract
 Figure \ref{fig:SubDetector_UML} shows that base class has two data members \texttt{sd\_name} and \texttt{status}.
 \texttt{sd\_name} simply distinguishes between \texttt{SubDetector} objects while \texttt{status} controls whether a \texttt{SubDetector} is active.
 Since \texttt{SubDetector} manages no dynamically allocated data members, the default compiler copy/move operations are sufficient, so no custom copy/move semantics were required.
-\textcolor{red}{How to mention status as advanced.}
 
 To meet requirement 6 of Table \ref{tab:min_func_summary}, \texttt{Particle} objects must be passed through the derived \texttt{SubDetector}, which return the particle's energy.
 This was implemented via a virtual base member function \texttt{detect}. As virtual it allowed each derived \texttt{SubDetector} to define its own detection response while sharing a common interface.
 This common interface was utilised in \texttt{DetectorSystem} to pass a \texttt{Particle} through all contained \texttt{SubDetector} objects clearly and efficiently, as discussed later.
+
+Following the interaction design discussed in Section \ref{sec:min_func_Particles}, the \texttt{SubDetector::detect} uses the passed \texttt{Particle}'s relevant  \texttt{interacts\_with...} function to determine whether detection is physically possible.
+Code snippet \ref{lst:SubDetector_detect}, line 9, demonstrates the simplicity of this approach.
+The omission of \texttt{const} in the \texttt{particle} argument is discussed later in the advanced features section.
+\clearpage
 
 \begin{lstlisting}[
     style=vscode, 
@@ -259,10 +261,6 @@ void MuonChamber::detect(Particle& particle) const
     }
 }
 \end{lstlisting}
-
-Following the interaction design discussed in Section \ref{sec:min_func_Particles}, the \texttt{SubDetector::detect} uses the passed \texttt{Particle}'s relevant  \texttt{interacts\_with...} function to determine whether detection is physically possible.
-Code snippet \ref{lst:SubDetector_detect}, line 9, demonstrates the simplicity of this approach.
-The omission of \texttt{const} in the \texttt{particle} argument is discussed later in the advanced features section.
 
 \subsubsection{DetectorSystems}
 \label{sec:min_func_DetctorSystems}
@@ -317,7 +315,7 @@ void DetectorSystem::detect(Particle& particle) const
 
 The advanced features section includes code that implements higher level C++ techniques or goes beyond the minimum functionality.
 
-The advanced C++ feature \texttt{namespace}, was employed the whole program to globally control whether debug messages are printed or not, as shown in Code snippet \ref{lst:namespace_debug}.
+The advanced C++ feature \texttt{namespace}, was employed throughout the whole program to globally control whether debug messages are printed or not, as shown in Code snippet \ref{lst:namespace_debug}.
 These messages are useful for debugging, however overwhelming for a general user, hence the utility to switch on or off is valuable.
 The choice to use a \texttt{namespace} instead of a simple global variable \texttt{show\_messages} can avoid name clashes between other variables similarly named.
 This organisational benefit is clearly demonstrated by the \texttt{DetectorSystem} specific messages, as shown in Code snippet \ref{lst:namespace_DSMessages_ex}.
@@ -352,8 +350,8 @@ if (DSMessages::show_messages)
 \subsubsection{SubDetectors}
 \label{sec:ad_feat_subdetectors}
 
-The data member \texttt{status} goes beyond the minimum functionality, adding realism to the class. It makes physical sense to be able to switch a \texttt{SubDetector} on or off.
-As will be seen in Section \ref{sec:ad_feat_detectorsystems}, a \texttt{SubDetector} contained within a \texttt{DetectorSystem} can also have its \texttt{status} modified by the said \texttt{DetectorSystem} container.
+The data member \texttt{status} goes beyond the minimum functionality, with switching a \texttt{SubDetector} on or off adding physical realism.
+As will be seen in Section \ref{sec:ad_feat_detectorsystems}, a \texttt{SubDetector} contained within a \texttt{DetectorSystem} can also have its \texttt{status} modified by the \texttt{DetectorSystem} container.
 
 The \texttt{Particle} argument in  \texttt{SubDetector::detect} was not \texttt{const} to support the additional feature where \texttt{Calorimeter} objects stop the detected particles completely \cite{cms_detector}, hence altering the \texttt{Particle} object's \texttt{four\_momentum}.
 This was implemented using the \texttt{Particle} base member function \texttt{absorb()} inside \texttt{Calorimeter::detect} function, as shown by Code snippets \ref{lst:ad_feat_absorb} and \ref{lst:ad_feat_calor_detect}.
@@ -452,7 +450,7 @@ void DetectorSystem::remove_sub_detector(const std::string& rem_sub_detector_nam
 Both member functions utilise a lambda function, an advanced C++ technique, when finding if the selected \texttt{SubDetector} is contained within the \texttt{DetectorSystem}.
 This is carried out using the \texttt{algorithm} \texttt{std::find\_if} function which searches through the containing data member \texttt{sub\_detectors}.
 A lambda function returns \texttt{true} if the \texttt{SubDetector} name of that iteration  matches the requested name.
-\texttt{std::find\_if} then returns the iterator associated with the matching \texttt{SubDetector} or \texttt{sub\_detectors.end()} if no match is found.  
+\texttt{std::} \texttt{find\_if} then returns the iterator associated with the matching \texttt{SubDetector} or \texttt{sub\_detectors.end()} if no match is found.  
 Its use here maintains clarity of the process because the search condition is defined directly where it is needed. Defining the same function elsewhere would achieve the same result but make this simple procedure less visible.
 The lambda function therefore acts as a beneficial, small local attachment to \texttt{std::find\_if}, as seen in in lines 7 to 10 in Code snippet \ref{lst:remove_sub_detector}.
 Note the member function \texttt{get\_sub\_detector}, mentioned below and in Code snippet \ref{lst:set_sub_detector_status}, uses the same \texttt{std::find\_if} and lambda function logic.
@@ -461,6 +459,7 @@ A wrapper member function \texttt{set\_sub\_detector\_status}, as seen in Code s
 It does so by using \texttt{get\_sub\_detector} to return a non owning pointer to a contained \texttt{SubDetector}, if the requested name exists.
 It is important that this pointer does not transfer ownership, so that the \texttt{DetectorSystem} object's \texttt{std::unique\_ptr} remains intact.
 The returned pointer is only used to access and modify the contained \texttt{SubDetector}.
+\clearpage
 \begin{lstlisting}[
     style=vscode, 
     caption={
@@ -496,17 +495,8 @@ The outputs are presented in two parts: minimum functionality and advanced featu
 
 \subsection{Minimum functionality}
 
-\textcolor{red}{Should I have the Forward Calorimeter.}
-
-\textcolor{red}{Should I have an option to loop through many particle detections?}
-
 The minimum functionality was tested by constructing a \texttt{DetectorSystem} named \texttt{det\_sys\_CMS}, which is composed of the major CMS \texttt{SubDetector} components seen in Figure \ref{fig:CMS_schematic}.
 The resulting configuration was printed using \texttt{print\_configuration} to verify that each \texttt{SubDetector} had been successfully added to the container.
-
-A \texttt{Muon} object is created and passed through \texttt{det\_sys\_CMS}, with the expectation that it will be detected by the \texttt{Tracker} and \texttt{MuonChamber} but not by the \texttt{Calorimeter} objects as they deposit little energy.
-The success of this can be seen in the \texttt{DetectorSystem::detect} output in Figure \ref{fig:min_func_detect_muon}.
-For each successful detection, the detected energy and its true energy are outputted.
-These values are equal because the detector response is modelled as perfect.
 \begin{figure}[H]
       \centering
       \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_assets/report_figures/det_sys_CMS_Muon.png}
@@ -515,10 +505,14 @@ These values are equal because the detector response is modelled as perfect.
       }
       \label{fig:min_func_detect_muon}
 \end{figure}
+A \texttt{Muon} object is created and passed through \texttt{det\_sys\_CMS}, with the expectation that it will be detected by the \texttt{Tracker} and \texttt{MuonChamber} but not by the \texttt{Calorimeter} objects as they deposit little energy.
+The success of this can be seen in the \texttt{DetectorSystem::detect} output in Figure \ref{fig:min_func_detect_muon}.
+For each successful detection, the detected energy and its true energy are outputted.
+These values are equal because the detector response is modelled as perfect.
 
 \subsection{Advanced features}
 
-The first advanced functionality tested was the wrapper member function \texttt{DetectorSystem::set\_detector\_status}.
+The first advanced functionality tested was the wrapper member function \texttt{DetectorSystem::set} \texttt{\_detector\_status}.
 This was tested by switching off the \texttt{MuonChamber} before passing the same \texttt{Muon} through the \texttt{DetectorSystem} again.
 The output can be seen in Figure \ref{fig:ad_feat_wrapper_detect}, with as expected no detection occuring for the \texttt{MuonChamber} as it is inactive.
 This demsonstrates that the wrapper function successfully modifies the \texttt{SubDetector}'s \texttt{status} via \texttt{DetectorSystem}.
@@ -543,7 +537,7 @@ It then applies the \texttt{absorb} member function with this behaviour being sh
       \label{fig:ad_feat_absorb_pion}
 \end{figure}
 
-Another \texttt{DetectorSystem}, \texttt{det\_sys\_2}, is used to test the ownership managment functions \texttt{remove\_sub\_detector} and \texttt{release\_sub\_detector}.
+Another \texttt{DetectorSystem}, \texttt{det\_sys\_2}, is used to test the ownership managment functions \texttt{remove} \texttt{\_sub\_detector} and \texttt{release\_sub\_detector}.
 The output shows that a \texttt{SubDetector} can either be removed from the container and destroyed or released and used independently.
 
 The utility of \texttt{namespaces} are shown in Figure \ref{fig:ad_feat_namespace_debug}, by turning  \texttt{Debug::show\_messages} to \texttt{true} and creating an object. 
@@ -553,7 +547,7 @@ Similar can be done for \texttt{DSMessages}.
       \centering
       \includegraphics[alt={Put short description for screen readers here},width=1\textwidth,keepaspectratio=true]{report_assets/report_figures/namespace_debug_on.png}
       \caption[Short caption for list of figures]{
-      Screenshot of the terminal's output for when a \texttt{Neutron} is created while \texttt{Debug} messages are on. \textcolor{red}{Zoomed in compared to others. What else can I do?}
+      Screenshot of the terminal's output for when a \texttt{Neutron} is created while \texttt{Debug} messages are on.
       }
       \label{fig:ad_feat_namespace_debug}
 \end{figure}
