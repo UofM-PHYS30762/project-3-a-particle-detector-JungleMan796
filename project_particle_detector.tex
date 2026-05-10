@@ -297,8 +297,9 @@ Move construction and assignment were defaulted as \texttt{std::unique\_ptr} alr
     ]
     void add_sub_detector(std::unique_ptr<SubDetector> sub_detector);
 \end{lstlisting}
-\texttt{SubDetector} objects can be added using the member function stated in Code snippet \ref{lst:add_sub_detector}, with the configuration printed via the member function \texttt{print\_configuration}, which uses a \texttt{for} loop similar to the one seen in Code snippet \ref{lst:DetectorSystem_detect}.
-As mentioned earlier in Section \ref{sec:min_func_SubDetectors}, the fact that \texttt{SubDetector::detect} is virtual means that it can be called in the same way for all \texttt{SubDetector} objects, as seen in line 8.
+\texttt{SubDetector} objects are added to the \texttt{DetectorSystem} using the member function stated in Code snippet \ref{lst:add_sub_detector}.
+The full \texttt{DetectorSystem} configuration can be displayed using the member function \texttt{print\_configuration}, which iterates through the stored \texttt{SubDetector} objects in the same manner as \texttt{DetectorSystem::detect} in Code snippet \ref{lst:DetectorSystem_detect}.
+As discussed in Section \ref{sec:min_func_SubDetectors}, \texttt{SubDetector::detect} is virtual, so each stored \texttt{SubDetector} can be called via the same interface, as seen in line 8.
 \begin{lstlisting}[
     style=vscode, 
     caption={\texttt{DetectorSystem} member function implementation to pass the \texttt{Particle} through the all the owned \texttt{SubDetector} objects.},
@@ -318,7 +319,6 @@ void DetectorSystem::detect(Particle& particle) const
     std::cout << std::endl; // Line break.
 }
 \end{lstlisting}
-\textcolor{red}{Check the copy for the additional \texttt{DetectorSystem} features. Talk on namespace feature also.}
 
 \subsection{Advanced features}
 
