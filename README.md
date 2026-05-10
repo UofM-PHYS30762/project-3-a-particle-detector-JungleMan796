@@ -1,7 +1,7 @@
 # Final Project - Particle Detector.
 
 ## Usage instructions.
-Compilation line:```g++ -Wall main.cpp `
+Compilation line: ```g++ -Wall main.cpp `
 src/core/*.cpp `
 src/base/*.cpp `
 src/derived/Particle/*.cpp `
