@@ -36,9 +36,13 @@ Much of the foundation of this project was built from the assignments 4 & 5, hen
 - ChatGPT 5.2 suggested ```is_anti ? +1 : -1``` for printing the charge of the ```ChargeLepton``` branch of the hierarchy, I adopted this.
 - Needing a better file system I wanted folders to intuitively match the hierarchy structure. This I did but ChatGPT 5.2 suggested using C++ standards ```inlcude``` for the header files and ```src``` for the implementation files.
 ### Project
-
-Below will explain how it is used in this assignment.
+- Discussed whether to store the interaction logic with member functions or in a ```vector```.
+- For the ```DetectorSystem``` container ChatGPT 5.2 suggested ```std::vector<std::unique_ptr<SubDetector>>```, with ```std::unique_ptr``` making sense as discussed in the report.
+- When creating the ```DetectorSystem``` member functions, ```remove_sub_detector``` and ```release_sub_detector```, ChatGPT 5.2 suggested that I use ```std::find_if()``` to search for the requested ```SubDetector``` within the container.
+- ChatGPT 5.2 helped me to learn how UML diagrams work.
+- Discussed the possibilities of exceptions for validation, however I did not think it added much value.
+- In the report ChatGPT 5.2 helped me to created nicely formatted code snippets.
 
 ## Report
-This report includes my design considerations and process and a description of the software built.
-The report can be found in the file "" with its commit history being found in the file "project_particle_detector.tex". It includes design considerations and a description of the software.
+This report includes my key design considerations, with the results indicating how the main.cpp demonstrates the minimum and advanced functionality.
+The report can be found in the file "" with its commit history being found in the file "project_particle_detector.tex".
