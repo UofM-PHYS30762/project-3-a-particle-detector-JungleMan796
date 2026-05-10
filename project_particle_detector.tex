@@ -286,11 +286,10 @@ This is what gives \texttt{DetectorSystem} its utility of being a container of m
     private:
     std::vector<std::unique_ptr<SubDetector>> sub_detectors;
 \end{lstlisting}
-\texttt{std::unique\_ptr} was chosen over \texttt{std::shared\_ptr} to store the \texttt{SubDetector} objects, as it seemed unrealistic for the same \texttt{SubDetector}component to be part of multiple major \texttt{DetectorSystem} objects.
-Exclusive ownership also makes destroying \texttt{SubDetector} classes much easier, using shared ownership would therefore introduce unnecessary complexity without providing that much benefit.
-Copy constructors and assignment operators were deleted to prevent the copying of unique pointers.
-It is also non-physical that a whole \texttt{DetectorSystem} with its unique \texttt{SubDetector} objects would be copied exactly.
-The move constructors and assignment operators \textcolor{red}{(check that they work)} are \texttt{defualt} as the compiler provides the correct handling of \texttt{std::unique\_ptr}.
+\texttt{std::unique\_ptr} was chosen over \texttt{std::shared\_ptr} because each \texttt{SubDetector} should belong to a single \texttt{DetectorSystem}, reflecting exclusive ownership.
+Shared ownership would add unnecessary complexity, as the same physical \texttt{SubDetector} component would not normally be part of multiple \texttt{DetectorSystem} objects.
+Copy constructors and assignment operators were deleted, to prevent copying of unique pointers. Duplicating a whole \texttt{DetectorSystem} would also not represent a meaningful physical operation.
+Move construction and assignment were defaulted as \texttt{std::unique\_ptr} already provides safe ownership transfer.
 \begin{lstlisting}[
     style=vscode, 
     caption={\texttt{DetectorSystem} member function interface to add \texttt{SubDetector} objects to the container.},
