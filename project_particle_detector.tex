@@ -547,10 +547,11 @@ It then applies the \texttt{absorb} member function with this behaviour being sh
       \label{fig:ad_feat_absorb_pion}
 \end{figure}
 
-Another \texttt{DetectorSystem}, \texttt{det\_sys\_2}, is used to test the \texttt{remove} and \texttt{release} \textcolor{red}{(Should I name them all fully)} member functions.
-With the extracted \texttt{SubDetector} shown to work alone.
+Another \texttt{DetectorSystem}, \texttt{det\_sys\_2}, is used to test the ownership managment functions \texttt{remove\_sub\_detector} and \texttt{release\_sub\_detector}.
+The output shows that a \texttt{SubDetector} can either be removed from the container and destroyed or released and used independently.
 
-The utility of \texttt{namespaces} are shown in Figure \ref{fig:ad_feat_namespace_debug}, by turning  \texttt{Debug::show\_messages} to \texttt{true} and creating an object. These messages are useful for debugging, however they substantially bloat the main and hence the ability to be turned off is essential for the general user.
+The utility of \texttt{namespaces} are shown in Figure \ref{fig:ad_feat_namespace_debug}, by turning  \texttt{Debug::show\_messages} to \texttt{true} and creating an object. 
+It can seen that these messages are useful for debugging, however they substantially bloat the main and hence the ability to be turned off is essential for the general user.
 Similar can be done for \texttt{DSMessages}.
 \begin{figure}[H]
       \centering
