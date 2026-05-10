@@ -1,7 +1,13 @@
 # Final Project - Particle Detector.
 
 ## Usage instructions.
-Compilation line:
+Compilation line:```g++ -Wall main.cpp `
+src/core/*.cpp `
+src/base/*.cpp `
+src/derived/Particle/*.cpp `
+src/derived/SubDetector/*.cpp `
+-Iinclude `
+-o main.exe```
 
 ## Declaration of AI use.
 Sharing of prompts will be included if it regards "Code Generation" or "comments".
