@@ -67,6 +67,7 @@ int main()
     std::cout << "Demonstrating with Calorimeter interacting Particles that they are absorbed." << std::endl;
     std::cout << std::endl; // Line break.
 
+    // Demonstration of an anti-electron.
     std::cout << "Demonstrating with a Positron (anti-Electron)." << std::endl;
     Electron electron_1(10.0, 1.0, 2.0, 3.0, true);
 
