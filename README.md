@@ -41,6 +41,7 @@ Much of the foundation of this project was built from the assignments 4 & 5, hen
 - ChatGPT 5.2 helped me to learn how UML diagrams work.
 - Discussed the possibilities of exceptions for validation, however I did not think it added much value.
 - In the report ChatGPT 5.2 helped me to created nicely formatted code snippets.
+- In "main.cpp" ChatGPT 5.2 recommened helper functions to split up the long main into many managable functions that demonstrate a singular feature.
 
 ## Report
 This report includes my key design considerations, with the results indicating how the main.cpp demonstrates the minimum and advanced functionality.
