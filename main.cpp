@@ -30,7 +30,7 @@
 int main()
 {
     // Demonstration of minimum functionality.
-    std::cout << "--- Demonstration of minimum fucntionality in main.cpp ---" << std::endl;
+    std::cout << "--- Demonstration of minimum functionality in main.cpp ---" << std::endl;
     std::cout << std::endl; // Line break.
     std::cout << "Creating the CMS DetectorSystem with all the SubDetector components." << std::endl;
     std::cout << std::endl; // Line break.
@@ -50,7 +50,7 @@ int main()
     Muon muon_1(20.0, 2.0, 3.0, 4.0, false);
     muon_1.print_info();
 
-    det_sys_CMS.detect(muon_1); // Pass muon_1 throught the DetectorSystem.
+    det_sys_CMS.detect(muon_1); // Pass muon_1 through the DetectorSystem.
 
     // Demonstration of advanced features.
     std::cout << "--- Demonstration of advanced features in main.cpp ---" << std::endl;
