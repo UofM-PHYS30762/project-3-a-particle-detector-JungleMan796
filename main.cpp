@@ -103,7 +103,7 @@ int main()
     det_sys_2.print_configuration(); // Uncomment if wish to see process clearer.
 
     std::unique_ptr<SubDetector> released_sub_detector = det_sys_2.release_sub_detector("Silicon Tracker 2");
-    std::cout << "Example of released SubDetector detecting alone." << std::endl;
+    std::cout << "Example of released SubDetector detecting a Muon alone." << std::endl;
     released_sub_detector->detect(muon_1); // Example of released SubDetector acting alone.
 
     // Demonstration of Debug namespace, turned on and then off.
