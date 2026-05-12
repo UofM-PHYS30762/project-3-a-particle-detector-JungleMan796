@@ -49,7 +49,7 @@ void MuonChamber::print_info() const
     SubDetector::print_info();
 
     // Additional characteristics common to MuonChambers.
-    std::cout << "Placeholder MuonChamber unique characteristics." << std::endl;
+    // std::cout << "Placeholder MuonChamber unique characteristics." << std::endl;
 
     std::cout << std::endl; // Line break.
 }

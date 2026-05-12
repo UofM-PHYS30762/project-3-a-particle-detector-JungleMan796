@@ -49,7 +49,7 @@ void Tracker::print_info() const
     SubDetector::print_info();
 
     // Additional characteristics common to Trackers.
-    std::cout << "Placeholder Tracker unique characteristics." << std::endl;
+    // std::cout << "Placeholder Tracker unique characteristics." << std::endl;
 
     std::cout << std::endl; // Line break.
 }

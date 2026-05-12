@@ -49,7 +49,7 @@ void Calorimeter::print_info() const
     SubDetector::print_info();
 
     // Additional characteristics common to Calorimeters.
-    std::cout << "Placeholder Calorimeters unique characteristics." << std::endl;
+    // std::cout << "Placeholder Calorimeters unique characteristics." << std::endl;
 
     std::cout << std::endl; // Line break.
 }
