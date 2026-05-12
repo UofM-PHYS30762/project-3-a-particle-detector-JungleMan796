@@ -107,7 +107,7 @@ int main()
     released_sub_detector->detect(muon_1); // Example of released SubDetector acting alone.
 
     // Demonstration of Debug namespace, turned on and then off.
-    std::cout << "Example of Debug namespace turned on when an object is created." << std::endl;
+    std::cout << "Example of Debug namespace turned on when an object (Neutron) is created." << std::endl;
     std::cout << std::endl; // Line break.
     Debug::show_messages = true; // Turn Debug messages on.
 
