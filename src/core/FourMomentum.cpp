@@ -23,30 +23,20 @@ void FourMomentum::validate_E(double E) const
 }
 
 // Defualt Constructor.
-FourMomentum::FourMomentum()
+FourMomentum::FourMomentum() : components(std::make_unique<std::vector<double>>(std::vector<double>{0.0, 0.0, 0.0, 0.0}))
 {
-    components = new std::vector<double>;
-    components->push_back(0.0); // E.
-    components->push_back(0.0); // px
-    components->push_back(0.0); // py
-    components->push_back(0.0); // pz
-
     if (Debug::show_messages)
     {
-        std::cout << "Calling FourMomentum Defualt Constructor." << std::endl;
+        std::cout << "Calling FourMomentum Default Constructor." << std::endl;
     }
 }
 
 //Parameterised Constructor.
 FourMomentum::FourMomentum(double E, double px, double py, double pz)
 {
-    validate_E(E); // Validation of E.
-
-    components = new std::vector<double>;
-    components->push_back(E);
-    components->push_back(px);
-    components->push_back(py);
-    components->push_back(pz);
+    validate_E(E); // Validation of E before initialisation.
+    
+    components = std::make_unique<std::vector<double>>(std::vector<double>{E, px, py, pz}); 
 
     if (Debug::show_messages)
     {
@@ -61,11 +51,12 @@ FourMomentum::~FourMomentum()
     {
         std::cout << "Calling FourMomentum Destructor." << std::endl;
     }
-    delete components;
+    // delete components; // No delete needed, std::unique cleans up automatically.
 }
 
 // Copy Constructor (deep copy).
-FourMomentum::FourMomentum(const FourMomentum& other)
+FourMomentum::FourMomentum(const FourMomentum& other) :
+    components(std::make_unique<std::vector<double>>(*other.components))
 {
     // e.g FourMomentum b = a.
     // other refers to a.
@@ -76,7 +67,7 @@ FourMomentum::FourMomentum(const FourMomentum& other)
     }
     // Copies components of other (FourMomentum object) and constructs new object.
     // Does not copy the address of the other.
-    components = new std::vector<double>(*other.components);
+    // components = new std::vector<double>(*other.components); // Done above with smart pointers now.
 }
 
 // Copy Assignment Operator.
@@ -94,22 +85,25 @@ FourMomentum& FourMomentum::operator=(const FourMomentum& other)
     // Checks you don't do b = b. Then you may delete your memory and try to copy from it. 
     if (this != &other)
     {
-        delete components; // Delete b's prior components, therefore no memory leak.
-        components = new std::vector<double>(*other.components);
+        // delete components; // Delete b's prior components, therefore no memory leak. // Commented as now using smart pointers.
+        // components = new std::vector<double>(*other.components); // Commented as now using smart pointers.
+        components = std::make_unique<std::vector<double>>(*other.components); // Smart pointer deals with the deletion of this's old components.
     }
 
     return *this;
 }
 
 // Move Constructor (constructing from temporary/disposible object).
-FourMomentum::FourMomentum(FourMomentum&& other) noexcept // && means other is an rvalue reference, can strip from.
+FourMomentum::FourMomentum(FourMomentum&& other) noexcept : // && means other is an rvalue reference, can strip from.
+    components(std::move(other.components))
 {
     if (Debug::show_messages)
     {
         std::cout << "Calling FourMomentum Move Constructor." << std::endl;
     }
-    components = other.components;
-    other.components = nullptr; // other has been stripped but safely for destructor.
+    // Commented below as smart pointer deals with this.
+    // components = other.components;
+    // other.components = nullptr; // other has been stripped but safely for destructor.
 }
 
 // Move Assignment Operator.
@@ -122,9 +116,12 @@ FourMomentum& FourMomentum::operator=(FourMomentum&& other) noexcept
 
     if (this != &other)
     {
-        delete components; // this previous components are deleted.
-        components = other.components;
-        other.components = nullptr; // other has been stripped but safely for destructor.
+        // Commented below as smart pointer deals with this.
+        // delete components; // this previous components are deleted.
+        // components = other.components;
+        // other.components = nullptr; // other has been stripped but safely for destructor.
+
+        components = std::move(other.components);
     }
 
     return *this;

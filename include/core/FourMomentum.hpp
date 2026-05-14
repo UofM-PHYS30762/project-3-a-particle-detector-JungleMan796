@@ -9,13 +9,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 
 class FourMomentum
 {
     private:
     // Components of four momentum [units: MeV - using natural units].
     // Implemented as a pointer to a dynamically allocated std::vector.
-    std::vector<double>* components; // (E, px, py, pz).
+    std::unique_ptr<std::vector<double>> components; // (E, px, py, pz).
 
     // Validation of energy function.
     void validate_E(double E) const;
