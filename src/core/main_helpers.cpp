@@ -57,7 +57,7 @@ DetectorSystem demonstrate_minimium_functionality()
     det_sys_CMS.print_configuration(); // Demonstration of printing entire configuration.
 
     // Creation of Muon to pass through det_sys_CMS to demonstrate minimum functionality.
-    Muon muon_1(20.0, 2.0, 3.0, 4.0, false);
+    Muon muon_1(130.0, 2.0, 3.0, 4.0, false);
     muon_1.print_info();
 
     det_sys_CMS.detect(muon_1); // Pass muon_1 through the DetectorSystem.
@@ -73,7 +73,7 @@ void demonstrate_wrapper_sub_detector_status(DetectorSystem& det_sys)
     std::cout << "Demonstrating the use of a wrapper function to alter the status of a contained SubDetector." << std::endl;
     std::cout << "Demonstrating how this alters the detection process." << std::endl;
 
-    Muon muon_2(20.0, 2.0, 3.0, 4.0, false); // Making new Muon to do this so I another doesn't need to be passed.
+    Muon muon_2(130.0, 2.0, 3.0, 4.0, false); // Making new Muon to do this so I another doesn't need to be passed.
 
     det_sys.set_sub_detector_status("Muon Chamber", false);
     det_sys.detect(muon_2); // Demonstration of how this changes the detection process.
@@ -103,13 +103,13 @@ void demonstrate_particle_absorption(DetectorSystem& det_sys)
 
     // Demonstration of a Hadron - Neutral Pion.
     std::cout << "Demonstrating with a Neutral Pion." << std::endl;
-    Pion pion_1(15.0, 4.0, 5.0, 6.0, false, false);
+    Pion pion_1(500.0, 4.0, 5.0, 6.0, false, false);
 
     print_detect_print_for_abs(det_sys, pion_1);
 
     // Demonstration of a Photon.
     std::cout << "Demonstrating with a Photon." << std::endl;
-    Photon photon_1(15.0, 4.0, 5.0, 6.0, false);
+    Photon photon_1(50.0, 50.0, 0.0, 0.0, false);
 
     print_detect_print_for_abs(det_sys, photon_1);
 }
@@ -132,7 +132,7 @@ void demonstrate_remove_and_release()
     std::unique_ptr<SubDetector> released_sub_detector = det_sys_2.release_sub_detector("Silicon Tracker 2");
     std::cout << "Example of released SubDetector detecting a Charged Kaon alone." << std::endl;
 
-    Kaon kaon_1(500.0, 3.0, 4.0, 5.0, false, true);
+    Kaon kaon_1(600.0, 3.0, 4.0, 5.0, false, true);
 
     released_sub_detector->detect(kaon_1); // Example of released SubDetector acting alone.
 }
@@ -145,7 +145,7 @@ void demonstrate_debug_messages()
     Debug::show_messages = true; // Turn Debug messages on.
 
     // Created object to show constructor messages.
-    Neutron neutron_1(10.0, 1.0, 2.0, 3.0, false);
+    Neutron neutron_1(1000, 1.0, 2.0, 3.0, false);
 
     Debug::show_messages = false; // Turn Debug messages off.
     std::cout << std::endl; // Line break.
