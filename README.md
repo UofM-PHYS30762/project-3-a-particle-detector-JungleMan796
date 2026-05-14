@@ -38,6 +38,7 @@ Much of the foundation of this project was built from the assignments 4 & 5, hen
 - Discussed whether to store the interaction logic with member functions or in a ```vector```.
 - For the ```DetectorSystem``` container ChatGPT 5.2 suggested ```std::vector<std::unique_ptr<SubDetector>>```, with ```std::unique_ptr``` making sense as discussed in the report.
 - When creating the ```DetectorSystem``` member functions, ```remove_sub_detector``` and ```release_sub_detector```, ChatGPT 5.2 suggested that I use ```std::find_if()``` to search for the requested ```SubDetector``` within the container.
+- When designing the ```DetectorSystem``` wrapper function ```set_sub_detector_status```, ChatGPT 5.2 indicated the use of a raw non-owning pointer to deal with the ```status``` change of the ```SubDetector``` stored in the ```DetectorSystem```. 
 - ChatGPT 5.2 helped me to learn how UML diagrams work.
 - Discussed the possibilities of exceptions for validation, however I did not think it added much value.
 - In the report ChatGPT 5.2 helped me to created nicely formatted code snippets.
