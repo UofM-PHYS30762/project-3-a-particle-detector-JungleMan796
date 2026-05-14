@@ -20,7 +20,7 @@ Modification and additions to the classes can be applied simply due them being m
 - Could add energy thresholds to whether ```MuonChamber``` objects can detect a ```Muon```, this would be done by modifying the member function ```interacts_with_muon_chamber```. 
 
 ## Declaration of AI use.
-Sharing of prompts will be included if it regards "Code Generation" or "comments".
+Sharing of prompts will be included if it regards "Code Generation" or "comments", none where needed for this project.
 Also whether I have a paid GenAI subscriptions: I have ChatGPT plus. 
 Much of the foundation of this project was built from the assignments 4 & 5, hence I will include the declaration of AI from these assignments that are relevant, and then where I used it standalone for this project.
 ### Assignment 4
