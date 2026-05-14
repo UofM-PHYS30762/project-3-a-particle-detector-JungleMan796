@@ -56,7 +56,8 @@
 \begin{abstract}
     An object oriented C++ program was developed to simulate a particle detector.
     It utilised abstract base classes for the particle and sub-detector hierarchies to allow a detector system class to own derived sub-detectors and pass derived particles through, simulating detection.
-    Further improvements to my code design would be to: model the detector as imperfect, increase the physicality of the energy validation and introduce particle interactions.
+    To do this encapsulation, composition, inheritance and polymorphism was employed.
+    The main finding of this code was how integral inheritance and polymorphism is for future extension.
 \end{abstract}
 
 \section{Introduction}
@@ -153,7 +154,7 @@ Detector specific conditions, such as \texttt{status}, remain within the \texttt
 \begin{lstlisting}[
     style=vscode, 
     caption={
-    \texttt{Particle} member function \texttt{interacts\_with\_tracker}. As seen in Figure \ref{fig:Particle_UML}, it is theonly \texttt{interacts\_with} member function defined in \texttt{Particle} and not overridden in the derived classes.},
+    \texttt{Particle} member function \texttt{interacts\_with\_tracker}. As seen in Figure \ref{fig:Particle_UML}, it is the only \texttt{interacts\_with} member function defined in \texttt{Particle} and not overridden in the derived classes.},
     label={lst:interacts_with_tracker}
 ]
 bool Particle::interacts_with_tracker() const
@@ -177,7 +178,7 @@ On top of this, it will be seen that the design choice greatly simplifies the de
 The class hierarchy seen in Figure \ref{fig:Particle_UML} was decided upon based on shared properties of the particles required in Table \ref{tab:min_func_summary}.
 \texttt{Photon} was derived directly from \texttt{Particle} due to it possessing distinct properties and not sharing behaviour with the other particles.
 It became clear that the inherited data members, \texttt{rest\_mass} and \texttt{is\_anti}, were redundant for \texttt{Photon} as it has no mass and is its own anti-particle. However, since they are not damaging and a necessity for most of the particles, it was worthwhile for them to remain as base data members.
-To mitigate this the polymorphic \texttt{Photon::print\_info()} addresses the fact that photons are their own anti-particles.
+To mitigate this the polymorphic \texttt{print\_info()} addresses the fact that photons are their own anti-particles.
 The same was done for the neutral \texttt{Pion}.
 
 
@@ -187,7 +188,7 @@ A further intermediate base class, \texttt{Meson}, was introduced because mesons
 As shown in Code snippet \ref{lst:meson_construction}, this parameter controls if a charged or neutral \texttt{Meson} is instantiated, setting the appropriate \texttt{charged\_mag} and \texttt{rest\_mass}.
 For charged mesons, \texttt{is\_anti} then determines the charge sign, while the polymorphic \texttt{print\_info} functions distinguish neutral particles that are their own anti-particles, such as \texttt{Pion}, from mesons with distinct anti-particles, such as \texttt{Kaon}.
 This reduces repeated constructor and output  logic across derived \texttt{Meson} objects.
-Baryons were not given an intermediate base class because their construction logic is not consistent, while the hierarchy still allows a baryon base class to be introduced later if more shared behaviour is added.
+Baryons were not given an intermediate base class because their construction logic is not consistent, however the hierarchy still allows a baryon base class to be introduced later if more shared behaviour is added.
 \begin{lstlisting}[
     style=vscode, 
     caption={
@@ -222,13 +223,13 @@ Meson::Meson(double E, double px, double py, double pz, bool is_anti,
 The \texttt{SubDetector} hierarchy was initially developed using an abstract base class and one derived class, allowing the core interface to be tested before adding more derived classes.
 Figure \ref{fig:SubDetector_UML} shows that the base class has two data members \texttt{sd\_name} and \texttt{status}.
 \texttt{sd\_name} simply distinguishes between \texttt{SubDetector} objects while \texttt{status} controls whether a \texttt{SubDetector} is active.
-Since \texttt{SubDetector} manages no dynamically allocated data members, the default compiler copy/move operations are sufficient, so no custom copy/move semantics were required.
+Since \texttt{SubDetector} manages no dynamically allocated data members, the default compiler copy/move operations are sufficient, hence no custom copy/move semantics were required.
 
 To meet requirement 6 of Table \ref{tab:min_func_summary}, \texttt{Particle} objects must be passed through the derived \texttt{SubDetector}, which returns the particle's energy.
 This was implemented via a virtual base member function \texttt{detect}. As virtual it allowed each derived \texttt{SubDetector} to define its own detection response while sharing a common interface.
 This common interface was utilised in \texttt{DetectorSystem} to pass a \texttt{Particle} through all contained \texttt{SubDetector} objects clearly and efficiently, as discussed later.
 
-Following the interaction design discussed in Section \ref{sec:min_func_Particles}, the \texttt{SubDetector::detect} uses the passed \texttt{Particle}'s relevant  \texttt{interacts\_with...} function to determine whether detection is physically possible.
+Following the interaction design discussed in Section \ref{sec:min_func_Particles}, the \texttt{SubDetector::detect} uses the passed \texttt{Particle}'s relevant  \texttt{interacts\_with} function to determine whether detection is physically possible.
 Code snippet \ref{lst:SubDetector_detect}, line 9, demonstrates the simplicity of this approach.
 The omission of \texttt{const} in the \texttt{particle} argument is discussed later in the advanced features section.
 \clearpage
@@ -250,7 +251,6 @@ void MuonChamber::detect(Particle& particle) const
     if (particle.interacts_with_muonchamber())
     {
         std::cout << "Muon Chamber (" << sd_name << ") measures the energy of the particle as: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
-        // Will differentiate these later.
         std::cout << "The particle's true energy is: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
         std::cout << std::endl; // Line break.
     }
@@ -353,7 +353,7 @@ if (DSMessages::show_messages)
 The data member \texttt{status} goes beyond the minimum functionality, with switching a \texttt{SubDetector} on or off adding physical realism.
 As will be seen in Section \ref{sec:ad_feat_detectorsystems}, a \texttt{SubDetector} contained within a \texttt{DetectorSystem} can also have its \texttt{status} modified by the \texttt{DetectorSystem} container.
 
-The \texttt{Particle} argument in  \texttt{SubDetector::detect} was not \texttt{const} to support the additional feature where \texttt{Calorimeter} objects stop the detected particles completely \cite{cms_detector}, hence altering the \texttt{Particle} object's \texttt{four\_momentum}.
+The \texttt{Particle} argument in  \texttt{SubDetector::detect} was not \texttt{const} to support the additional feature of \texttt{Calorimeter} objects stopping the detected particles completely \cite{cms_detector}, hence altering the \texttt{Particle} object's \texttt{four\_momentum}.
 This was implemented using the \texttt{Particle} base member function \texttt{absorb()} inside \texttt{Calorimeter::detect} function, as shown by Code snippets \ref{lst:ad_feat_absorb} and \ref{lst:ad_feat_calor_detect}.
 A friend function approach was considered as I initially thought it would allow a more physically aligned process to be programmed, with the \texttt{SubDetector} altering the \texttt{four\_momentum}.
 However, this wasn't the case and hence granting the \texttt{SubDetector} access to the \texttt{Particle} protected data members produced no value.
@@ -393,7 +393,6 @@ void Calorimeter::detect(Particle& particle) const
     if (particle_interacts(particle)) // Removes code repetition by having detect differ in the derived classes.
     {
         std::cout << "Calorimeter (" << sd_name << ") measures the energy of the particle as: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
-        // Will differentiate these later.
         std::cout << "The particle's true energy is: " << particle.get_four_momentum().get_E() << " MeV" << std::endl;
         std::cout << "The particle is absorbed." << std::endl;
         particle.absorb();
@@ -449,10 +448,10 @@ void DetectorSystem::remove_sub_detector(const std::string& rem_sub_detector_nam
 }
 \end{lstlisting}
 Both member functions utilise a lambda function, an advanced C++ technique, when finding if the selected \texttt{SubDetector} is contained within the \texttt{DetectorSystem}.
-This is carried out using the \texttt{algorithm} \texttt{std::find\_if} function which searches through the containing data member \texttt{sub\_detectors}.
+This is carried out using the \texttt{algorithm} \texttt{std::find\_if} function, which searches through the containing data member \texttt{sub\_detectors}.
 A lambda function returns \texttt{true} if the \texttt{SubDetector} name of that iteration  matches the requested name.
-\texttt{std::} \texttt{find\_if} then returns the iterator associated with the matching \texttt{SubDetector} or \texttt{sub\_detectors.end()} if no match is found.  
-Its use here maintains clarity of the process because the search condition is defined directly where it is needed. Defining the same function elsewhere would achieve the same result but make this simple procedure less visible.
+\texttt{std::} \texttt{find\_if} then returns the iterator associated with the matching \texttt{SubDetector} or \texttt{sub\_detectors} \texttt{.end()} if no match is found.  
+The lambda function maintains clarity of the process because the search condition is defined directly where it is needed. Defining the same function elsewhere would achieve the same result but make this simple procedure less visible.
 The lambda function therefore acts as a beneficial, small local attachment to \texttt{std::find\_if}, as seen in in lines 7 to 10 in Code snippet \ref{lst:remove_sub_detector}.
 Note the member function \texttt{get\_sub\_detector}, mentioned below and in Code snippet \ref{lst:set_sub_detector_status}, uses the same \texttt{std::find\_if} and lambda function logic.
 
@@ -464,7 +463,7 @@ The returned pointer is only used to access and modify the contained \texttt{Sub
 \begin{lstlisting}[
     style=vscode, 
     caption={
-    \texttt{DetectorSystem} member function to set a contained \texttt{SubDetector} object's \texttt{status}. It employs another member function \texttt{get\_sub\_detector} to return a non-owning pointer of \texttt{SubDetector}, as seen in line 3.
+    \texttt{DetectorSystem} member function to set a contained \texttt{SubDetector} object's \texttt{status}. It employs another member function \texttt{get\_sub\_detector} to return a raw non-owning pointer of \texttt{SubDetector}, as seen in line 3.
     },
     label={lst:set_sub_detector_status}
     ]
