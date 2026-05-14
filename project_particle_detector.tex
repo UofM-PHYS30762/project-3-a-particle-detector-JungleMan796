@@ -55,9 +55,9 @@
 
 \begin{abstract}
     An object oriented C++ program was developed to simulate a particle detector.
-    It utilised abstract base classes for the particle and sub-detector hierarchies to allow a detector system class to own derived sub-detectors and pass derived particles through, simulating detection.
-    To do this encapsulation, composition, inheritance and polymorphism was employed.
-    The main finding of this code was how integral inheritance and polymorphism is for future extension.
+    Abstract base classes, inheritance and polymorphism were employed to model particle and sub-detector hierarchies.
+    Composition and dynamic memory were implemented to store sub-detector objects within a detector system class, allowing for particles to be passed through multiple sub-detectors.
+    The program demonstrated particle dependent detector responses, e.g. muons detected by trackers and muon-chambers but not by calorimeters.
 \end{abstract}
 
 \section{Introduction}
