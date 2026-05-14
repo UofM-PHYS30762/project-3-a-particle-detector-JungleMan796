@@ -127,9 +127,10 @@ void demonstrate_remove_and_release()
     det_sys_2.print_configuration(); // Comment if wish to reduce bloat.
 
     det_sys_2.remove_sub_detector("Crystal Electromagnetic Calorimeter 2"); // Deleting this Calorimeter.
-    det_sys_2.print_configuration(); // Uncomment if wish to see process clearer.
+    det_sys_2.print_configuration(); // Comment if wish to reduce bloat.
 
     std::unique_ptr<SubDetector> released_sub_detector = det_sys_2.release_sub_detector("Silicon Tracker 2");
+    det_sys_2.print_configuration(); // Comment if wish to reduce bloat.
     std::cout << "Example of released SubDetector detecting a Charged Kaon alone." << std::endl;
 
     Kaon kaon_1(600.0, 3.0, 4.0, 5.0, false, true);
