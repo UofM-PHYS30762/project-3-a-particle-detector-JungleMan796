@@ -41,7 +41,7 @@ Much of the foundation of this project was built from the assignments 4 & 5, hen
 - When designing the ```DetectorSystem``` wrapper function ```set_sub_detector_status```, ChatGPT 5.2 indicated the use of a raw non-owning pointer to deal with the ```status``` change of the ```SubDetector``` stored in the ```DetectorSystem```. 
 - ChatGPT 5.2 helped me to learn how UML diagrams work.
 - Discussed the possibilities of exceptions for validation, however I did not think it added much value.
-- In the report ChatGPT 5.2 helped me to created nicely formatted code snippets.
+- In the report ChatGPT 5.2 helped me to create nicely formatted code snippets.
 - In "main.cpp" ChatGPT 5.2 recommened helper functions to split up the long main into many managable functions that demonstrate a singular feature.
 - While testing the alteration of my ```FourMomentum``` to use smart pointers instead of raw pointers, I noticed the derived Particles were not moving as expected, more just copying. I thought they would derive the copy/move semantics from Particle, which they should if they hadn't had an overriding destructor. ChatGPT 5.2 helped me to realise that this definition of a custom destructor prevented the compiler from doing the correct move operations for all the derived Particles. Hence in each intermediate base class and derived class I defualted the copy/move constructors and assignment operators, e.g for the ```Proton``` copy constructor ```Proton(const Proton& other) = default;```. This specifically stated that the compiler should use the semantics from the base ```Particle```. 
  
