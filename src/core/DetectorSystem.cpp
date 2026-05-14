@@ -232,6 +232,6 @@ void DetectorSystem::detect(Particle& particle) const
         sub_detector->detect(particle);
     }
 
-    std::cout << "-- Finished passing particle through DetectorSystem (" << sys_name << ") ---" << std::endl;
+    std::cout << "--- Finished passing particle through DetectorSystem (" << sys_name << ") ---" << std::endl;
     std::cout << std::endl; // Line break.
 }
