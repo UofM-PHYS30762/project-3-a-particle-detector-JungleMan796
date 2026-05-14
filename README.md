@@ -33,7 +33,7 @@ Much of the foundation of this project was built from the assignments 4 & 5, hen
 - When building the ```Electron``` derived class I realised the ```Lepton``` class destructor was being called. ChatGPT 5.2 and the pre lecture 8 slides helped me to understand why we need the base class to have a virtual destructor.
 - ChatGPT 5.2 suggested header guards so that no .hpp file gets defined twice.
 - ChatGPT 5.2 suggested ```is_anti ? +1 : -1``` for printing the charge of the ```ChargeLepton``` branch of the hierarchy, I adopted this.
-- Needing a better file system I wanted folders to intuitively match the hierarchy structure. This I did but ChatGPT 5.2 suggested using C++ standards ```inlcude``` for the header files and ```src``` for the implementation files.
+- Needing a better file system I wanted folders to intuitively match the hierarchy structure. This I did but ChatGPT 5.2 suggested using C++ standards ```include``` for the header files and ```src``` for the implementation files.
 ### Project
 - Discussed whether to store the interaction logic with member functions or in a ```vector```.
 - For the ```DetectorSystem``` container ChatGPT 5.2 suggested ```std::vector<std::unique_ptr<SubDetector>>```, with ```std::unique_ptr``` making sense as discussed in the report.
