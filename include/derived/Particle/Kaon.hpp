@@ -22,7 +22,19 @@ class Kaon : public Meson
     Kaon(double E, double px, double py, double pz, bool is_anti, bool is_charged);
 
     // Destructor.
-    ~Kaon();
+    ~Kaon() override;
+
+    // Copy Constructor.
+    Kaon(const Kaon& other) = default;
+
+    // Copy Assignment Operator.
+    Kaon& operator=(const Kaon& other) = default;
+
+    // Move Constructor.
+    Kaon(Kaon&& other) noexcept = default;
+
+    // Move Assignment Operator.
+    Kaon& operator=(Kaon&& other) noexcept = default;
 
     // Print function for characteristics common to Kaon.
     void print_info() const override;

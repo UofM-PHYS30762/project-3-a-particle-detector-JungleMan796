@@ -22,7 +22,19 @@ class Neutron : public Hadron
     Neutron(double E, double px, double py, double pz, bool is_anti);
 
     // Destructor.
-    ~Neutron();
+    ~Neutron() override;
+
+    // Copy Constructor.
+    Neutron(const Neutron& other) = default;
+
+    // Copy Assignment Operator.
+    Neutron& operator=(const Neutron& other) = default;
+
+    // Move Constructor.
+    Neutron(Neutron&& other) noexcept = default;
+
+    // Move Assignment Operator.
+    Neutron& operator=(Neutron&& other) noexcept = default;
 
     // Print function for characteristics common to Neutron.
     void print_info() const override;

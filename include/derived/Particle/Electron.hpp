@@ -25,7 +25,19 @@ class Electron : public Particle
     Electron(double E, double px, double py, double pz, bool is_anti);
 
     // Destructor.
-    ~Electron();
+    ~Electron() override;
+
+    // Copy Constructor.
+    Electron(const Electron& other) = default;
+
+    // Copy Assignment Operator.
+    Electron& operator=(const Electron& other) = default;
+
+    // Move Constructor.
+    Electron(Electron&& other) noexcept = default;
+
+    // Move Assignment Operator.
+    Electron& operator=(Electron&& other) noexcept = default;
 
     // Print function for characteristics common to Electrons.
     void print_info() const override;

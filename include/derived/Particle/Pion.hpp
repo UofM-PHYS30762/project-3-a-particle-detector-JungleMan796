@@ -22,7 +22,19 @@ class Pion : public Meson
     Pion(double E, double px, double py, double pz, bool is_anti, bool is_charged);
 
     // Destructor.
-    ~Pion();
+    ~Pion() override;
+
+    // Copy Constructor.
+    Pion(const Pion& other) = default;
+
+    // Copy Assignment Operator.
+    Pion& operator=(const Pion& other) = default;
+
+    // Move Constructor.
+    Pion(Pion&& other) noexcept = default;
+
+    // Move Assignment Operator.
+    Pion& operator=(Pion&& other) noexcept = default;
 
     // Print function for characteristics common to Pion.
     void print_info() const override;

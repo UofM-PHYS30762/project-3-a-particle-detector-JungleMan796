@@ -25,7 +25,19 @@ class Hadron : public Particle
     Hadron(double E, double px, double py, double pz, double rest_mass, bool is_anti, int charge_mag);
 
     // Destructor.
-    ~Hadron();
+    virtual ~Hadron() override = 0;
+
+    // Copy Constructor.
+    Hadron(const Hadron& other) = default;
+
+    // Copy Assignment Operator.
+    Hadron& operator=(const Hadron& other) = default;
+
+    // Move Constructor.
+    Hadron(Hadron&& other) noexcept = default;
+
+    // Move Assignment Operator.
+    Hadron& operator=(Hadron&& other) noexcept = default;
 
     // // Print function for characteristics common to Hadron.
     // void print_info() const override;

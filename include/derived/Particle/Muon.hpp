@@ -25,7 +25,19 @@ class Muon : public Particle
     Muon(double E, double px, double py, double pz, bool is_anti);
 
     // Destructor.
-    ~Muon();
+    ~Muon() override;
+
+    // Copy Constructor.
+    Muon(const Muon& other) = default;
+
+    // Copy Assignment Operator.
+    Muon& operator=(const Muon& other) = default;
+
+    // Move Constructor.
+    Muon(Muon&& other) noexcept = default;
+
+    // Move Assignment Operator.
+    Muon& operator=(Muon&& other) noexcept = default;
 
     // Print function for characteristics common to Muons.
     void print_info() const override;

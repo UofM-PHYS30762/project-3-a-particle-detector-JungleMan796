@@ -25,7 +25,19 @@ class Photon : public Particle
     Photon(double E, double px, double py, double pz, bool is_anti);
 
     // Destructor.
-    ~Photon();
+    ~Photon() override;
+
+    // Copy Constructor.
+    Photon(const Photon& other) = default;
+
+    // Copy Assignment Operator.
+    Photon& operator=(const Photon& other) = default;
+
+    // Move Constructor.
+    Photon(Photon&& other) noexcept = default;
+
+    // Move Assignment Operator.
+    Photon& operator=(Photon&& other) noexcept = default;
 
     // Print function for characteristics common to Photons.
     void print_info() const override;
