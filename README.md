@@ -3,7 +3,7 @@
 ## Usage instructions.
 Compilation line: ```g++ -Wall main.cpp src/core/*.cpp src/base/*.cpp src/derived/Particle/*.cpp src/derived/SubDetector/*.cpp -Iinclude -o main.exe```.
 Please ensure the files in the "include" and "src" folders and "main.cpp" are in your directory.
-Also please note that the files within the "test_files" are not part of the project and purely for my testing.
+Also please note that the files within the "test_files" are not part of the project and purely for my testing, and the files within "report_assets" are needed to have figures in the synced overleaf repository.
 
 main.cpp demonstrates the minimum functionality and advanced features of my code design. It does so by calling helper functions ```demonstrate_minimum_functionality``` and ```demonstrate_advanced_features``` to make the main.cpp succinct. These helper functions have helper functions within defined in "main_helpers.cpp", that makes the main.cpp understandable and modular.
 The bullet points below indicate how you will move through the main.cpp:
