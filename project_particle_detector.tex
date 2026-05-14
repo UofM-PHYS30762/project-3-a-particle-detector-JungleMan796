@@ -57,7 +57,7 @@
     An object oriented C++ program was developed to simulate a particle detector.
     Abstract base classes, inheritance and polymorphism were employed to model particle and sub-detector hierarchies.
     Composition and dynamic memory were implemented to store sub-detector objects within a detector system class, allowing for particles to be passed through multiple sub-detectors.
-    The program demonstrated particle dependent detector responses, e.g. muons detected by trackers and muon-chambers but not by calorimeters.
+    The program demonstrated particle dependent detector responses, e.g. muons were detected by trackers and muon-chambers but not by calorimeters.
 \end{abstract}
 
 \section{Introduction}
@@ -135,8 +135,9 @@ Although requirement 4 of Table \ref{tab:min_func_summary} refers to virtual set
 Figure \ref{fig:Particle_UML} shows the \texttt{Particle} base class data members, which were chosen because they represent intrinsic properties shared by all particles.
 Figure \ref{fig:Particle_UML} also shows the composition relationship between \texttt{FourMomentum} and \texttt{Particle}, satisfying requirement 5 in Table \ref{tab:min_func_summary}.
 This is implemented using a \texttt{std::unique\_ptr}, enforcing exclusive ownership of \texttt{four\_momentum}.
-The storage of \texttt{FourMomentum} \texttt{components} was changed from Assignment's 4 raw pointers to \texttt{std::unique\_ptr} to increase memory safety.
+The storage of \texttt{FourMomentum} \texttt{components} was changed from Assignments 4's raw pointers to \texttt{std::unique\_ptr} to increase memory safety.
 The decision to implement dynamic memory meant that custom move/copy semantics were required.
+The validation of \texttt{FourMomentum} simply ensures the energy is not negative using \texttt{validate\_E}, as seen in Figure \ref{fig:Particle_UML}. 
 \begin{figure}[H]
       \centering
       \makebox[\textwidth][c]{\includegraphics[alt={Put short description for screen readers here},width=1.2\textwidth,keepaspectratio=true]{report_assets/report_figures/UML_Particle_4.png}}
@@ -555,14 +556,14 @@ Similar can be done for \texttt{DSMessages}.
 
 \section{Discussion and conclusions}
 
-The main program successfully demonstrates an object oriented simulation of a particle detector.
-The abstract base classes \texttt{Particle} and \texttt{SubDetector} provide a clear interface, allowing common properties to be inherited, and derived class specific properties to be implemented polymorphically.
-This allowed \texttt{DetectorSystem} to store different derived \texttt{SubDetector} objects and pass different derived \texttt{Particle} objects through a detection function, meeting the minimum functionality.
+The main program successfully demonstrates an object oriented particle detector simulation.
+The abstract base classes, \texttt{Particle} and \texttt{SubDetector}, provide common interfaces, while inheritance and polymorphism allow different derived \texttt{Particle} objects to pass through a \texttt{DetectorSystem} that owns derived \texttt{SubDetector} objects.
+This also made the design extensible, with the addition of threshold energies to the \texttt{interacts\_with} functions serving as a simple example.
 
-The advanced features increased the physical realism and the usability of the program while applying advanced C++ techniques.
-Future improvements would be to model the detectors as imperfect, including detector efficiency and fluctuations in measured energy.
-The current \texttt{Particle} \texttt{four\_momentum} validation could also be improved, as only preventing negative energy does not stop unphysical \texttt{four\_momenta}, such as massive particles with $E^2 < p^2 +m^2$.
-An interesting further extension would be to create a mechanism for particle interactions, allowing particles to produce secondary particles as they pass through the detector.
+
+The advanced features increased physical realism and usability of the program. For example, absorption showed how \texttt{SubDetector} interactions can modify a \texttt{Particle}'s state.
+Future improvements would be to include detector imperfections, possibly introducing fluctuations with a Gaussian distribution.
+The current \texttt{FourMomentum} validation could also be improved by rejecting unphysical particles that are  inconsistent with $E^2 = p^2 + m^2$.
 
 \printbibliography
 
