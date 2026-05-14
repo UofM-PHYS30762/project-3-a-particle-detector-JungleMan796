@@ -48,4 +48,4 @@ Much of the foundation of this project was built from the assignments 4 & 5, hen
 
 ## Report
 This report includes my key design considerations, with the results indicating how the main.cpp demonstrates the minimum and advanced functionality.
-The report can be found in the file "" with its commit history being found in the file "project_particle_detector.tex".
+The report can be found in the file "11399397_report_particle_detector" with its commit history being found in the file "project_particle_detector.tex".
