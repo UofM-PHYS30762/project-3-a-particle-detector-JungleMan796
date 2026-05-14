@@ -134,11 +134,11 @@ Although requirement 4 of Table \ref{tab:min_func_summary} refers to virtual set
 Figure \ref{fig:Particle_UML} shows the \texttt{Particle} base class data members, which were chosen because they represent intrinsic properties shared by all particles.
 Figure \ref{fig:Particle_UML} also shows the composition relationship between \texttt{FourMomentum} and \texttt{Particle}, satisfying requirement 5 in Table \ref{tab:min_func_summary}.
 This is implemented using a \texttt{std::unique\_ptr}, enforcing exclusive ownership of \texttt{four\_momentum}.
-\texttt{FourMomentum} \texttt{components} remain stored by a raw pointer from Assignment 4.
+The storage of \texttt{FourMomentum} \texttt{components} was changed from Assignment's 4 raw pointers to \texttt{std::unique\_ptr} to increase memory safety.
 The decision to implement dynamic memory meant that custom move/copy semantics were required.
 \begin{figure}[H]
       \centering
-      \makebox[\textwidth][c]{\includegraphics[alt={Put short description for screen readers here},width=1.2\textwidth,keepaspectratio=true]{report_assets/report_figures/UML_Particle_3.drawio.png}}
+      \makebox[\textwidth][c]{\includegraphics[alt={Put short description for screen readers here},width=1.2\textwidth,keepaspectratio=true]{report_assets/report_figures/UML_Particle_4.png}}
       \caption[Short caption for list of figures]{
       UML class diagram for the \texttt{Particle} hierarchy. Note no default, parametrised constructors or destructors are included to maintain simplicity.
       }
