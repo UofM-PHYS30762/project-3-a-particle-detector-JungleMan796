@@ -1,5 +1,7 @@
 # Final Project - Particle Detector.
 
+Overall module grade: 85%
+
 ## Usage instructions.
 Compilation line: ```g++ -Wall main.cpp src/core/*.cpp src/base/*.cpp src/derived/Particle/*.cpp src/derived/SubDetector/*.cpp -Iinclude -o main.exe```.
 Please ensure the files in the "include" and "src" folders and "main.cpp" are in your directory.
